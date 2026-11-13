@@ -1,0 +1,50 @@
+order_id,customer_name,email,product_name,quantity,price,status,created_at
+ORD-001,Juan Pérez,juan.perez@example.com,Laptop Dell XPS 15,1,1299.99,confirmed,2024-01-10 09:15:00
+ORD-001,Juan Pérez,juan.perez@example.com,Mouse Logitech MX Master,1,99.99,confirmed,2024-01-10 09:15:00
+ORD-002,María García,maria.garcia@example.com,Teclado mecánico,2,129.50,pending,2024-01-11 10:30:00
+ORD-003,Juan Pérez,juan.perez@example.com,Monitor 4K,1,599.00,shipped,2024-01-12 08:00:00
+ORD-003,Juan Pérez,juan.perez@example.com,Cable HDMI,2,15.99,shipped,2024-01-12 08:00:00
+ORD-004,Carlos López,carlos.lopez@example.com,SSD 1TB,1,89.99,delivered,2024-01-13 14:20:00
+ORD-005,Juan Pérez,juan.perez@example.com,Webcam Logitech C920,1,89.99,confirmed,2024-01-14 11:05:00
+ORD-005,Juan Pérez,juan.perez@example.com,Auriculares Sony WH-1000XM5,1,349.99,confirmed,2024-01-14 11:05:00
+ORD-006,María García,maria.garcia@example.com,Router WiFi 6,1,179.99,delivered,2024-01-15 16:45:00
+ORD-007,Ana Martínez,ana.martinez@example.com,Tablet iPad Air,1,649.00,confirmed,2024-01-16 09:30:00
+ORD-007,Ana Martínez,ana.martinez@example.com,Apple Pencil,1,129.00,confirmed,2024-01-16 09:30:00
+ORD-007,Ana Martínez,ana.martinez@example.com,Funda Smart Folio,1,79.00,confirmed,2024-01-16 09:30:00
+ORD-008,Carlos López,carlos.lopez@example.com,Disco duro externo 4TB,1,139.99,shipped,2024-01-17 13:10:00
+ORD-009,Juan Pérez,juan.perez@example.com,Dock USB-C,1,149.99,delivered,2024-01-18 10:00:00
+ORD-010,Ana Martínez,ana.martinez@example.com,AirPods Pro,1,249.00,pending,2024-01-19 15:20:00
+ORD-011,Roberto Silva,roberto.silva@example.com,Impresora láser,1,299.99,confirmed,2024-01-20 08:45:00
+ORD-011,Roberto Silva,roberto.silva@example.com,Tóner compatible,2,45.00,confirmed,2024-01-20 08:45:00
+ORD-012,María García,maria.garcia@example.com,Monitor curvo 27",1,329.99,shipped,2024-01-21 12:30:00
+ORD-013,Juan Pérez,juan.perez@example.com,Teclado inalámbrico,1,79.99,confirmed,2024-01-22 09:00:00
+ORD-013,Juan Pérez,juan.perez@example.com,Mouse vertical ergonómico,1,59.99,confirmed,2024-01-22 09:00:00
+ORD-014,Ana Martínez,ana.martinez@example.com,Cargador rápido 65W,2,34.99,delivered,2024-01-23 14:00:00
+ORD-015,Carlos López,carlos.lopez@example.com,Switch 8 puertos,1,49.99,pending,2024-01-24 11:30:00
+ORD-016,Roberto Silva,roberto.silva@example.com,Raspberry Pi 5,1,89.99,confirmed,2024-01-25 10:15:00
+ORD-016,Roberto Silva,roberto.silva@example.com,Fuente de poder 27W,1,15.99,confirmed,2024-01-25 10:15:00
+ORD-016,Roberto Silva,roberto.silva@example.com,MicroSD 128GB,2,19.99,confirmed,2024-01-25 10:15:00
+ORD-017,Laura Gómez,laura.gomez@example.com,iPhone 15 Pro,1,1199.99,pending,2024-01-26 09:45:00
+ORD-017,Laura Gómez,laura.gomez@example.com,Funda MagSafe,1,49.99,pending,2024-01-26 09:45:00
+ORD-018,Laura Gómez,laura.gomez@example.com,MacBook Air M3,1,1299.99,confirmed,2024-01-27 08:30:00
+ORD-018,Laura Gómez,laura.gomez@example.com,Cable USB-C 2m,2,24.99,confirmed,2024-01-27 08:30:00
+ORD-019,Pedro Ramírez,pedro.ramirez@example.com,Samsung Galaxy S24,1,999.99,shipped,2024-01-28 13:00:00
+ORD-019,Pedro Ramírez,pedro.ramirez@example.com,Cargador inalámbrico,1,39.99,shipped,2024-01-28 13:00:00
+ORD-020,Pedro Ramírez,pedro.ramirez@example.com,Smart TV 55" 4K,1,649.99,delivered,2024-01-29 10:30:00
+ORD-020,Pedro Ramírez,pedro.ramirez@example.com,Soporte de pared TV,1,34.99,delivered,2024-01-29 10:30:00
+ORD-020,Pedro Ramírez,pedro.ramirez@example.com,Cable HDMI 2.1,2,22.99,delivered,2024-01-29 10:30:00
+ORD-021,Ana Martínez,ana.martinez@example.com,Kindle Paperwhite,1,139.99,confirmed,2024-01-30 15:00:00
+ORD-022,Carlos López,carlos.lopez@example.com,Consola PS5,1,499.99,pending,2024-01-31 09:00:00
+ORD-022,Carlos López,carlos.lopez@example.com,Control DualSense extra,1,69.99,pending,2024-01-31 09:00:00
+ORD-022,Carlos López,carlos.lopez@example.com,Juego FIFA 2025,2,59.99,pending,2024-01-31 09:00:00
+ORD-023,María García,maria.garcia@example.com,Silla ergonómica,1,449.99,shipped,2024-02-01 11:00:00
+ORD-024,Juan Pérez,juan.perez@example.com,Escritorio de pie,1,599.99,confirmed,2024-02-02 08:00:00
+ORD-024,Juan Pérez,juan.perez@example.com,Alfombra antifatiga,1,49.99,confirmed,2024-02-02 08:00:00
+ORD-025,Roberto Silva,roberto.silva@example.com,NAS Synology 2 bahías,1,299.99,delivered,2024-02-03 14:30:00
+ORD-025,Roberto Silva,roberto.silva@example.com,Disco duro 4TB NAS,2,119.99,delivered,2024-02-03 14:30:00
+ORD-INVALID-1,Cliente Sin Items,,,,,pending,2024-02-04 10:00:00
+ORD-INVALID-2,Cliente Sin Email,,Producto X,1,100.00,confirmed,2024-02-04 10:05:00
+ORD-INVALID-3,Cliente Precio Negativo,cliente@test.com,Producto Y,1,-50.00,pending,2024-02-04 10:10:00
+ORD-INVALID-4,Cliente Cantidad Cero,cliente@test.com,Producto Z,0,25.00,confirmed,2024-02-04 10:15:00
+ORD-INVALID-5,,cliente@test.com,Producto W,1,10.00,pending,2024-02-04 10:20:00
+ORD-INVALID-6,Cliente Sin Estado,cliente@test.com,Producto V,1,30.00,,2024-02-04 10:25:00

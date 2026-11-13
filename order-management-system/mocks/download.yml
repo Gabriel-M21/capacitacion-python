@@ -1,0 +1,20 @@
+- request:
+    method: GET
+    path: /exports/catalog.json
+  response:
+    status: 200
+    headers:
+      Content-Type: application/json
+    body: |
+      {
+        "export": "catalog",
+        "products": [
+          {
+            "product_id": "SKU-001",
+            "product_name": "Laptop Dell XPS 15",
+            "unit_price": "1299.99",
+            "currency": "USD",
+            "available": true
+          }
+        ]
+      }

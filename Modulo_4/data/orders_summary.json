@@ -1,0 +1,109 @@
+{
+  "total_orders": 15,
+  "valid_orders": 15,
+  "invalid_orders": 6,
+  "total_revenue": 5375.83,
+  "average_order_value": 358.39,
+  "unique_customers": 5,
+  "orders_by_status": {
+    "confirmed": 5,
+    "pending": 3,
+    "shipped": 3,
+    "delivered": 4
+  },
+  "invalid_details": [
+    {
+      "index": 15,
+      "error": "Faltan campos requeridos: {'email'}",
+      "order": {
+        "order_id": "ORD-INVALID-1",
+        "customer_name": "Cliente Sin Items",
+        "status": "pending",
+        "items": []
+      }
+    },
+    {
+      "index": 16,
+      "error": "Faltan campos requeridos: {'email'}",
+      "order": {
+        "order_id": "ORD-INVALID-2",
+        "customer_name": "Cliente Sin Email",
+        "status": "confirmed",
+        "items": [
+          {
+            "product_name": "Producto X",
+            "quantity": 1,
+            "price": 100.0
+          }
+        ]
+      }
+    },
+    {
+      "index": 17,
+      "error": "Item 0 tiene precio inválido",
+      "order": {
+        "order_id": "ORD-INVALID-3",
+        "customer_name": "Cliente Precio Negativo",
+        "email": "cliente@test.com",
+        "status": "pending",
+        "items": [
+          {
+            "product_name": "Producto Y",
+            "quantity": 1,
+            "price": -50.0
+          }
+        ]
+      }
+    },
+    {
+      "index": 18,
+      "error": "Item 0 tiene cantidad inválida",
+      "order": {
+        "order_id": "ORD-INVALID-4",
+        "customer_name": "Cliente Cantidad Cero",
+        "email": "cliente@test.com",
+        "status": "confirmed",
+        "items": [
+          {
+            "product_name": "Producto Z",
+            "quantity": 0,
+            "price": 25.0
+          }
+        ]
+      }
+    },
+    {
+      "index": 19,
+      "error": "customer_name no puede estar vacío",
+      "order": {
+        "order_id": "ORD-INVALID-5",
+        "customer_name": "",
+        "email": "cliente@test.com",
+        "status": "pending",
+        "items": [
+          {
+            "product_name": "Producto W",
+            "quantity": 1,
+            "price": 10.0
+          }
+        ]
+      }
+    },
+    {
+      "index": 20,
+      "error": "Faltan campos requeridos: {'status'}",
+      "order": {
+        "order_id": "ORD-INVALID-6",
+        "customer_name": "Cliente Sin Estado",
+        "email": "cliente@test.com",
+        "items": [
+          {
+            "product_name": "Producto V",
+            "quantity": 1,
+            "price": 30.0
+          }
+        ]
+      }
+    }
+  ]
+}

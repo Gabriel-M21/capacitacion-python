@@ -1,0 +1,145 @@
+{
+  "metrics": {
+    "generated_at": "2026-11-11T23:54:41.790840+00:00",
+    "total_orders": 30,
+    "total_revenue": 19307.42,
+    "avg_order_value": 643.5806666666666,
+    "by_status": {
+      "confirmed": {
+        "count": 10,
+        "total_revenue": 6492.8
+      },
+      "pending": {
+        "count": 6,
+        "total_revenue": 6457.89
+      },
+      "cancelled": {
+        "count": 14,
+        "total_revenue": 6356.73
+      }
+    },
+    "by_customer": {
+      "Ana Martínez": {
+        "email": "ana.martinez@example.com",
+        "order_count": 5,
+        "total_spent": 5275.93
+      },
+      "Laura Gómez": {
+        "email": "laura.gomez@example.com",
+        "order_count": 3,
+        "total_spent": 3999.93
+      },
+      "Juan Pérez": {
+        "email": "juan.perez@example.com",
+        "order_count": 7,
+        "total_spent": 3605.86
+      },
+      "Pedro Ramírez": {
+        "email": "pedro.ramirez@example.com",
+        "order_count": 3,
+        "total_spent": 2750.91
+      },
+      "Roberto Silva": {
+        "email": "roberto.silva@example.com",
+        "order_count": 4,
+        "total_spent": 1485.89
+      },
+      "María García": {
+        "email": "maria.garcia@example.com",
+        "order_count": 4,
+        "total_spent": 1218.97
+      },
+      "Carlos López": {
+        "email": "carlos.lopez@example.com",
+        "order_count": 4,
+        "total_spent": 969.93
+      }
+    },
+    "top_3_products": [
+      {
+        "product_name": "Teclado mecánico",
+        "total_quantity": 2
+      },
+      {
+        "product_name": "Cable HDMI",
+        "total_quantity": 2
+      },
+      {
+        "product_name": "Tóner compatible",
+        "total_quantity": 2
+      }
+    ],
+    "most_expensive_order": {
+      "order_id": "ORD-00029",
+      "customer": "Ana Martínez",
+      "total": 3959.96
+    },
+    "cheapest_order": {
+      "order_id": "ORD-00015",
+      "customer": "Carlos López",
+      "total": 49.99
+    }
+  },
+  "validation_errors": [
+    {
+      "order_id": "ORD-INVALID-1",
+      "source": "CSV",
+      "error": "email ausente"
+    },
+    {
+      "order_id": "ORD-INVALID-2",
+      "source": "CSV",
+      "error": "email ausente"
+    },
+    {
+      "order_id": "ORD-INVALID-3",
+      "source": "CSV",
+      "error": "price <= 0 en item 'Producto Y'"
+    },
+    {
+      "order_id": "ORD-INVALID-4",
+      "source": "CSV",
+      "error": "quantity <= 0 en item 'Producto Z'"
+    },
+    {
+      "order_id": "ORD-INVALID-5",
+      "source": "CSV",
+      "error": "customer_name vacío"
+    },
+    {
+      "order_id": "ORD-INVALID-6",
+      "source": "CSV",
+      "error": "status ausente"
+    },
+    {
+      "order_id": "ORD-INVALID-1",
+      "source": "JSON",
+      "error": "email ausente"
+    },
+    {
+      "order_id": "ORD-INVALID-2",
+      "source": "JSON",
+      "error": "email ausente"
+    },
+    {
+      "order_id": "ORD-INVALID-3",
+      "source": "JSON",
+      "error": "price <= 0 en item 'Producto Y'"
+    },
+    {
+      "order_id": "ORD-INVALID-4",
+      "source": "JSON",
+      "error": "quantity <= 0 en item 'Producto Z'"
+    },
+    {
+      "order_id": "ORD-INVALID-5",
+      "source": "JSON",
+      "error": "customer_name vacío"
+    },
+    {
+      "order_id": "ORD-INVALID-6",
+      "source": "JSON",
+      "error": "status ausente"
+    }
+  ]
+}
