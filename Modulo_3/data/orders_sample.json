@@ -1,0 +1,301 @@
+[
+  {
+    "order_id": "ORD-001",
+    "customer_name": "Juan Pérez",
+    "email": "juan.perez@example.com",
+    "status": "confirmed",
+    "items": [
+      {
+        "product_name": "Laptop Dell XPS 15",
+        "quantity": 1,
+        "price": 1299.99
+      },
+      {
+        "product_name": "Mouse Logitech MX Master",
+        "quantity": 1,
+        "price": 99.99
+      }
+    ]
+  },
+  {
+    "order_id": "ORD-002",
+    "customer_name": "María García",
+    "email": "maria.garcia@example.com",
+    "status": "pending",
+    "items": [
+      {
+        "product_name": "Teclado mecánico",
+        "quantity": 2,
+        "price": 129.50
+      }
+    ]
+  },
+  {
+    "order_id": "ORD-003",
+    "customer_name": "Juan Pérez",
+    "email": "juan.perez@example.com",
+    "status": "shipped",
+    "items": [
+      {
+        "product_name": "Monitor 4K",
+        "quantity": 1,
+        "price": 599.00
+      },
+      {
+        "product_name": "Cable HDMI",
+        "quantity": 2,
+        "price": 15.99
+      }
+    ]
+  },
+  {
+    "order_id": "ORD-004",
+    "customer_name": "Carlos López",
+    "email": "carlos.lopez@example.com",
+    "status": "delivered",
+    "items": [
+      {
+        "product_name": "SSD 1TB",
+        "quantity": 1,
+        "price": 89.99
+      }
+    ]
+  },
+  {
+    "order_id": "ORD-005",
+    "customer_name": "Juan Pérez",
+    "email": "juan.perez@example.com",
+    "status": "confirmed",
+    "items": [
+      {
+        "product_name": "Webcam Logitech C920",
+        "quantity": 1,
+        "price": 89.99
+      },
+      {
+        "product_name": "Auriculares Sony WH-1000XM5",
+        "quantity": 1,
+        "price": 349.99
+      }
+    ]
+  },
+  {
+    "order_id": "ORD-006",
+    "customer_name": "María García",
+    "email": "maria.garcia@example.com",
+    "status": "delivered",
+    "items": [
+      {
+        "product_name": "Router WiFi 6",
+        "quantity": 1,
+        "price": 179.99
+      }
+    ]
+  },
+  {
+    "order_id": "ORD-007",
+    "customer_name": "Ana Martínez",
+    "email": "ana.martinez@example.com",
+    "status": "confirmed",
+    "items": [
+      {
+        "product_name": "Tablet iPad Air",
+        "quantity": 1,
+        "price": 649.00
+      },
+      {
+        "product_name": "Apple Pencil",
+        "quantity": 1,
+        "price": 129.00
+      },
+      {
+        "product_name": "Funda Smart Folio",
+        "quantity": 1,
+        "price": 79.00
+      }
+    ]
+  },
+  {
+    "order_id": "ORD-008",
+    "customer_name": "Carlos López",
+    "email": "carlos.lopez@example.com",
+    "status": "shipped",
+    "items": [
+      {
+        "product_name": "Disco duro externo 4TB",
+        "quantity": 1,
+        "price": 139.99
+      }
+    ]
+  },
+  {
+    "order_id": "ORD-009",
+    "customer_name": "Juan Pérez",
+    "email": "juan.perez@example.com",
+    "status": "delivered",
+    "items": [
+      {
+        "product_name": "Dock USB-C",
+        "quantity": 1,
+        "price": 149.99
+      }
+    ]
+  },
+  {
+    "order_id": "ORD-010",
+    "customer_name": "Ana Martínez",
+    "email": "ana.martinez@example.com",
+    "status": "pending",
+    "items": [
+      {
+        "product_name": "AirPods Pro",
+        "quantity": 1,
+        "price": 249.00
+      }
+    ]
+  },
+  {
+    "order_id": "ORD-011",
+    "customer_name": "Roberto Silva",
+    "email": "roberto.silva@example.com",
+    "status": "confirmed",
+    "items": [
+      {
+        "product_name": "Impresora láser",
+        "quantity": 1,
+        "price": 299.99
+      },
+      {
+        "product_name": "Tóner compatible",
+        "quantity": 2,
+        "price": 45.00
+      }
+    ]
+  },
+  {
+    "order_id": "ORD-012",
+    "customer_name": "María García",
+    "email": "maria.garcia@example.com",
+    "status": "shipped",
+    "items": [
+      {
+        "product_name": "Monitor curvo 27\"",
+        "quantity": 1,
+        "price": 329.99
+      }
+    ]
+  },
+  {
+    "order_id": "ORD-013",
+    "customer_name": "Juan Pérez",
+    "email": "juan.perez@example.com",
+    "status": "confirmed",
+    "items": [
+      {
+        "product_name": "Teclado inalámbrico",
+        "quantity": 1,
+        "price": 79.99
+      },
+      {
+        "product_name": "Mouse vertical ergonómico",
+        "quantity": 1,
+        "price": 59.99
+      }
+    ]
+  },
+  {
+    "order_id": "ORD-014",
+    "customer_name": "Ana Martínez",
+    "email": "ana.martinez@example.com",
+    "status": "delivered",
+    "items": [
+      {
+        "product_name": "Cargador rápido 65W",
+        "quantity": 2,
+        "price": 34.99
+      }
+    ]
+  },
+  {
+    "order_id": "ORD-015",
+    "customer_name": "Carlos López",
+    "email": "carlos.lopez@example.com",
+    "status": "pending",
+    "items": [
+      {
+        "product_name": "Switch 8 puertos",
+        "quantity": 1,
+        "price": 49.99
+      }
+    ]
+  },
+  {
+    "order_id": "ORD-INVALID-1",
+    "customer_name": "Cliente Sin Items",
+    "status": "pending",
+    "items": []
+  },
+  {
+    "order_id": "ORD-INVALID-2",
+    "customer_name": "Cliente Sin Email",
+    "status": "confirmed",
+    "items": [
+      {
+        "product_name": "Producto X",
+        "quantity": 1,
+        "price": 100.00
+      }
+    ]
+  },
+  {
+    "order_id": "ORD-INVALID-3",
+    "customer_name": "Cliente Precio Negativo",
+    "email": "cliente@test.com",
+    "status": "pending",
+    "items": [
+      {
+        "product_name": "Producto Y",
+        "quantity": 1,
+        "price": -50.00
+      }
+    ]
+  },
+  {
+    "order_id": "ORD-INVALID-4",
+    "customer_name": "Cliente Cantidad Cero",
+    "email": "cliente@test.com",
+    "status": "confirmed",
+    "items": [
+      {
+        "product_name": "Producto Z",
+        "quantity": 0,
+        "price": 25.00
+      }
+    ]
+  },
+  {
+    "order_id": "ORD-INVALID-5",
+    "customer_name": "",
+    "email": "cliente@test.com",
+    "status": "pending",
+    "items": [
+      {
+        "product_name": "Producto W",
+        "quantity": 1,
+        "price": 10.00
+      }
+    ]
+  },
+  {
+    "order_id": "ORD-INVALID-6",
+    "customer_name": "Cliente Sin Estado",
+    "email": "cliente@test.com",
+    "items": [
+      {
+        "product_name": "Producto V",
+        "quantity": 1,
+        "price": 30.00
+      }
+    ]
+  }
+]
