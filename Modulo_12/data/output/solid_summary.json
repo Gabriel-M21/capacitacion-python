@@ -1,0 +1,115 @@
+{
+  "total_orders": 30,
+  "valid_orders": 30,
+  "invalid_orders": 6,
+  "total_revenue": 19307.42,
+  "average_order_value": 643.58,
+  "unique_customers": 7,
+  "orders_by_status": {
+    "confirmed": 10,
+    "pending": 6,
+    "shipped": 6,
+    "delivered": 8
+  },
+  "invalid_details": [
+    {
+      "index": 30,
+      "error": "Faltan campos requeridos: {'email'}",
+      "order": {
+        "order_id": "ORD-INVALID-1",
+        "customer_name": "Cliente Sin Items",
+        "status": "pending",
+        "created_at": "2024-02-09T10:00:00",
+        "items": []
+      }
+    },
+    {
+      "index": 31,
+      "error": "Faltan campos requeridos: {'email'}",
+      "order": {
+        "order_id": "ORD-INVALID-2",
+        "customer_name": "Cliente Sin Email",
+        "status": "confirmed",
+        "created_at": "2024-02-09T10:05:00",
+        "items": [
+          {
+            "product_name": "Producto X",
+            "quantity": 1,
+            "price": 100.0
+          }
+        ]
+      }
+    },
+    {
+      "index": 32,
+      "error": "Item 0: price inválido",
+      "order": {
+        "order_id": "ORD-INVALID-3",
+        "customer_name": "Cliente Precio Negativo",
+        "email": "cliente@test.com",
+        "status": "pending",
+        "created_at": "2024-02-09T10:10:00",
+        "items": [
+          {
+            "product_name": "Producto Y",
+            "quantity": 1,
+            "price": -50.0
+          }
+        ]
+      }
+    },
+    {
+      "index": 33,
+      "error": "Item 0: quantity inválida",
+      "order": {
+        "order_id": "ORD-INVALID-4",
+        "customer_name": "Cliente Cantidad Cero",
+        "email": "cliente@test.com",
+        "status": "confirmed",
+        "created_at": "2024-02-09T10:15:00",
+        "items": [
+          {
+            "product_name": "Producto Z",
+            "quantity": 0,
+            "price": 25.0
+          }
+        ]
+      }
+    },
+    {
+      "index": 34,
+      "error": "customer_name no puede estar vacío",
+      "order": {
+        "order_id": "ORD-INVALID-5",
+        "customer_name": "",
+        "email": "cliente@test.com",
+        "status": "pending",
+        "created_at": "2024-02-09T10:20:00",
+        "items": [
+          {
+            "product_name": "Producto W",
+            "quantity": 1,
+            "price": 10.0
+          }
+        ]
+      }
+    },
+    {
+      "index": 35,
+      "error": "Faltan campos requeridos: {'status'}",
+      "order": {
+        "order_id": "ORD-INVALID-6",
+        "customer_name": "Cliente Sin Estado",
+        "email": "cliente@test.com",
+        "created_at": "2024-02-09T10:25:00",
+        "items": [
+          {
+            "product_name": "Producto V",
+            "quantity": 1,
+            "price": 30.0
+          }
+        ]
+      }
+    }
+  ]
+}
