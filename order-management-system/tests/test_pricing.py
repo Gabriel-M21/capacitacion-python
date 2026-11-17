@@ -150,7 +150,9 @@ def test_descuento_aplicado_a_money(precio_base: Money) -> None:
         (10, 100.0, 85.00),  # 15%
     ],
 )
-def test_precio_final_con_descuento(item_count: int, precio: float, esperado: float) -> None:
+def test_precio_final_con_descuento(
+    item_count: int, precio: float, esperado: float
+) -> None:
     """Precio final correcto para cada tramo de descuento."""
     base = Money.from_float(precio)
     factor = (Decimal("100") - volume_discount(item_count)) / Decimal("100")

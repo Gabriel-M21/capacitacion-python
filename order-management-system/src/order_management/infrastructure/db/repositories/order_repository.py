@@ -44,7 +44,9 @@ class OrderRepository:
         """
         # 1. Buscar o crear el UserModel
         user_model = (
-            self._session.query(UserModel).filter_by(email=str(order.customer.email)).first()
+            self._session.query(UserModel)
+            .filter_by(email=str(order.customer.email))
+            .first()
         )
         if user_model is None:
             user_model = UserModel(
@@ -57,7 +59,9 @@ class OrderRepository:
 
         # 2. Buscar o crear el OrderModel
         order_model = (
-            self._session.query(OrderModel).filter_by(order_id=str(order.order_id)).first()
+            self._session.query(OrderModel)
+            .filter_by(order_id=str(order.order_id))
+            .first()
         )
         if order_model is None:
             order_model = OrderModel(
@@ -108,7 +112,9 @@ class OrderRepository:
         Raises:
             OrderNotFoundError: Si no existe la orden
         """
-        order_model = self._session.query(OrderModel).filter_by(order_id=order_id).first()
+        order_model = (
+            self._session.query(OrderModel).filter_by(order_id=order_id).first()
+        )
         if order_model is None:
             raise OrderNotFoundError(f"No existe la orden '{order_id}'")
 
@@ -178,7 +184,9 @@ class OrderRepository:
         Raises:
             OrderNotFoundError: Si no existe la orden
         """
-        order_model = self._session.query(OrderModel).filter_by(order_id=order_id).first()
+        order_model = (
+            self._session.query(OrderModel).filter_by(order_id=order_id).first()
+        )
         if order_model is None:
             raise OrderNotFoundError(f"No existe la orden '{order_id}'")
 

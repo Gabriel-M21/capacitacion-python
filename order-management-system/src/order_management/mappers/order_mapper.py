@@ -81,7 +81,9 @@ class OrderMapper:
         Returns:
             Schema de salida
         """
-        return CustomerOut(name=customer.name, email=str(customer.email), phone=customer.phone)
+        return CustomerOut(
+            name=customer.name, email=str(customer.email), phone=customer.phone
+        )
 
     @staticmethod
     def to_domain_order(order_in: OrderIn, order_id: OrderId) -> Order:

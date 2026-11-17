@@ -54,7 +54,9 @@ def demo_value_objects() -> None:
     print("\nd) OrderStatus con transiciones:")
     status = OrderStatus.PENDING
     print(f"   Estado inicial: {status.value}")
-    print(f"   ¿Puede ir a CONFIRMED? {status.can_transition_to(OrderStatus.CONFIRMED)}")
+    print(
+        f"   ¿Puede ir a CONFIRMED? {status.can_transition_to(OrderStatus.CONFIRMED)}"
+    )
     print(f"   ¿Puede ir a SHIPPED? {status.can_transition_to(OrderStatus.SHIPPED)}")
 
 
@@ -82,7 +84,9 @@ def demo_entities() -> None:
     # Customer
     print("\nb) Customer:")
     customer = Customer(
-        name="Juan Pérez", email=Email("juan.perez@example.com"), phone="+52 55 1234 5678"
+        name="Juan Pérez",
+        email=Email("juan.perez@example.com"),
+        phone="+52 55 1234 5678",
     )
     print(f"   {customer}")
 
@@ -174,7 +178,9 @@ def demo_pydantic_schemas() -> None:
     try:
         OrderIn(
             customer=CustomerIn(
-                name="", email="correo-invalido", phone=None  # Nombre vacío  # Email inválido
+                name="",
+                email="correo-invalido",
+                phone=None,  # Nombre vacío  # Email inválido
             ),
             items=[],  # Sin items
             notes=None,
@@ -199,10 +205,16 @@ def demo_conversion() -> None:
     # API → Domain
     print("\na) Conversión API → Domain:")
     order_in = OrderIn(
-        customer=CustomerIn(name="Carlos López", email="carlos.lopez@example.com", phone=None),
+        customer=CustomerIn(
+            name="Carlos López", email="carlos.lopez@example.com", phone=None
+        ),
         items=[
-            OrderItemIn(product_name="MacBook Pro", quantity=1, unit_price=Decimal("2499.00")),
-            OrderItemIn(product_name="Magic Mouse", quantity=1, unit_price=Decimal("79.00")),
+            OrderItemIn(
+                product_name="MacBook Pro", quantity=1, unit_price=Decimal("2499.00")
+            ),
+            OrderItemIn(
+                product_name="Magic Mouse", quantity=1, unit_price=Decimal("79.00")
+            ),
         ],
         notes="Factura a nombre de empresa",
     )
@@ -233,7 +245,9 @@ def demo_dunder_methods() -> None:
     print("=" * 70)
 
     customer = Customer(name="Test User", email=Email("test@example.com"))
-    item = OrderItem(product_name="Test Product", quantity=1, unit_price=Money.from_float(100))
+    item = OrderItem(
+        product_name="Test Product", quantity=1, unit_price=Money.from_float(100)
+    )
     order = Order(order_id=OrderId.generate(999), customer=customer, items=[item])
 
     print("\na) __str__ (representación legible):")
@@ -250,7 +264,9 @@ def demo_dunder_methods() -> None:
 
     print("\nd) __hash__ (para usar en sets/dicts):")
     orders_dict = {order: "Primera", order2: "Segunda", order3: "Tercera"}
-    print(f"   Dict de órdenes: {len(orders_dict)} entradas (order y order2 colisionan)")
+    print(
+        f"   Dict de órdenes: {len(orders_dict)} entradas (order y order2 colisionan)"
+    )
 
     print("\ne) __lt__, __le__ (comparaciones para ordenamiento):")
     orders = [order3, order, order2]

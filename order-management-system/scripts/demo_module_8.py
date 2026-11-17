@@ -114,7 +114,9 @@ def test_get_by_order_id_raises_if_not_found(repo: OrderRepository) -> None:
         repo.get_by_order_id("ORD-99999")
 
 
-def test_list_by_customer_email_returns_orders(repo: OrderRepository, sample_order: Order) -> None:
+def test_list_by_customer_email_returns_orders(
+    repo: OrderRepository, sample_order: Order
+) -> None:
     """list_by_customer_email() devuelve todas las órdenes del cliente."""
     repo.save(sample_order)
 
@@ -129,13 +131,17 @@ def test_list_by_customer_email_returns_orders(repo: OrderRepository, sample_ord
     assert len(orders) == 2
 
 
-def test_list_by_customer_email_returns_empty_for_unknown(repo: OrderRepository) -> None:
+def test_list_by_customer_email_returns_empty_for_unknown(
+    repo: OrderRepository,
+) -> None:
     """list_by_customer_email() devuelve lista vacía si el email no existe."""
     orders = repo.list_by_customer_email("noexiste@example.com")
     assert orders == []
 
 
-def test_list_all_returns_all_orders(repo: OrderRepository, sample_order: Order) -> None:
+def test_list_all_returns_all_orders(
+    repo: OrderRepository, sample_order: Order
+) -> None:
     """list_all() devuelve todas las órdenes guardadas."""
     repo.save(sample_order)
 
@@ -155,7 +161,9 @@ def test_list_all_returns_all_orders(repo: OrderRepository, sample_order: Order)
 # ---------------------------------------------------------------------------
 
 
-def test_update_status_valid_transition(repo: OrderRepository, sample_order: Order) -> None:
+def test_update_status_valid_transition(
+    repo: OrderRepository, sample_order: Order
+) -> None:
     """update_status() aplica transiciones válidas correctamente."""
     repo.save(sample_order)
 
@@ -197,7 +205,9 @@ def test_delete_raises_if_not_found(repo: OrderRepository) -> None:
         repo.delete("ORD-99999")
 
 
-def test_money_reconstructed_correctly(repo: OrderRepository, sample_order: Order) -> None:
+def test_money_reconstructed_correctly(
+    repo: OrderRepository, sample_order: Order
+) -> None:
     """Money se reconstruye correctamente desde las columnas unit_price + currency."""
     repo.save(sample_order)
 

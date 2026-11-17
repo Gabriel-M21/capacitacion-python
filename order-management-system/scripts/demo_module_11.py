@@ -19,28 +19,26 @@ from pathlib import Path
 
 import httpx
 
-from order_management.clients.catalog_client import (
-    CatalogClient,
-    CatalogProductNotFound,
-)
+from order_management.clients.catalog_client import CatalogClient, CatalogProductNotFound
 from order_management.domain.pricing import volume_discount
 
 logging.basicConfig(
-    level=logging.WARNING,          # silenciamos INFO para ver solo la demo
+    level=logging.WARNING,  # silenciamos INFO para ver solo la demo
     format="%(asctime)s | %(levelname)-8s | %(message)s",
     datefmt="%H:%M:%S",
 )
 logger = logging.getLogger(__name__)
 
-SMOCKER_URL  = "http://localhost:8080"
-ORDERS_PATH  = Path("data") / "orders.json"
-MAX_WORKERS  = multiprocessing.cpu_count()
-SEMAPHORE    = 10          # máximo de peticiones HTTP simultáneas
+SMOCKER_URL = "http://localhost:8080"
+ORDERS_PATH = Path("data") / "orders.json"
+MAX_WORKERS = multiprocessing.cpu_count()
+SEMAPHORE = 10  # máximo de peticiones HTTP simultáneas
 
 
 # ---------------------------------------------------------------------------
 # Helpers compartidos
 # ---------------------------------------------------------------------------
+
 
 def load_product_names(path: Path) -> list[str]:
     """Extrae nombres de producto únicos y válidos desde orders.json."""
@@ -61,22 +59,27 @@ def load_orders_items(path: Path) -> list[dict]:
     items = []
     for order in orders:
         order_items = [
-            i for i in order.get("items", [])
+            i
+            for i in order.get("items", [])
             if i.get("product_name", "").strip() and float(i.get("price", 0)) > 0
         ]
         if order_items:
-            items.append({
-                "order_id": order.get("order_id"),
-                "item_count": len(order_items),
-                "total": sum(float(i["price"]) * i.get("quantity", 1)
-                             for i in order_items),
-            })
+            items.append(
+                {
+                    "order_id": order.get("order_id"),
+                    "item_count": len(order_items),
+                    "total": sum(
+                        float(i["price"]) * i.get("quantity", 1) for i in order_items
+                    ),
+                }
+            )
     return items
 
 
 # ---------------------------------------------------------------------------
 # PARTE 1A — Fetcher SÍNCRONO (baseline)
 # ---------------------------------------------------------------------------
+
 
 def fetch_sync(product_names: list[str]) -> list[dict]:
     """
@@ -87,15 +90,18 @@ def fetch_sync(product_names: list[str]) -> list[dict]:
     with httpx.Client(base_url=SMOCKER_URL, timeout=5.0) as client:
         for name in product_names:
             from urllib.parse import quote
+
             try:
                 response = client.get(f"/products/{quote(name, safe='')}")
                 if response.status_code == 200:
                     data = response.json()
-                    results.append({
-                        "product_name": name,
-                        "unit_price": data.get("unit_price"),
-                        "available": data.get("available"),
-                    })
+                    results.append(
+                        {
+                            "product_name": name,
+                            "unit_price": data.get("unit_price"),
+                            "available": data.get("available"),
+                        }
+                    )
             except httpx.RequestError:
                 logger.warning("Error al consultar '%s'", name)
     return results
@@ -104,6 +110,7 @@ def fetch_sync(product_names: list[str]) -> list[dict]:
 # ---------------------------------------------------------------------------
 # PARTE 1B — Fetcher ASÍNCRONO con semáforo
 # ---------------------------------------------------------------------------
+
 
 async def fetch_one(
     client: CatalogClient,
@@ -138,10 +145,7 @@ async def fetch_async(product_names: list[str]) -> list[dict]:
         max_retries=1,
         backoff_factor=0.1,
     ) as client:
-        tasks = [
-            fetch_one(client, name, semaphore)
-            for name in product_names
-        ]
+        tasks = [fetch_one(client, name, semaphore) for name in product_names]
         results = await asyncio.gather(*tasks)
 
     return [r for r in results if r is not None]
@@ -151,24 +155,25 @@ async def fetch_async(product_names: list[str]) -> list[dict]:
 # PARTE 2A — Cálculo CPU-bound SECUENCIAL
 # ---------------------------------------------------------------------------
 
+
 def compute_discount_for_order(order: dict) -> dict:
     """
     Calcula el descuento y el ahorro para una orden.
     Esta función se ejecuta en un proceso separado (debe ser picklable).
     """
     item_count = order["item_count"]
-    total      = Decimal(str(order["total"]))
+    total = Decimal(str(order["total"]))
     discount_pct = volume_discount(item_count)
-    factor       = (Decimal("100") - discount_pct) / Decimal("100")
-    final        = total * factor
-    saving       = total - final
+    factor = (Decimal("100") - discount_pct) / Decimal("100")
+    final = total * factor
+    saving = total - final
     return {
-        "order_id":     order["order_id"],
-        "item_count":   item_count,
-        "total":        float(total),
+        "order_id": order["order_id"],
+        "item_count": item_count,
+        "total": float(total),
         "discount_pct": float(discount_pct),
-        "final":        float(final),
-        "saving":       float(saving),
+        "final": float(final),
+        "saving": float(saving),
     }
 
 
@@ -181,16 +186,14 @@ def compute_sequential(orders: list[dict]) -> list[dict]:
 # PARTE 2B — Cálculo CPU-bound con ProcessPoolExecutor
 # ---------------------------------------------------------------------------
 
+
 def compute_parallel(orders: list[dict]) -> list[dict]:
     """
     Distribuye el cálculo entre MAX_WORKERS procesos.
     Cada proceso recibe un subconjunto de órdenes (chunks).
     """
     chunk_size = max(1, len(orders) // MAX_WORKERS)
-    chunks = [
-        orders[i: i + chunk_size]
-        for i in range(0, len(orders), chunk_size)
-    ]
+    chunks = [orders[i : i + chunk_size] for i in range(0, len(orders), chunk_size)]
 
     results: list[dict] = []
     with ProcessPoolExecutor(max_workers=MAX_WORKERS) as executor:
@@ -204,6 +207,7 @@ def compute_parallel(orders: list[dict]) -> list[dict]:
 # MAIN
 # ---------------------------------------------------------------------------
 
+
 def main() -> None:
     print("\n" + "=" * 70)
     print("MÓDULO 11: CONCURRENCIA Y RENDIMIENTO")
@@ -211,7 +215,7 @@ def main() -> None:
     print("=" * 70)
 
     product_names = load_product_names(ORDERS_PATH)
-    orders        = load_orders_items(ORDERS_PATH)
+    orders = load_orders_items(ORDERS_PATH)
 
     print(f"\n  Productos únicos a consultar : {len(product_names)}")
     print(f"  Órdenes a procesar           : {len(orders)}")
@@ -278,7 +282,9 @@ def main() -> None:
 
     # Muestra primeros 5 descuentos calculados
     print("\n  Muestra (primeras 5 órdenes):")
-    print(f"  {'Orden':<14} {'Items':>5} {'Total':>9} {'Desc%':>6} {'Final':>9} {'Ahorro':>9}")
+    print(
+        f"  {'Orden':<14} {'Items':>5} {'Total':>9} {'Desc%':>6} {'Final':>9} {'Ahorro':>9}"
+    )
     print("  " + "-" * 60)
     for r in par_results[:5]:
         print(
@@ -297,15 +303,22 @@ def main() -> None:
     print(f"\n  {'Estrategia':<35} {'Tiempo':>8}  {'Speedup':>8}")
     print("  " + "-" * 55)
     print(f"  {'HTTP síncrono':<35} {sync_time:>7.3f}s  {'1.0x':>8}")
-    print(f"  {'HTTP asíncrono (semáforo=10)':<35} {async_time:>7.3f}s  {speedup_http:>7.1f}x")
+    print(
+        f"  {'HTTP asíncrono (semáforo=10)':<35} {async_time:>7.3f}s  {speedup_http:>7.1f}x"
+    )
     print(f"  {'CPU secuencial (1 proceso)':<35} {seq_time:>7.3f}s  {'1.0x':>8}")
-    print(f"  {'CPU paralelo ({} procesos)':<35} {par_time:>7.3f}s  {speedup_cpu:>7.1f}x".format(MAX_WORKERS))
+    print(
+        f"  {'CPU paralelo ({} procesos)':<35} {par_time:>7.3f}s  {speedup_cpu:>7.1f}x".format(
+            MAX_WORKERS
+        )
+    )
 
     # ── GIL — nota educativa ───────────────────────────────────────────────
     print("\n" + "=" * 70)
     print("NOTA: EL GIL Y CUÁNDO IMPORTA")
     print("=" * 70)
-    print("""
+    print(
+        """
   • asyncio (I/O-bound)      → el GIL no es problema: mientras una
     corrutina espera la respuesta HTTP, otras corrutinas corren.
     Por eso el fetcher asíncrono es mucho más rápido.
@@ -319,7 +332,8 @@ def main() -> None:
 
   • threading (CPU-bound)    → el GIL impide paralelismo real;
     los hilos se turnan, no corren simultáneamente. Evitar para CPU-bound.
-    """)
+    """
+    )
 
     print("=" * 70)
     print("✓ DEMO MÓDULO 11 COMPLETADO")

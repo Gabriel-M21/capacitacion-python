@@ -70,7 +70,9 @@ class CatalogClient:
                 response = await self._client.get(url)
 
                 if response.status_code == 404:
-                    raise CatalogProductNotFound(f"No existe el producto '{product_id}'")
+                    raise CatalogProductNotFound(
+                        f"No existe el producto '{product_id}'"
+                    )
 
                 response.raise_for_status()
                 return CatalogProductOut.model_validate(response.json())
@@ -112,7 +114,9 @@ class CatalogClient:
             try:
                 async with self._client.stream("GET", url) as response:
                     if response.status_code == 404:
-                        raise CatalogProductNotFound(f"No se encontró el recurso '{url}'")
+                        raise CatalogProductNotFound(
+                            f"No se encontró el recurso '{url}'"
+                        )
 
                     response.raise_for_status()
 
@@ -142,7 +146,8 @@ class CatalogClient:
 
                 if attempt >= self.max_retries:
                     raise CatalogRequestError(
-                        f"Falló la descarga de '{url}' " f"después de {attempt + 1} intentos"
+                        f"Falló la descarga de '{url}' "
+                        f"después de {attempt + 1} intentos"
                     ) from exc
 
                 await self._wait_before_retry(attempt, url, str(exc))

@@ -68,7 +68,9 @@ class OrderProcessor:
             return data
 
         except json.JSONDecodeError as e:
-            raise json.JSONDecodeError(f"Error al parsear JSON: {e.msg}", e.doc, e.pos) from e
+            raise json.JSONDecodeError(
+                f"Error al parsear JSON: {e.msg}", e.doc, e.pos
+            ) from e
         except UnicodeDecodeError as e:
             raise ValueError(f"Error de codificación en el archivo: {e}") from e
 
@@ -106,7 +108,10 @@ class OrderProcessor:
         # Validar status contra enum
         valid_statuses = {s.value for s in OrderStatus}
         if order["status"] not in valid_statuses:
-            return False, f"status inválido: {order['status']}. Válidos: {valid_statuses}"
+            return (
+                False,
+                f"status inválido: {order['status']}. Válidos: {valid_statuses}",
+            )
 
         # Validar items
         if not isinstance(order["items"], list) or len(order["items"]) == 0:
@@ -251,7 +256,9 @@ class OrderProcessor:
             is_valid, error_msg = self.validate_order(order)
 
             if not is_valid:
-                invalid_orders.append({"index": idx, "error": error_msg, "order": order})
+                invalid_orders.append(
+                    {"index": idx, "error": error_msg, "order": order}
+                )
                 if not skip_invalid:
                     raise ValueError(f"Orden {idx} inválida: {error_msg}")
                 continue
@@ -279,7 +286,9 @@ class OrderProcessor:
             "invalid_orders": len(invalid_orders),
             "total_revenue": round(self.total_revenue, 2),
             "average_order_value": (
-                round(self.total_revenue / self.total_orders, 2) if self.total_orders > 0 else 0.0
+                round(self.total_revenue / self.total_orders, 2)
+                if self.total_orders > 0
+                else 0.0
             ),
             "unique_customers": len(self.unique_customers),
             "orders_by_status": self.orders_by_status,
@@ -304,11 +313,15 @@ class OrderProcessor:
             customer_totals[customer] = customer_totals.get(customer, 0.0) + total
 
         # Convertir a lista de tuplas y ordenar
-        sorted_customers = sorted(customer_totals.items(), key=lambda x: x[1], reverse=True)
+        sorted_customers = sorted(
+            customer_totals.items(), key=lambda x: x[1], reverse=True
+        )
 
         return sorted_customers[:top_n]
 
-    def export_summary_to_json(self, filepath: Path | str, stats: dict[str, Any]) -> None:
+    def export_summary_to_json(
+        self, filepath: Path | str, stats: dict[str, Any]
+    ) -> None:
         """
         Exporta estadísticas a archivo JSON.
 

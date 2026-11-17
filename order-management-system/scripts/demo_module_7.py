@@ -147,7 +147,9 @@ async def main() -> None:
         results = await fetch_catalog_products(client, items)
 
         # Mostrar comparación
-        print(f"\n{'Orden':<14} {'Producto':<35} {'Orden':>8} {'Catálogo':>9}  Diferencia")
+        print(
+            f"\n{'Orden':<14} {'Producto':<35} {'Orden':>8} {'Catálogo':>9}  Diferencia"
+        )
         print("-" * 90)
         for r in results:
             avail = "✓" if r["available"] else "✗"

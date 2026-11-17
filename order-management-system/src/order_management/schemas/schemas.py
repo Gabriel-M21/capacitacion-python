@@ -107,8 +107,16 @@ class OrderIn(BaseModel):
                     "phone": "+52 55 1234 5678",
                 },
                 "items": [
-                    {"product_name": "Laptop Dell XPS 15", "quantity": 1, "unit_price": 1299.99},
-                    {"product_name": "Mouse Logitech", "quantity": 2, "unit_price": 29.99},
+                    {
+                        "product_name": "Laptop Dell XPS 15",
+                        "quantity": 1,
+                        "unit_price": 1299.99,
+                    },
+                    {
+                        "product_name": "Mouse Logitech",
+                        "quantity": 2,
+                        "unit_price": 29.99,
+                    },
                 ],
                 "notes": "Entrega urgente",
             }

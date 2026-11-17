@@ -64,7 +64,9 @@ class Timer:
                 f"{self.operation_name} falló después de {self.elapsed_time:.4f}s: {exc_val}"
             )
         else:
-            logger.info(f"{self.operation_name} completado en {self.elapsed_time:.4f} segundos")
+            logger.info(
+                f"{self.operation_name} completado en {self.elapsed_time:.4f} segundos"
+            )
 
 
 class OrderProcessingContext:
@@ -117,7 +119,9 @@ class OrderProcessingContext:
 
         if exc_type is not None:
             logger.error(f"Error en procesamiento: {exc_val}")
-            logger.info(f"Procesadas: {len(self.processed)}, Fallidas: {len(self.failed)}")
+            logger.info(
+                f"Procesadas: {len(self.processed)}, Fallidas: {len(self.failed)}"
+            )
         else:
             logger.info(
                 f"Procesamiento completado en {elapsed:.4f}s: "

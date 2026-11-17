@@ -71,7 +71,9 @@ def main() -> None:
 
     # 3. Filtrar órdenes por estado (solo válidas)
     print("\nFILTRADO POR ESTADO 'confirmed' (solo válidas):")
-    confirmed_orders = processor.filter_orders_by_status(processor.processed_orders, "confirmed")
+    confirmed_orders = processor.filter_orders_by_status(
+        processor.processed_orders, "confirmed"
+    )
     print(f"   Encontradas: {len(confirmed_orders)} órdenes")
     for order in confirmed_orders:
         print(f"   - {order['order_id']}: {order['customer_name']}")
@@ -79,7 +81,9 @@ def main() -> None:
     # 4. Filtrar por total mínimo
     min_total = 100.0
     print(f"\nÓRDENES CON TOTAL >= ${min_total}:")
-    high_value_orders = processor.filter_orders_by_min_total(processor.processed_orders, min_total)
+    high_value_orders = processor.filter_orders_by_min_total(
+        processor.processed_orders, min_total
+    )
     for order in high_value_orders:
         print(f"   - {order['order_id']}: ${order['total']:,.2f} ({order['category']})")
 

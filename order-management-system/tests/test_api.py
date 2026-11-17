@@ -163,7 +163,9 @@ def test_update_status_valid(client: TestClient, auth_headers: dict) -> None:
     assert response.json()["status"] == "confirmed"
 
 
-def test_update_status_invalid_transition(client: TestClient, auth_headers: dict) -> None:
+def test_update_status_invalid_transition(
+    client: TestClient, auth_headers: dict
+) -> None:
     create = client.post("/orders", json=ORDER_PAYLOAD, headers=auth_headers)
     order_id = create.json()["order_id"]
     response = client.patch(

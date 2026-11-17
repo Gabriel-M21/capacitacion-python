@@ -138,7 +138,9 @@ def validate_order_data(**validators: Callable[[Any], bool]) -> Callable:
                 if param_name in bound_args.arguments:
                     value = bound_args.arguments[param_name]
                     if not validator(value):
-                        raise ValueError(f"Validación falló para '{param_name}': {value}")
+                        raise ValueError(
+                            f"Validación falló para '{param_name}': {value}"
+                        )
 
             return func(*args, **kwargs)
 
