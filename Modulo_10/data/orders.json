@@ -1,0 +1,383 @@
+[
+  {
+    "order_id": "ORD-001",
+    "customer_name": "Juan Pérez",
+    "email": "juan.perez@example.com",
+    "status": "confirmed",
+    "created_at": "2024-01-10T09:15:00",
+    "items": [
+      {"product_name": "Laptop Dell XPS 15", "quantity": 1, "price": 1299.99},
+      {"product_name": "Mouse Logitech MX Master", "quantity": 1, "price": 99.99}
+    ]
+  },
+  {
+    "order_id": "ORD-002",
+    "customer_name": "María García",
+    "email": "maria.garcia@example.com",
+    "status": "pending",
+    "created_at": "2024-01-11T10:30:00",
+    "items": [
+      {"product_name": "Teclado mecánico", "quantity": 2, "price": 129.50}
+    ]
+  },
+  {
+    "order_id": "ORD-003",
+    "customer_name": "Juan Pérez",
+    "email": "juan.perez@example.com",
+    "status": "shipped",
+    "created_at": "2024-01-12T08:00:00",
+    "items": [
+      {"product_name": "Monitor 4K", "quantity": 1, "price": 599.00},
+      {"product_name": "Cable HDMI", "quantity": 2, "price": 15.99}
+    ]
+  },
+  {
+    "order_id": "ORD-004",
+    "customer_name": "Carlos López",
+    "email": "carlos.lopez@example.com",
+    "status": "delivered",
+    "created_at": "2024-01-13T14:20:00",
+    "items": [
+      {"product_name": "SSD 1TB", "quantity": 1, "price": 89.99}
+    ]
+  },
+  {
+    "order_id": "ORD-005",
+    "customer_name": "Juan Pérez",
+    "email": "juan.perez@example.com",
+    "status": "confirmed",
+    "created_at": "2024-01-14T11:05:00",
+    "items": [
+      {"product_name": "Webcam Logitech C920", "quantity": 1, "price": 89.99},
+      {"product_name": "Auriculares Sony WH-1000XM5", "quantity": 1, "price": 349.99}
+    ]
+  },
+  {
+    "order_id": "ORD-006",
+    "customer_name": "María García",
+    "email": "maria.garcia@example.com",
+    "status": "delivered",
+    "created_at": "2024-01-15T16:45:00",
+    "items": [
+      {"product_name": "Router WiFi 6", "quantity": 1, "price": 179.99}
+    ]
+  },
+  {
+    "order_id": "ORD-007",
+    "customer_name": "Ana Martínez",
+    "email": "ana.martinez@example.com",
+    "status": "confirmed",
+    "created_at": "2024-01-16T09:30:00",
+    "items": [
+      {"product_name": "Tablet iPad Air", "quantity": 1, "price": 649.00},
+      {"product_name": "Apple Pencil", "quantity": 1, "price": 129.00},
+      {"product_name": "Funda Smart Folio", "quantity": 1, "price": 79.00}
+    ]
+  },
+  {
+    "order_id": "ORD-008",
+    "customer_name": "Carlos López",
+    "email": "carlos.lopez@example.com",
+    "status": "shipped",
+    "created_at": "2024-01-17T13:10:00",
+    "items": [
+      {"product_name": "Disco duro externo 4TB", "quantity": 1, "price": 139.99}
+    ]
+  },
+  {
+    "order_id": "ORD-009",
+    "customer_name": "Juan Pérez",
+    "email": "juan.perez@example.com",
+    "status": "delivered",
+    "created_at": "2024-01-18T10:00:00",
+    "items": [
+      {"product_name": "Dock USB-C", "quantity": 1, "price": 149.99}
+    ]
+  },
+  {
+    "order_id": "ORD-010",
+    "customer_name": "Ana Martínez",
+    "email": "ana.martinez@example.com",
+    "status": "pending",
+    "created_at": "2024-01-19T15:20:00",
+    "items": [
+      {"product_name": "AirPods Pro", "quantity": 1, "price": 249.00}
+    ]
+  },
+  {
+    "order_id": "ORD-011",
+    "customer_name": "Roberto Silva",
+    "email": "roberto.silva@example.com",
+    "status": "confirmed",
+    "created_at": "2024-01-20T08:45:00",
+    "items": [
+      {"product_name": "Impresora láser", "quantity": 1, "price": 299.99},
+      {"product_name": "Tóner compatible", "quantity": 2, "price": 45.00}
+    ]
+  },
+  {
+    "order_id": "ORD-012",
+    "customer_name": "María García",
+    "email": "maria.garcia@example.com",
+    "status": "shipped",
+    "created_at": "2024-01-21T12:30:00",
+    "items": [
+      {"product_name": "Monitor curvo 27\"", "quantity": 1, "price": 329.99}
+    ]
+  },
+  {
+    "order_id": "ORD-013",
+    "customer_name": "Juan Pérez",
+    "email": "juan.perez@example.com",
+    "status": "confirmed",
+    "created_at": "2024-01-22T09:00:00",
+    "items": [
+      {"product_name": "Teclado inalámbrico", "quantity": 1, "price": 79.99},
+      {"product_name": "Mouse vertical ergonómico", "quantity": 1, "price": 59.99}
+    ]
+  },
+  {
+    "order_id": "ORD-014",
+    "customer_name": "Ana Martínez",
+    "email": "ana.martinez@example.com",
+    "status": "delivered",
+    "created_at": "2024-01-23T14:00:00",
+    "items": [
+      {"product_name": "Cargador rápido 65W", "quantity": 2, "price": 34.99}
+    ]
+  },
+  {
+    "order_id": "ORD-015",
+    "customer_name": "Carlos López",
+    "email": "carlos.lopez@example.com",
+    "status": "pending",
+    "created_at": "2024-01-24T11:30:00",
+    "items": [
+      {"product_name": "Switch 8 puertos", "quantity": 1, "price": 49.99}
+    ]
+  },
+  {
+    "order_id": "ORD-016",
+    "customer_name": "Roberto Silva",
+    "email": "roberto.silva@example.com",
+    "status": "confirmed",
+    "created_at": "2024-01-25T10:15:00",
+    "items": [
+      {"product_name": "Raspberry Pi 5", "quantity": 1, "price": 89.99},
+      {"product_name": "Fuente de poder 27W", "quantity": 1, "price": 15.99},
+      {"product_name": "MicroSD 128GB", "quantity": 2, "price": 19.99}
+    ]
+  },
+  {
+    "order_id": "ORD-017",
+    "customer_name": "Laura Gómez",
+    "email": "laura.gomez@example.com",
+    "status": "pending",
+    "created_at": "2024-01-26T09:45:00",
+    "items": [
+      {"product_name": "iPhone 15 Pro", "quantity": 1, "price": 1199.99},
+      {"product_name": "Funda MagSafe", "quantity": 1, "price": 49.99}
+    ]
+  },
+  {
+    "order_id": "ORD-018",
+    "customer_name": "Laura Gómez",
+    "email": "laura.gomez@example.com",
+    "status": "confirmed",
+    "created_at": "2024-01-27T08:30:00",
+    "items": [
+      {"product_name": "MacBook Air M3", "quantity": 1, "price": 1299.99},
+      {"product_name": "Cable USB-C 2m", "quantity": 2, "price": 24.99}
+    ]
+  },
+  {
+    "order_id": "ORD-019",
+    "customer_name": "Pedro Ramírez",
+    "email": "pedro.ramirez@example.com",
+    "status": "shipped",
+    "created_at": "2024-01-28T13:00:00",
+    "items": [
+      {"product_name": "Samsung Galaxy S24", "quantity": 1, "price": 999.99},
+      {"product_name": "Cargador inalámbrico", "quantity": 1, "price": 39.99}
+    ]
+  },
+  {
+    "order_id": "ORD-020",
+    "customer_name": "Pedro Ramírez",
+    "email": "pedro.ramirez@example.com",
+    "status": "delivered",
+    "created_at": "2024-01-29T10:30:00",
+    "items": [
+      {"product_name": "Smart TV 55\" 4K", "quantity": 1, "price": 649.99},
+      {"product_name": "Soporte de pared TV", "quantity": 1, "price": 34.99},
+      {"product_name": "Cable HDMI 2.1", "quantity": 2, "price": 22.99}
+    ]
+  },
+  {
+    "order_id": "ORD-021",
+    "customer_name": "Ana Martínez",
+    "email": "ana.martinez@example.com",
+    "status": "confirmed",
+    "created_at": "2024-01-30T15:00:00",
+    "items": [
+      {"product_name": "Kindle Paperwhite", "quantity": 1, "price": 139.99}
+    ]
+  },
+  {
+    "order_id": "ORD-022",
+    "customer_name": "Carlos López",
+    "email": "carlos.lopez@example.com",
+    "status": "pending",
+    "created_at": "2024-01-31T09:00:00",
+    "items": [
+      {"product_name": "Consola PS5", "quantity": 1, "price": 499.99},
+      {"product_name": "Control DualSense extra", "quantity": 1, "price": 69.99},
+      {"product_name": "Juego FIFA 2025", "quantity": 2, "price": 59.99}
+    ]
+  },
+  {
+    "order_id": "ORD-023",
+    "customer_name": "María García",
+    "email": "maria.garcia@example.com",
+    "status": "shipped",
+    "created_at": "2024-02-01T11:00:00",
+    "items": [
+      {"product_name": "Silla ergonómica", "quantity": 1, "price": 449.99}
+    ]
+  },
+  {
+    "order_id": "ORD-024",
+    "customer_name": "Juan Pérez",
+    "email": "juan.perez@example.com",
+    "status": "confirmed",
+    "created_at": "2024-02-02T08:00:00",
+    "items": [
+      {"product_name": "Escritorio de pie", "quantity": 1, "price": 599.99},
+      {"product_name": "Alfombra antifatiga", "quantity": 1, "price": 49.99}
+    ]
+  },
+  {
+    "order_id": "ORD-025",
+    "customer_name": "Roberto Silva",
+    "email": "roberto.silva@example.com",
+    "status": "delivered",
+    "created_at": "2024-02-03T14:30:00",
+    "items": [
+      {"product_name": "NAS Synology 2 bahías", "quantity": 1, "price": 299.99},
+      {"product_name": "Disco duro 4TB NAS", "quantity": 2, "price": 119.99}
+    ]
+  },
+  {
+    "order_id": "ORD-026",
+    "customer_name": "Laura Gómez",
+    "email": "laura.gomez@example.com",
+    "status": "delivered",
+    "created_at": "2024-02-04T09:00:00",
+    "items": [
+      {"product_name": "iPad Pro 12.9\"", "quantity": 1, "price": 1099.99},
+      {"product_name": "Magic Keyboard iPad", "quantity": 1, "price": 299.99}
+    ]
+  },
+  {
+    "order_id": "ORD-027",
+    "customer_name": "Pedro Ramírez",
+    "email": "pedro.ramirez@example.com",
+    "status": "confirmed",
+    "created_at": "2024-02-05T10:45:00",
+    "items": [
+      {"product_name": "Proyector 4K", "quantity": 1, "price": 799.99},
+      {"product_name": "Pantalla proyección 100\"", "quantity": 1, "price": 149.99},
+      {"product_name": "Cable HDMI 5m", "quantity": 1, "price": 29.99}
+    ]
+  },
+  {
+    "order_id": "ORD-028",
+    "customer_name": "Roberto Silva",
+    "email": "roberto.silva@example.com",
+    "status": "shipped",
+    "created_at": "2024-02-06T13:30:00",
+    "items": [
+      {"product_name": "Switch administrable 24p", "quantity": 1, "price": 349.99},
+      {"product_name": "Cable de red Cat6 50m", "quantity": 2, "price": 29.99}
+    ]
+  },
+  {
+    "order_id": "ORD-029",
+    "customer_name": "Ana Martínez",
+    "email": "ana.martinez@example.com",
+    "status": "pending",
+    "created_at": "2024-02-07T08:15:00",
+    "items": [
+      {"product_name": "Cámara mirrorless Sony A7IV", "quantity": 1, "price": 2499.99},
+      {"product_name": "Lente 24-70mm f/2.8", "quantity": 1, "price": 1299.99},
+      {"product_name": "Batería extra NP-FZ100", "quantity": 2, "price": 79.99}
+    ]
+  },
+  {
+    "order_id": "ORD-030",
+    "customer_name": "Juan Pérez",
+    "email": "juan.perez@example.com",
+    "status": "delivered",
+    "created_at": "2024-02-08T16:00:00",
+    "items": [
+      {"product_name": "Micrófono USB Blue Yeti", "quantity": 1, "price": 129.99},
+      {"product_name": "Brazo articulado micrófono", "quantity": 1, "price": 49.99},
+      {"product_name": "Filtro antipop", "quantity": 1, "price": 14.99}
+    ]
+  },
+  {
+    "order_id": "ORD-INVALID-1",
+    "customer_name": "Cliente Sin Items",
+    "status": "pending",
+    "created_at": "2024-02-09T10:00:00",
+    "items": []
+  },
+  {
+    "order_id": "ORD-INVALID-2",
+    "customer_name": "Cliente Sin Email",
+    "status": "confirmed",
+    "created_at": "2024-02-09T10:05:00",
+    "items": [
+      {"product_name": "Producto X", "quantity": 1, "price": 100.00}
+    ]
+  },
+  {
+    "order_id": "ORD-INVALID-3",
+    "customer_name": "Cliente Precio Negativo",
+    "email": "cliente@test.com",
+    "status": "pending",
+    "created_at": "2024-02-09T10:10:00",
+    "items": [
+      {"product_name": "Producto Y", "quantity": 1, "price": -50.00}
+    ]
+  },
+  {
+    "order_id": "ORD-INVALID-4",
+    "customer_name": "Cliente Cantidad Cero",
+    "email": "cliente@test.com",
+    "status": "confirmed",
+    "created_at": "2024-02-09T10:15:00",
+    "items": [
+      {"product_name": "Producto Z", "quantity": 0, "price": 25.00}
+    ]
+  },
+  {
+    "order_id": "ORD-INVALID-5",
+    "customer_name": "",
+    "email": "cliente@test.com",
+    "status": "pending",
+    "created_at": "2024-02-09T10:20:00",
+    "items": [
+      {"product_name": "Producto W", "quantity": 1, "price": 10.00}
+    ]
+  },
+  {
+    "order_id": "ORD-INVALID-6",
+    "customer_name": "Cliente Sin Estado",
+    "email": "cliente@test.com",
+    "created_at": "2024-02-09T10:25:00",
+    "items": [
+      {"product_name": "Producto V", "quantity": 1, "price": 30.00}
+    ]
+  }
+]
