@@ -215,7 +215,7 @@
 
 ---
 
-### Módulo 13. Patrones de diseño
+### Módulo 13. Patrones de diseño LISTO
 
 **Contenidos clave:**
 - Creacionales: Factory, Abstract Factory, Builder, Singleton (cuándo evitarlo)
@@ -232,7 +232,7 @@
 
 ---
 
-### Módulo 14. Ciencia de datos
+### Módulo 14. Ciencia de datos LISTO
 
 **Contenidos clave:**
 - NumPy, Polars y Pandas

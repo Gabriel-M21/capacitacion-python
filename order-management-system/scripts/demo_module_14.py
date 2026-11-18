@@ -17,18 +17,18 @@ import numpy as np
 import pandas as pd
 import polars as pl
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import classification_report, confusion_matrix
+from sklearn.metrics import classification_report
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
 
-from order_management.infrastructure.db.base import Base
+from order_management.domain.value_objects import OrderId, OrderStatus
 from order_management.infrastructure.db import models  # noqa: F401
-from order_management.infrastructure.db.session import build_engine
+from order_management.infrastructure.db.base import Base
 from order_management.infrastructure.db.repositories.order_repository import (
     OrderRepository,
 )
+from order_management.infrastructure.db.session import build_engine
 from order_management.services.order_builder import OrderBuilder
-from order_management.domain.value_objects import OrderId, OrderStatus
 
 warnings.filterwarnings("ignore")
 logging.basicConfig(
@@ -56,7 +56,7 @@ def ingest_with_pandas(path: Path) -> pd.DataFrame:
     df = pd.read_csv(path, encoding="utf-8")
     print(f"\n  Filas cargadas    : {len(df)}")
     print(f"  Columnas          : {list(df.columns)}")
-    print(f"\n  Tipos de datos:")
+    print("\n  Tipos de datos:")
     for col, dtype in df.dtypes.items():
         print(f"    {col:<20} {dtype}")
 
@@ -86,11 +86,11 @@ def ingest_with_pandas(path: Path) -> pd.DataFrame:
     order_items  = df.groupby("order_id")["product_name"].count().rename("item_count")
     df = df.merge(order_totals, on="order_id").merge(order_items, on="order_id")
 
-    print(f"\n  Distribución de estados:")
+    print("\n  Distribución de estados:")
     for status, count in df.drop_duplicates("order_id")["status"].value_counts().items():
         print(f"    {status:<12} : {count}")
 
-    print(f"\n  Estadísticas de order_total:")
+    print("\n  Estadísticas de order_total:")
     stats = df.drop_duplicates("order_id")["order_total"].describe()
     print(f"    media  : ${stats['mean']:.2f}")
     print(f"    mediana: ${stats['50%']:.2f}")
@@ -113,7 +113,7 @@ def ingest_with_polars(path: Path) -> pl.DataFrame:
     print(f"\n  Filas cargadas    : {len(df)}")
     print(f"  Columnas          : {df.columns}")
 
-    print(f"\n  Schema:")
+    print("\n  Schema:")
     for col, dtype in df.schema.items():
         print(f"    {col:<20} {dtype}")
 
@@ -155,7 +155,7 @@ def ingest_with_polars(path: Path) -> pl.DataFrame:
     ])
     df = df.join(order_agg, on="order_id")
 
-    print(f"\n  Distribución de estados (Polars):")
+    print("\n  Distribución de estados (Polars):")
     status_counts = (
         df.unique("order_id")
         .group_by("status")
@@ -165,7 +165,7 @@ def ingest_with_polars(path: Path) -> pl.DataFrame:
     for row in status_counts.iter_rows(named=True):
         print(f"    {row['status']:<12} : {row['count']}")
 
-    print(f"\n  Top 5 productos por revenue:")
+    print("\n  Top 5 productos por revenue:")
     top = (
         df.group_by("product_name")
         .agg(pl.col("subtotal").sum().alias("revenue"))
@@ -230,7 +230,7 @@ def train_classifier(df: pd.DataFrame) -> tuple:
     accuracy = (y_pred == y_test).mean()
     print(f"\n  Accuracy: {accuracy:.3f} ({accuracy:.1%})")
 
-    print(f"\n  Reporte de clasificación:")
+    print("\n  Reporte de clasificación:")
     report = classification_report(
         y_test, y_pred,
         target_names=le.classes_,
@@ -240,9 +240,9 @@ def train_classifier(df: pd.DataFrame) -> tuple:
         if line.strip():
             print(f"    {line}")
 
-    print(f"\n  Importancia de features:")
+    print("\n  Importancia de features:")
     for feat, imp in sorted(
-        zip(feature_cols, clf.feature_importances_),
+        zip(feature_cols, clf.feature_importances_, strict=False),
         key=lambda x: x[1],
         reverse=True,
     ):
@@ -417,7 +417,7 @@ def fill_database(df: pd.DataFrame, max_orders: int = 50) -> None:
         repo    = OrderRepository(session)
         all_ord = repo.list_all()
         print(f"  Total en DB        : {len(all_ord)} órdenes")
-        print(f"\n  Muestra (primeras 5):")
+        print("\n  Muestra (primeras 5):")
         for o in all_ord[:5]:
             print(f"    {o.order_id}  {o.customer.name:<20}  {o.total}  {o.status.value}")
 
