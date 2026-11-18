@@ -198,7 +198,15 @@ def train_classifier(df: pd.DataFrame) -> tuple:
 
     # Features a nivel de orden (una fila por orden)
     order_df = df.drop_duplicates("order_id")[
-        ["order_id", "status", "order_total", "item_count", "hour", "day_of_week", "month"]
+        [
+            "order_id",
+            "status",
+            "order_total",
+            "item_count",
+            "hour",
+            "day_of_week",
+            "month",
+        ]
     ].copy()
 
     print(f"\n  Órdenes únicas para entrenamiento: {len(order_df)}")
@@ -476,11 +484,41 @@ def main() -> None:
 
     # 4. Inferencia con ejemplos nuevos
     examples = [
-        {"order_total": 1500.0, "item_count": 2, "hour": 10, "day_of_week": 1, "month": 3},
-        {"order_total": 50.0, "item_count": 1, "hour": 20, "day_of_week": 5, "month": 12},
-        {"order_total": 350.0, "item_count": 3, "hour": 14, "day_of_week": 2, "month": 6},
-        {"order_total": 2500.0, "item_count": 4, "hour": 9, "day_of_week": 0, "month": 1},
-        {"order_total": 100.0, "item_count": 1, "hour": 18, "day_of_week": 4, "month": 11},
+        {
+            "order_total": 1500.0,
+            "item_count": 2,
+            "hour": 10,
+            "day_of_week": 1,
+            "month": 3,
+        },
+        {
+            "order_total": 50.0,
+            "item_count": 1,
+            "hour": 20,
+            "day_of_week": 5,
+            "month": 12,
+        },
+        {
+            "order_total": 350.0,
+            "item_count": 3,
+            "hour": 14,
+            "day_of_week": 2,
+            "month": 6,
+        },
+        {
+            "order_total": 2500.0,
+            "item_count": 4,
+            "hour": 9,
+            "day_of_week": 0,
+            "month": 1,
+        },
+        {
+            "order_total": 100.0,
+            "item_count": 1,
+            "hour": 18,
+            "day_of_week": 4,
+            "month": 11,
+        },
     ]
     load_and_infer(examples)
 

@@ -126,9 +126,7 @@ def test_lsp_mismo_resultado_con_memoria_y_json(valid_orders, tmp_path):
     # Con JsonFile (escribe ordenes en disco temporal)
     orders_file = tmp_path / "orders.json"
     summary_file = tmp_path / "summary.json"
-    orders_file.write_text(
-        json.dumps(valid_orders, ensure_ascii=False), encoding="utf-8"
-    )
+    orders_file.write_text(json.dumps(valid_orders, ensure_ascii=False), encoding="utf-8")
     repo_json = JsonFileOrderRepository(
         orders_path=orders_file,
         summary_path=summary_file,
@@ -137,9 +135,7 @@ def test_lsp_mismo_resultado_con_memoria_y_json(valid_orders, tmp_path):
 
     # El servicio debe producir el mismo resultado con ambas implementaciones
     assert result_mem["valid_orders"] == result_json["valid_orders"]
-    assert result_mem["total_revenue"] == pytest.approx(
-        result_json["total_revenue"], rel=1e-2
-    )
+    assert result_mem["total_revenue"] == pytest.approx(result_json["total_revenue"], rel=1e-2)
     assert result_mem["orders_by_status"] == result_json["orders_by_status"]
 
 
@@ -147,9 +143,7 @@ def test_lsp_json_repo_persiste_en_disco(valid_orders, tmp_path):
     """JsonFileOrderRepository escribe el resumen en disco correctamente."""
     orders_file = tmp_path / "orders.json"
     summary_file = tmp_path / "output" / "summary.json"
-    orders_file.write_text(
-        json.dumps(valid_orders, ensure_ascii=False), encoding="utf-8"
-    )
+    orders_file.write_text(json.dumps(valid_orders, ensure_ascii=False), encoding="utf-8")
 
     repo = JsonFileOrderRepository(
         orders_path=orders_file,
@@ -240,9 +234,7 @@ def test_srp_validator_rechaza_nombre_vacio():
         ),
     ],
 )
-def test_srp_validator_detecta_errores_especificos(
-    bad_order: dict, expected_error: str
-) -> None:
+def test_srp_validator_detecta_errores_especificos(bad_order: dict, expected_error: str) -> None:
     """OrderValidator detecta cada tipo de error de forma independiente."""
     validator = OrderValidator()
     ok, msg = validator.validate(bad_order)

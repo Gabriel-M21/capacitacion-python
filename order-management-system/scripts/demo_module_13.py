@@ -144,8 +144,16 @@ def demo_adapter() -> None:
     adapter = ExternalPricingAdapter()
 
     cases = [
-        {"label": "Laura Gómez (GOLD)", "email": "laura.gomez@example.com", "total": 600.0},
-        {"label": "Juan Pérez (SILVER)", "email": "juan.perez@example.com", "total": 300.0},
+        {
+            "label": "Laura Gómez (GOLD)",
+            "email": "laura.gomez@example.com",
+            "total": 600.0,
+        },
+        {
+            "label": "Juan Pérez (SILVER)",
+            "email": "juan.perez@example.com",
+            "total": 300.0,
+        },
         {"label": "Desconocido (ninguno)", "email": "nuevo@empresa.mx", "total": 50.0},
     ]
 
@@ -156,7 +164,11 @@ def demo_adapter() -> None:
         order = {
             "email": case["email"],
             "items": [
-                {"product_name": "Producto", "quantity": 3, "price": float(str(case["total"])) / 3}
+                {
+                    "product_name": "Producto",
+                    "quantity": 3,
+                    "price": float(str(case["total"])) / 3,
+                }
             ],
         }
         discount = adapter.calculate_discount(order)

@@ -25,8 +25,7 @@ from order_management.infrastructure.adapters.pricing_adapter import (
     ExternalPricingAPI,
 )
 from order_management.schemas.schemas import CatalogProductOut
-from order_management.services.order_builder import OrderBuildError, OrderBuilder
-
+from order_management.services.order_builder import OrderBuilder, OrderBuildError
 
 # ---------------------------------------------------------------------------
 # Fixtures compartidos
@@ -48,8 +47,7 @@ def order_6_items() -> dict[str, Any]:
         "order_id": "ORD-002",
         "email": "maria.garcia@example.com",
         "items": [
-            {"product_name": f"Producto {i}", "quantity": 1, "price": 50.0}
-            for i in range(6)
+            {"product_name": f"Producto {i}", "quantity": 1, "price": 50.0} for i in range(6)
         ],
     }
 
@@ -83,12 +81,12 @@ def test_no_discount_strategy_devuelve_cero(order_1_item):
 @pytest.mark.parametrize(
     "quantities, expected",
     [
-        ([1],             Decimal("0")),   # 1 item → 0%
-        ([1, 1],          Decimal("0")),   # 2 items → 0%
-        ([1, 1, 1],       Decimal("5")),   # 3 items → 5%
-        ([2, 2, 2],       Decimal("10")),  # 6 qty en 3 productos → 10%
-        ([1] * 6,         Decimal("10")),  # 6 items → 10%
-        ([1] * 10,        Decimal("15")),  # 10 items → 15%
+        ([1], Decimal("0")),  # 1 item → 0%
+        ([1, 1], Decimal("0")),  # 2 items → 0%
+        ([1, 1, 1], Decimal("5")),  # 3 items → 5%
+        ([2, 2, 2], Decimal("10")),  # 6 qty en 3 productos → 10%
+        ([1] * 6, Decimal("10")),  # 6 items → 10%
+        ([1] * 10, Decimal("15")),  # 10 items → 15%
     ],
 )
 def test_volume_discount_strategy_tramos(quantities: list, expected: Decimal):
@@ -131,9 +129,9 @@ def test_vip_discount_strategy_cliente_no_vip(order_1_item):
 
 def test_max_discount_strategy_elige_maximo(order_6_items):
     strategies: list[PricingStrategy] = [
-        NoDiscountStrategy(),           # → 0%
+        NoDiscountStrategy(),  # → 0%
         SeasonalDiscountStrategy(Decimal("8")),  # → 8%
-        VolumeDiscountStrategy(),       # → 10% (6 items)
+        VolumeDiscountStrategy(),  # → 10% (6 items)
     ]
     strategy = MaxDiscountStrategy(strategies=strategies)
     assert strategy.calculate_discount(order_6_items) == Decimal("10")
@@ -167,18 +165,15 @@ def test_builder_construye_orden_completa():
 
 
 def test_builder_sin_cliente_lanza_error():
-    builder = (
-        OrderBuilder(order_id=OrderId.generate(1))
-        .add_item("Laptop", quantity=1, unit_price=999.0)
+    builder = OrderBuilder(order_id=OrderId.generate(1)).add_item(
+        "Laptop", quantity=1, unit_price=999.0
     )
     with pytest.raises(OrderBuildError, match="cliente"):
         builder.build()
 
 
 def test_builder_sin_items_lanza_error():
-    builder = OrderBuilder(order_id=OrderId.generate(1)).with_customer(
-        "Juan", "juan@example.com"
-    )
+    builder = OrderBuilder(order_id=OrderId.generate(1)).with_customer("Juan", "juan@example.com")
     with pytest.raises(OrderBuildError, match="item"):
         builder.build()
 
@@ -192,6 +187,7 @@ def test_builder_calcula_total_correcto():
         .build()
     )
     from order_management.domain.value_objects import Money
+
     expected = Money.from_float(250.0)
     assert order.total == expected
 
@@ -221,9 +217,12 @@ def test_builder_es_reutilizable():
     )
 
     order_a = base.with_notes("Nota A").build()
-    order_b = OrderBuilder(order_id=OrderId.generate(2)).with_customer(
-        "María", "maria@example.com"
-    ).add_item("Otro", quantity=1, unit_price=200.0).build()
+    order_b = (
+        OrderBuilder(order_id=OrderId.generate(2))
+        .with_customer("María", "maria@example.com")
+        .add_item("Otro", quantity=1, unit_price=200.0)
+        .build()
+    )
 
     assert order_a.customer.name == "Juan"
     assert order_b.customer.name == "María"
@@ -264,8 +263,8 @@ def test_adapter_cliente_sin_tier_sin_descuento(order_1_item):
 def test_adapter_usa_api_externa_inyectada():
     """El Adapter acepta una API inyectada — testeable sin red."""
     mock_api = ExternalPricingAPI()
-    adapter  = ExternalPricingAdapter(api=mock_api)
-    order    = {
+    adapter = ExternalPricingAdapter(api=mock_api)
+    order = {
         "email": "admin@example.com",
         "items": [{"product_name": "Laptop", "quantity": 1, "price": 600.0}],
     }

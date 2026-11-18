@@ -1,88 +1,89 @@
 """
-Caso de uso CreateOrder - Módulo 15: Arquitectura Hexagonal
+Caso de uso CreateOrder v2 - Módulo 16: Arquitectura Limpia
 
-El caso de uso es el corazón de la capa de aplicación:
-  - Orquesta dominio e infraestructura
-  - Depende SOLO de puertos (Protocols), nunca de implementaciones concretas
-  - No importa nada de SQLAlchemy, httpx, FastAPI ni archivos
+Versión actualizada que incorpora:
+  - Unit of Work para atomicidad de la transacción
+  - Eventos de dominio (OrderCreated) publicados al EventBus
+  - Presenter para formatear el resultado según el canal de salida
 
 Flujo:
   CreateOrderCommand
-      ↓  validar
-      ↓  construir Order (dominio)
-      ↓  persistir (OrderRepositoryPort)
-      ↓  notificar (NotificationPort)
+      ↓  construir entidades de dominio
+      with uow:
+          ↓  uow.orders.save(order)
+          ↓  uow.add_event(OrderCreated(...))
+          ↓  uow.commit()
+      ↓  event_bus.publish_all(uow.collect_events())
+      ↓  presenter.present(result)
       ↓
-  OrderCreatedResult
+  Formato de salida (JSON, CLI, schema Pydantic, etc.)
 """
 
 import logging
+from typing import Any
 
 from order_management.application.dtos import (
     CreateOrderCommand,
     OrderCreatedResult,
     OrderItemResult,
 )
+from order_management.application.event_bus import EventBus
+from order_management.application.presenters import JsonPresenter, OrderPresenterPort
+from order_management.application.unit_of_work import UnitOfWorkPort
 from order_management.domain.entities import Customer, Order, OrderItem
-from order_management.domain.ports import NotificationPort, OrderRepositoryPort
+from order_management.domain.events import OrderCreated
 from order_management.domain.value_objects import Email, Money, OrderId
 
 logger = logging.getLogger(__name__)
-
-
-class OrderAlreadyExistsError(Exception):
-    """Se intenta crear una orden con un ID que ya existe."""
 
 
 class CreateOrderUseCase:
     """
     Caso de uso: Crear una nueva orden de compra.
 
-    DIP: depende de puertos (Protocols), no de implementaciones.
-    SRP: su única razón de cambiar es la lógica de creación de órdenes.
-    OCP: añadir un nuevo adaptador (notificación por SMS, email, etc.)
-         no modifica este caso de uso.
+    Versión Módulo 16 — incorpora UoW, eventos y Presenter.
 
-    Example:
-        repo     = SqlAlchemyOrderRepository(session)
-        notifier = HttpNotificationAdapter(base_url="http://localhost:8080")
-        use_case = CreateOrderUseCase(repository=repo, notifier=notifier)
-        result   = use_case.execute(command)
+    DIP: depende de UnitOfWorkPort, EventBus y OrderPresenterPort.
+    SRP: su única razón de cambiar es la lógica de creación de órdenes.
+    OCP: añadir un nuevo presenter o handler de evento no modifica este código.
     """
 
     def __init__(
         self,
-        repository: OrderRepositoryPort,
-        notifier: NotificationPort,
+        uow: UnitOfWorkPort,
+        event_bus: EventBus,
+        presenter: OrderPresenterPort | None = None,
     ) -> None:
         """
         Args:
-            repository: Adaptador de persistencia (SQL, memoria, etc.)
-            notifier:   Adaptador de notificaciones (HTTP, email, memoria)
+            uow:       Unit of Work que agrupa repositorio y transacción
+            event_bus: Bus para publicar eventos de dominio
+            presenter: Formatea el resultado (default: JsonPresenter)
         """
-        self._repo = repository
-        self._notifier = notifier
+        self._uow = uow
+        self._bus = event_bus
+        self._presenter = presenter or JsonPresenter()
 
-    def execute(self, command: CreateOrderCommand) -> OrderCreatedResult:
+    def execute(self, command: CreateOrderCommand) -> Any:
         """
-        Ejecuta el caso de uso CreateOrder.
+        Ejecuta el caso de uso CreateOrder con UoW y eventos.
 
         Args:
             command: Datos validados para crear la orden
 
         Returns:
-            OrderCreatedResult con los datos de la orden creada
+            Resultado formateado por el Presenter
 
         Raises:
             ValueError: Si algún dato del comando es inválido en dominio
         """
         logger.info(
-            "CreateOrder iniciado — cliente: %s, items: %d",
+            "CreateOrder (v2) iniciado — cliente: %s, items: %d",
             command.customer_email,
             len(command.items),
         )
 
-        # 1. Construir entidades de dominio
+        # 1. Construir entidades de dominio (sin infraestructura)
         customer = Customer(
             name=command.customer_name,
             email=Email(command.customer_email),
@@ -102,7 +103,6 @@ class CreateOrderUseCase:
         ]
 
         order_id = OrderId.generate(command.sequence_number)
-
         order = Order(
             order_id=order_id,
             customer=customer,
@@ -110,27 +110,37 @@ class CreateOrderUseCase:
             notes=command.notes,
         )
 
-        # 2. Persistir — el caso de uso no sabe si es SQL o memoria
-        self._repo.save(order)  # type: ignore[attr-defined]
+        # 2. Persistir con Unit of Work (atómico)
+        with self._uow:
+            self._uow.orders.save(order)  # type: ignore[attr-defined]
 
-        logger.info(
-            "CreateOrder persistido — order_id: %s, total: %s",
-            order.order_id,
-            order.total,
-        )
-
-        # 3. Notificar — el caso de uso no sabe si es HTTP o email
-        try:
-            self._notifier.order_created(
+            # 3. Generar evento de dominio
+            event = OrderCreated(
                 order_id=str(order.order_id),
                 customer_email=str(order.customer.email),
-                total=float(order.total.amount),
+                customer_name=order.customer.name,
+                total=order.total.amount,
+                item_count=order.item_count,
+                status=order.status.value,
             )
-        except Exception as exc:
-            # La notificación nunca debe romper el flujo principal
-            logger.warning("Notificación fallida (no crítico): %s", exc)
 
-        # 4. Construir y retornar DTO de resultado
+            # Acumular evento en el UoW para publicarlo después del commit
+            if hasattr(self._uow, "add_event"):
+                self._uow.add_event(event)  # type: ignore[attr-defined]
+
+            self._uow.commit()
+
+        # 4. Publicar eventos DESPUÉS del commit (no dentro de la transacción)
+        pending_events = self._uow.collect_events()
+        self._bus.publish_all(pending_events)
+
+        logger.info(
+            "CreateOrder completado — %s, eventos publicados: %d",
+            order.order_id,
+            len(pending_events),
+        )
+
+        # 5. Construir DTO de resultado
         result = OrderCreatedResult(
             order_id=str(order.order_id),
             customer_name=order.customer.name,
@@ -150,5 +160,5 @@ class CreateOrderUseCase:
             notes=order.notes,
         )
 
-        logger.info("CreateOrder completado — %s", result.order_id)
-        return result
+        # 6. Formatear con el Presenter y retornar
+        return self._presenter.present(result)

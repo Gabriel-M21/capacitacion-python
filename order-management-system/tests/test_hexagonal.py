@@ -3,36 +3,22 @@ Pruebas de Arquitectura Hexagonal - Módulo 15
 Cubre: dominio, contrato (LSP), caso de uso y adaptadores.
 """
 
-import json
 from decimal import Decimal
 from typing import Any
 from unittest.mock import MagicMock, patch
 
 import pytest
 
-from order_management.application.dtos import (
-    CreateOrderCommand,
-    OrderItemCommand,
-)
+from order_management.application.dtos import CreateOrderCommand, OrderItemCommand
 from order_management.application.use_cases.create_order import CreateOrderUseCase
 from order_management.domain.entities import Customer, Order, OrderItem
 from order_management.domain.ports import NotificationPort, OrderRepositoryPort
-from order_management.domain.value_objects import (
-    Email,
-    Money,
-    OrderId,
-    OrderStatus,
-)
-from order_management.infrastructure.adapters.http_notification import (
-    HttpNotificationAdapter,
-)
-from order_management.infrastructure.adapters.memory_notification import (
-    InMemoryNotificationAdapter,
-)
+from order_management.domain.value_objects import Email, Money, OrderId, OrderStatus
+from order_management.infrastructure.adapters.http_notification import HttpNotificationAdapter
+from order_management.infrastructure.adapters.memory_notification import InMemoryNotificationAdapter
 from order_management.infrastructure.db.repositories.in_memory_order_repo import (
     InMemoryOrderRepository,
 )
-
 
 # ---------------------------------------------------------------------------
 # Fixtures
@@ -96,7 +82,7 @@ def test_dominio_order_calcula_total_correctamente():
     )
     items = [
         OrderItem("Laptop", 1, Money(Decimal("1299.99"), "USD")),
-        OrderItem("Mouse",  2, Money(Decimal("49.99"),   "USD")),
+        OrderItem("Mouse", 2, Money(Decimal("49.99"), "USD")),
     ]
     order = Order(order_id=OrderId.generate(1), customer=customer, items=items)
 
@@ -167,7 +153,7 @@ def test_contrato_lsp_mismo_resultado_con_ambos_notificadores(
     """
     # Con InMemory
     notifier_mem = InMemoryNotificationAdapter()
-    result_mem   = CreateOrderUseCase(memory_repo, notifier_mem).execute(sample_command)
+    result_mem = CreateOrderUseCase(memory_repo, notifier_mem).execute(sample_command)
 
     # Con HTTP (mock para no necesitar red)
     memory_repo.clear()
@@ -186,11 +172,11 @@ def test_contrato_lsp_mismo_resultado_con_ambos_notificadores(
         )
 
     # El resultado del caso de uso es idéntico con ambos notificadores
-    assert result_mem.customer_name  == result_http.customer_name
+    assert result_mem.customer_name == result_http.customer_name
     assert result_mem.customer_email == result_http.customer_email
-    assert result_mem.total          == result_http.total
-    assert result_mem.status         == result_http.status
-    assert result_mem.item_count     == result_http.item_count
+    assert result_mem.total == result_http.total
+    assert result_mem.status == result_http.status
+    assert result_mem.item_count == result_http.item_count
 
 
 # ---------------------------------------------------------------------------
@@ -204,13 +190,13 @@ def test_create_order_retorna_resultado_correcto(
 ) -> None:
     result = use_case.execute(sample_command)
 
-    assert result.order_id       == "ORD-00001"
-    assert result.customer_name  == "Juan Pérez"
+    assert result.order_id == "ORD-00001"
+    assert result.customer_name == "Juan Pérez"
     assert result.customer_email == "juan.perez@example.com"
-    assert result.status         == "pending"
-    assert result.total          == Decimal("1399.97")
-    assert result.item_count     == 2
-    assert result.notes          == "Entrega urgente"
+    assert result.status == "pending"
+    assert result.total == Decimal("1399.97")
+    assert result.item_count == 2
+    assert result.notes == "Entrega urgente"
 
 
 def test_create_order_persiste_en_repositorio(
@@ -236,9 +222,9 @@ def test_create_order_envia_notificacion(
 
     notif = memory_notifier.last_notification
     assert notif is not None
-    assert notif["event"]          == "order_created"
+    assert notif["event"] == "order_created"
     assert notif["customer_email"] == "juan.perez@example.com"
-    assert notif["total"]          == pytest.approx(1399.97, rel=1e-2)
+    assert notif["total"] == pytest.approx(1399.97, rel=1e-2)
 
 
 def test_create_order_notificacion_fallida_no_rompe_flujo(
@@ -273,9 +259,7 @@ def test_create_order_multiples_ordenes_secuenciales(
             customer_name="Cliente Test",
             customer_email="test@example.com",
             sequence_number=i,
-            items=[
-                OrderItemCommand("Producto", 1, Decimal("100.00"))
-            ],
+            items=[OrderItemCommand("Producto", 1, Decimal("100.00"))],
         )
         CreateOrderUseCase(memory_repo, memory_notifier).execute(cmd)
 
@@ -331,10 +315,10 @@ def test_http_notifier_envia_post_correcto() -> None:
         )
 
     assert len(captured) == 1
-    assert captured[0]["event"]          == "order_created"
-    assert captured[0]["order_id"]       == "ORD-00001"
+    assert captured[0]["event"] == "order_created"
+    assert captured[0]["order_id"] == "ORD-00001"
     assert captured[0]["customer_email"] == "juan@example.com"
-    assert captured[0]["total"]          == pytest.approx(1399.97)
+    assert captured[0]["total"] == pytest.approx(1399.97)
 
 
 def test_http_notifier_no_lanza_por_defecto_en_error() -> None:
@@ -408,7 +392,7 @@ def test_http_notifier_con_smocker_si_disponible(
         raise_on_error=True,
     )
     use_case = CreateOrderUseCase(repository=memory_repo, notifier=notifier)
-    result   = use_case.execute(sample_command)
+    result = use_case.execute(sample_command)
 
-    assert result.order_id       == "ORD-00001"
+    assert result.order_id == "ORD-00001"
     assert result.customer_email == "juan.perez@example.com"
