@@ -68,9 +68,7 @@ def load_orders_items(path: Path) -> list[dict]:
                 {
                     "order_id": order.get("order_id"),
                     "item_count": len(order_items),
-                    "total": sum(
-                        float(i["price"]) * i.get("quantity", 1) for i in order_items
-                    ),
+                    "total": sum(float(i["price"]) * i.get("quantity", 1) for i in order_items),
                 }
             )
     return items
@@ -282,9 +280,7 @@ def main() -> None:
 
     # Muestra primeros 5 descuentos calculados
     print("\n  Muestra (primeras 5 órdenes):")
-    print(
-        f"  {'Orden':<14} {'Items':>5} {'Total':>9} {'Desc%':>6} {'Final':>9} {'Ahorro':>9}"
-    )
+    print(f"  {'Orden':<14} {'Items':>5} {'Total':>9} {'Desc%':>6} {'Final':>9} {'Ahorro':>9}")
     print("  " + "-" * 60)
     for r in par_results[:5]:
         print(
@@ -303,9 +299,7 @@ def main() -> None:
     print(f"\n  {'Estrategia':<35} {'Tiempo':>8}  {'Speedup':>8}")
     print("  " + "-" * 55)
     print(f"  {'HTTP síncrono':<35} {sync_time:>7.3f}s  {'1.0x':>8}")
-    print(
-        f"  {'HTTP asíncrono (semáforo=10)':<35} {async_time:>7.3f}s  {speedup_http:>7.1f}x"
-    )
+    print(f"  {'HTTP asíncrono (semáforo=10)':<35} {async_time:>7.3f}s  {speedup_http:>7.1f}x")
     print(f"  {'CPU secuencial (1 proceso)':<35} {seq_time:>7.3f}s  {'1.0x':>8}")
     print(
         f"  {'CPU paralelo ({} procesos)':<35} {par_time:>7.3f}s  {speedup_cpu:>7.1f}x".format(

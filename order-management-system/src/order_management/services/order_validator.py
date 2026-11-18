@@ -57,8 +57,7 @@ class OrderValidator:
         # 5. status válido
         if order["status"] not in self.VALID_STATUSES:
             return False, (
-                f"status inválido: '{order['status']}'. "
-                f"Válidos: {self.VALID_STATUSES}"
+                f"status inválido: '{order['status']}'. " f"Válidos: {self.VALID_STATUSES}"
             )
 
         # 6. items

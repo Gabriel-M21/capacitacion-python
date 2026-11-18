@@ -26,13 +26,9 @@ class UserModel(Base):
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
     name: Mapped[str] = mapped_column(String(100), nullable=False)
-    email: Mapped[str] = mapped_column(
-        String(255), nullable=False, unique=True, index=True
-    )
+    email: Mapped[str] = mapped_column(String(255), nullable=False, unique=True, index=True)
     phone: Mapped[str | None] = mapped_column(String(20), nullable=True)
-    hashed_password: Mapped[str] = mapped_column(
-        String(255), nullable=False, default=""
-    )
+    hashed_password: Mapped[str] = mapped_column(String(255), nullable=False, default="")
     role: Mapped[str] = mapped_column(String(20), nullable=False, default="user")
 
     # Relación 1-N con órdenes
@@ -58,13 +54,9 @@ class OrderModel(Base):
     __tablename__ = "orders"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
-    order_id: Mapped[str] = mapped_column(
-        String(20), nullable=False, unique=True, index=True
-    )
+    order_id: Mapped[str] = mapped_column(String(20), nullable=False, unique=True, index=True)
     status: Mapped[str] = mapped_column(String(20), nullable=False, default="pending")
-    created_at: Mapped[datetime] = mapped_column(
-        DateTime, nullable=False, default=datetime.now
-    )
+    created_at: Mapped[datetime] = mapped_column(DateTime, nullable=False, default=datetime.now)
     notes: Mapped[str | None] = mapped_column(String(500), nullable=True)
 
     # FK a users

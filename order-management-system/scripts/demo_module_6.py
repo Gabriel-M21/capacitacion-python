@@ -140,9 +140,7 @@ def ingest_from_csv(csv_path: Path) -> tuple[list[Order], list[dict[str, Any]]]:
 
     with csv_path.open(encoding="utf-8", newline="") as fh:
         reader = csv.DictReader(fh)
-        for row_num, row in enumerate(
-            reader, start=2
-        ):  # 2 porque la fila 1 es el header
+        for row_num, row in enumerate(reader, start=2):  # 2 porque la fila 1 es el header
             oid = row.get("order_id", "").strip()
             if not oid:
                 ingestion_log.warning(f"Fila {row_num}: order_id vacío, se omite")
@@ -181,18 +179,12 @@ def ingest_from_csv(csv_path: Path) -> tuple[list[Order], list[dict[str, Any]]]:
         try:
             order = _build_order_from_raw(data, source="CSV")
             valid_orders.append(order)
-            ingestion_log.info(
-                f"✓ {oid} - {order.customer.name} - total: {order.total}"
-            )
+            ingestion_log.info(f"✓ {oid} - {order.customer.name} - total: {order.total}")
         except Exception as exc:
             ingestion_log.warning(f"✗ {oid} inválida: {exc}")
-            errors.append(
-                {"order_id": oid, "source": "CSV", "error": str(exc), "data": data}
-            )
+            errors.append({"order_id": oid, "source": "CSV", "error": str(exc), "data": data})
 
-    ingestion_log.info(
-        f"CSV completado — válidas: {len(valid_orders)}, errores: {len(errors)}"
-    )
+    ingestion_log.info(f"CSV completado — válidas: {len(valid_orders)}, errores: {len(errors)}")
     return valid_orders, errors
 
 
@@ -248,18 +240,12 @@ def ingest_from_json(json_path: Path) -> tuple[list[Order], list[dict[str, Any]]
         try:
             order = _build_order_from_raw(raw, source="JSON")
             valid_orders.append(order)
-            ingestion_log.info(
-                f"✓ {oid} - {order.customer.name} - total: {order.total}"
-            )
+            ingestion_log.info(f"✓ {oid} - {order.customer.name} - total: {order.total}")
         except Exception as exc:
             ingestion_log.warning(f"✗ {oid} inválida: {exc}")
-            errors.append(
-                {"order_id": oid, "source": "JSON", "error": str(exc), "data": raw}
-            )
+            errors.append({"order_id": oid, "source": "JSON", "error": str(exc), "data": raw})
 
-    ingestion_log.info(
-        f"JSON completado — válidas: {len(valid_orders)}, errores: {len(errors)}"
-    )
+    ingestion_log.info(f"JSON completado — válidas: {len(valid_orders)}, errores: {len(errors)}")
     return valid_orders, errors
 
 
@@ -437,9 +423,7 @@ def compute_metrics(orders: list[Order]) -> dict[str, Any]:
                 "order_count": v["order_count"],
                 "total_spent": float(v["total_spent"]),
             }
-            for k, v in sorted(
-                by_customer.items(), key=lambda x: x[1]["total_spent"], reverse=True
-            )
+            for k, v in sorted(by_customer.items(), key=lambda x: x[1]["total_spent"], reverse=True)
         },
         "top_3_products": [
             {"product_name": name, "total_quantity": qty} for name, qty in top_products
@@ -460,9 +444,7 @@ def compute_metrics(orders: list[Order]) -> dict[str, Any]:
     metrics_log.info(f"Revenue total            : ${metrics['total_revenue']:.2f}")
     metrics_log.info(f"Ticket promedio          : ${metrics['avg_order_value']:.2f}")
     for status, data in cast(dict[str, dict[str, Any]], metrics["by_status"]).items():
-        metrics_log.info(
-            f"  [{status:10}] {data['count']} órdenes — ${data['total_revenue']:.2f}"
-        )
+        metrics_log.info(f"  [{status:10}] {data['count']} órdenes — ${data['total_revenue']:.2f}")
 
     return metrics
 
@@ -628,9 +610,7 @@ def demo_subprocess() -> None:
         print(f"   Error (código {result.returncode}): {result.stderr[:100]}")
 
     # Python --version como ejemplo seguro multiplataforma
-    py_result = subprocess.run(
-        [sys.executable, "--version"], capture_output=True, text=True
-    )
+    py_result = subprocess.run([sys.executable, "--version"], capture_output=True, text=True)
     print("\nb) Versión de Python activa:")
     print(f"   {py_result.stdout.strip() or py_result.stderr.strip()}")
 
@@ -695,9 +675,7 @@ def main() -> None:
 
     print("\n   Clientes por gasto:")
     for name, data in list(metrics.get("by_customer", {}).items())[:5]:
-        print(
-            f"      {name:20}  {data['order_count']} órdenes  ${data['total_spent']:.2f}"
-        )
+        print(f"      {name:20}  {data['order_count']} órdenes  ${data['total_spent']:.2f}")
 
     # ── 6. EXPORTAR JSON ────────────────────────────────────────────────────
     print("\n" + "=" * 70)

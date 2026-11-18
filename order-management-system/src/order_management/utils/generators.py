@@ -38,9 +38,7 @@ def batch_processor(
         batch_num = (i // batch_size) + 1
         total_batches = (total_orders + batch_size - 1) // batch_size
 
-        logger.debug(
-            f"Generando lote {batch_num}/{total_batches} ({len(batch)} órdenes)"
-        )
+        logger.debug(f"Generando lote {batch_num}/{total_batches} ({len(batch)} órdenes)")
         yield batch
 
 
@@ -150,9 +148,7 @@ class OrderIterator:
     Demuestra el protocolo de iterador (__iter__ y __next__).
     """
 
-    def __init__(
-        self, orders: list[dict[str, Any]], status_filter: str | None = None
-    ) -> None:
+    def __init__(self, orders: list[dict[str, Any]], status_filter: str | None = None) -> None:
         """
         Inicializa el iterador.
 
@@ -218,9 +214,7 @@ def get_order_summaries(orders: list[dict[str, Any]]) -> dict[str, Any]:
     order_totals = {order["order_id"]: order.get("total", 0) for order in orders}
 
     # Set comprehension: clientes únicos
-    unique_customers = {
-        order.get("customer_name") for order in orders if "customer_name" in order
-    }
+    unique_customers = {order.get("customer_name") for order in orders if "customer_name" in order}
 
     # Generator expression: suma de totales (eficiente)
     total_revenue = sum(order.get("total", 0) for order in orders)

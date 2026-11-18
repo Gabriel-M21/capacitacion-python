@@ -38,13 +38,9 @@ class JsonFileOrderRepository:
     def load_orders(self) -> list[dict[str, Any]]:
         """Lee órdenes desde el archivo JSON configurado."""
         if not self._orders_path.exists():
-            raise FileNotFoundError(
-                f"Archivo de órdenes no encontrado: {self._orders_path}"
-            )
+            raise FileNotFoundError(f"Archivo de órdenes no encontrado: {self._orders_path}")
         if self._orders_path.suffix.lower() != ".json":
-            raise ValueError(
-                f"El archivo debe ser .json, recibido: {self._orders_path.suffix}"
-            )
+            raise ValueError(f"El archivo debe ser .json, recibido: {self._orders_path.suffix}")
 
         data = json.loads(self._orders_path.read_text(encoding="utf-8"))
         if not isinstance(data, list):

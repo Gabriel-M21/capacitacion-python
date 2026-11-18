@@ -3,6 +3,7 @@ Demo del Módulo 12: SOLID en acción
 Muestra cómo OrderService trabaja con distintas implementaciones
 sin cambiar una sola línea del servicio.
 """
+
 from pathlib import Path
 from typing import Any
 

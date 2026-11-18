@@ -96,9 +96,7 @@ class OrderService:
             "valid_orders": n_valid,
             "invalid_orders": len(invalid_orders),
             "total_revenue": float(round(total_revenue, 2)),
-            "average_order_value": (
-                float(round(total_revenue / n_valid, 2)) if n_valid else 0.0
-            ),
+            "average_order_value": (float(round(total_revenue / n_valid, 2)) if n_valid else 0.0),
             "unique_customers": len(unique_customers),
             "orders_by_status": orders_by_status,
             "invalid_details": invalid_orders,
@@ -136,9 +134,7 @@ class OrderService:
 
     @staticmethod
     def _calculate_total(items: list[dict[str, Any]]) -> float:
-        total = sum(
-            float(i.get("quantity", 0)) * float(i.get("price", 0.0)) for i in items
-        )
+        total = sum(float(i.get("quantity", 0)) * float(i.get("price", 0.0)) for i in items)
         return round(total, 2)
 
     @staticmethod

@@ -111,9 +111,7 @@ class Order:
         # Validar que todas las monedas sean iguales
         currencies = {item.unit_price.currency for item in self.items}
         if len(currencies) > 1:
-            raise ValueError(
-                f"Todos los items deben usar la misma moneda: {currencies}"
-            )
+            raise ValueError(f"Todos los items deben usar la misma moneda: {currencies}")
 
     @property
     def total(self) -> Money:
@@ -185,9 +183,7 @@ class Order:
             ValueError: Si la transición no es válida
         """
         if not self.status.can_transition_to(new_status):
-            raise ValueError(
-                f"Transición inválida: {self.status.value} -> {new_status.value}"
-            )
+            raise ValueError(f"Transición inválida: {self.status.value} -> {new_status.value}")
         self.status = new_status
 
     def apply_discount(self, percentage: Decimal) -> Money:
