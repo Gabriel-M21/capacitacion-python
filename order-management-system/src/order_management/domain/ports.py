@@ -1,5 +1,5 @@
 """
-Puertos del dominio - Módulo 12: SOLID
+Puertos del dominio - Módulo 15: Arquitectura Hexagonal
 Define los contratos (Protocols) que el dominio espera de la infraestructura.
 
 DIP: el dominio depende de abstracciones, no de implementaciones concretas.
@@ -20,6 +20,7 @@ class OrderRepositoryPort(Protocol):
     Implementaciones actuales:
       - JsonFileOrderRepository   (producción / Módulo 6)
       - InMemoryOrderRepository   (tests / demos)
+      - OrderRepository           (SQLAlchemy / Módulo 8)
     """
 
     def load_orders(self) -> list[dict[str, Any]]:
@@ -59,5 +60,46 @@ class OrderValidatorPort(Protocol):
 
         Returns:
             Tupla (es_válida, mensaje_error)
+        """
+        ...
+
+
+@runtime_checkable
+class NotificationPort(Protocol):
+    """
+    Puerto de notificaciones — Módulo 15: Arquitectura Hexagonal.
+
+    El dominio y los casos de uso dependen de este Protocol,
+    nunca de implementaciones concretas (HTTP, email, SMS, etc.).
+
+    Implementaciones:
+      - InMemoryNotificationAdapter  (tests y demos)
+      - HttpNotificationAdapter      (producción con Smocker)
+    """
+
+    def order_created(self, order_id: str, customer_email: str, total: float) -> None:
+        """
+        Notifica que una orden fue creada exitosamente.
+
+        Args:
+            order_id:       ID de la orden creada (ej. 'ORD-00001')
+            customer_email: Email del cliente para la notificación
+            total:          Total de la orden en la moneda base
+        """
+        ...
+
+    def order_status_changed(
+        self,
+        order_id: str,
+        old_status: str,
+        new_status: str,
+    ) -> None:
+        """
+        Notifica que el estado de una orden cambió.
+
+        Args:
+            order_id:   ID de la orden
+            old_status: Estado anterior
+            new_status: Nuevo estado
         """
         ...

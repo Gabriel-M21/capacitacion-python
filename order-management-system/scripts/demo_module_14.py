@@ -12,21 +12,19 @@ import logging
 import warnings
 from pathlib import Path
 
-import joblib
+import joblib  # type: ignore[import-untyped]
 import numpy as np
-import pandas as pd
+import pandas as pd  # type: ignore[import-untyped]
 import polars as pl
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import classification_report
-from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import LabelEncoder
+from sklearn.ensemble import RandomForestClassifier  # type: ignore[import-untyped]
+from sklearn.metrics import classification_report  # type: ignore[import-untyped]
+from sklearn.model_selection import train_test_split  # type: ignore[import-untyped]
+from sklearn.preprocessing import LabelEncoder  # type: ignore[import-untyped]
 
 from order_management.domain.value_objects import OrderId, OrderStatus
 from order_management.infrastructure.db import models  # noqa: F401
 from order_management.infrastructure.db.base import Base
-from order_management.infrastructure.db.repositories.order_repository import (
-    OrderRepository,
-)
+from order_management.infrastructure.db.repositories.order_repository import OrderRepository
 from order_management.infrastructure.db.session import build_engine
 from order_management.services.order_builder import OrderBuilder
 
@@ -38,14 +36,15 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-CSV_PATH   = Path("data") / "orders_extended.csv"
+CSV_PATH = Path("data") / "orders_extended.csv"
 MODEL_PATH = Path("data") / "output" / "order_classifier.joblib"
-DB_URL     = "sqlite:///order_management.db"
+DB_URL = "sqlite:///order_management.db"
 
 
 # ---------------------------------------------------------------------------
 # PARTE 1A — Ingesta con PANDAS
 # ---------------------------------------------------------------------------
+
 
 def ingest_with_pandas(path: Path) -> pd.DataFrame:
     """Carga y limpia el CSV usando Pandas."""
@@ -76,14 +75,14 @@ def ingest_with_pandas(path: Path) -> pd.DataFrame:
     df["created_at"] = pd.to_datetime(df["created_at"])
 
     # Feature engineering
-    df["subtotal"]    = df["price"] * df["quantity"]
-    df["hour"]        = df["created_at"].dt.hour
+    df["subtotal"] = df["price"] * df["quantity"]
+    df["hour"] = df["created_at"].dt.hour
     df["day_of_week"] = df["created_at"].dt.dayofweek
-    df["month"]       = df["created_at"].dt.month
+    df["month"] = df["created_at"].dt.month
 
     # Totales por orden
     order_totals = df.groupby("order_id")["subtotal"].sum().rename("order_total")
-    order_items  = df.groupby("order_id")["product_name"].count().rename("item_count")
+    order_items = df.groupby("order_id")["product_name"].count().rename("item_count")
     df = df.merge(order_totals, on="order_id").merge(order_items, on="order_id")
 
     print("\n  Distribución de estados:")
@@ -103,6 +102,7 @@ def ingest_with_pandas(path: Path) -> pd.DataFrame:
 # PARTE 1B — Ingesta con POLARS
 # ---------------------------------------------------------------------------
 
+
 def ingest_with_polars(path: Path) -> pl.DataFrame:
     """Carga y limpia el CSV usando Polars."""
     print("\n" + "=" * 65)
@@ -120,15 +120,16 @@ def ingest_with_polars(path: Path) -> pl.DataFrame:
     # Limpieza — Polars usa expresiones lazy
     before = len(df)
     df = (
-        df
-        .filter(pl.col("order_id").is_not_null())
+        df.filter(pl.col("order_id").is_not_null())
         .filter(pl.col("customer_name").is_not_null() & (pl.col("customer_name") != ""))
         .filter(pl.col("email").is_not_null() & (pl.col("email") != ""))
         .filter(pl.col("product_name").is_not_null() & (pl.col("product_name") != ""))
         .filter(pl.col("price").cast(pl.Float64, strict=False).is_not_null())
         .filter(pl.col("price").cast(pl.Float64) > 0)
         .filter(pl.col("quantity").cast(pl.Float64) > 0)
-        .filter(pl.col("status").is_in(["pending", "confirmed", "shipped", "delivered", "cancelled"]))
+        .filter(
+            pl.col("status").is_in(["pending", "confirmed", "shipped", "delivered", "cancelled"])
+        )
     )
     after = len(df)
 
@@ -137,22 +138,28 @@ def ingest_with_polars(path: Path) -> pl.DataFrame:
     print(f"  Eliminadas           : {before - after}")
 
     # Feature engineering con Polars
-    df = df.with_columns([
-        (pl.col("price") * pl.col("quantity")).alias("subtotal"),
-        pl.col("created_at").str.to_datetime("%Y-%m-%d %H:%M:%S").alias("created_dt"),
-    ])
+    df = df.with_columns(
+        [
+            (pl.col("price") * pl.col("quantity")).alias("subtotal"),
+            pl.col("created_at").str.to_datetime("%Y-%m-%d %H:%M:%S").alias("created_dt"),
+        ]
+    )
 
-    df = df.with_columns([
-        pl.col("created_dt").dt.hour().alias("hour"),
-        pl.col("created_dt").dt.weekday().alias("day_of_week"),
-        pl.col("created_dt").dt.month().alias("month"),
-    ])
+    df = df.with_columns(
+        [
+            pl.col("created_dt").dt.hour().alias("hour"),
+            pl.col("created_dt").dt.weekday().alias("day_of_week"),
+            pl.col("created_dt").dt.month().alias("month"),
+        ]
+    )
 
     # Totales por orden
-    order_agg = df.group_by("order_id").agg([
-        pl.col("subtotal").sum().alias("order_total"),
-        pl.col("product_name").count().alias("item_count"),
-    ])
+    order_agg = df.group_by("order_id").agg(
+        [
+            pl.col("subtotal").sum().alias("order_total"),
+            pl.col("product_name").count().alias("item_count"),
+        ]
+    )
     df = df.join(order_agg, on="order_id")
 
     print("\n  Distribución de estados (Polars):")
@@ -182,6 +189,7 @@ def ingest_with_polars(path: Path) -> pl.DataFrame:
 # PARTE 2 — Clasificador con scikit-learn
 # ---------------------------------------------------------------------------
 
+
 def train_classifier(df: pd.DataFrame) -> tuple:
     """Entrena un RandomForest para predecir el estado de una orden."""
     print("\n" + "=" * 65)
@@ -189,12 +197,9 @@ def train_classifier(df: pd.DataFrame) -> tuple:
     print("=" * 65)
 
     # Features a nivel de orden (una fila por orden)
-    order_df = (
-        df.drop_duplicates("order_id")[
-            ["order_id", "status", "order_total", "item_count", "hour", "day_of_week", "month"]
-        ]
-        .copy()
-    )
+    order_df = df.drop_duplicates("order_id")[
+        ["order_id", "status", "order_total", "item_count", "hour", "day_of_week", "month"]
+    ].copy()
 
     print(f"\n  Órdenes únicas para entrenamiento: {len(order_df)}")
 
@@ -232,7 +237,8 @@ def train_classifier(df: pd.DataFrame) -> tuple:
 
     print("\n  Reporte de clasificación:")
     report = classification_report(
-        y_test, y_pred,
+        y_test,
+        y_pred,
         target_names=le.classes_,
         zero_division=0,
     )
@@ -256,6 +262,7 @@ def train_classifier(df: pd.DataFrame) -> tuple:
 # PARTE 3 — Serialización con joblib
 # ---------------------------------------------------------------------------
 
+
 def save_model(clf: RandomForestClassifier, le: LabelEncoder, feature_cols: list) -> None:
     """Guarda el modelo y el encoder con joblib."""
     print("\n" + "=" * 65)
@@ -278,27 +285,33 @@ def load_and_infer(examples: list[dict]) -> None:
 
     bundle = joblib.load(MODEL_PATH)
     clf: RandomForestClassifier = bundle["clf"]
-    le:  LabelEncoder           = bundle["le"]
-    feature_cols: list          = bundle["feature_cols"]
+    le: LabelEncoder = bundle["le"]
+    feature_cols: list = bundle["feature_cols"]
 
     print(f"\n  Modelo cargado: {type(clf).__name__}")
     print(f"  Features      : {feature_cols}")
 
-    print(f"\n  {'Total':>8}  {'Items':>5}  {'Hora':>4}  {'Día':>3}  {'Mes':>3}  {'Predicción':<12}  {'Confianza':>9}")
+    print(
+        f"\n  {'Total':>8}  {'Items':>5}  {'Hora':>4}  {'Día':>3}  {'Mes':>3}  {'Predicción':<12}  {'Confianza':>9}"
+    )
     print("  " + "-" * 60)
 
     for ex in examples:
-        X = np.array([[
-            ex["order_total"],
-            ex["item_count"],
-            ex["hour"],
-            ex["day_of_week"],
-            ex["month"],
-        ]])
-        pred_encoded  = clf.predict(X)[0]
+        X = np.array(
+            [
+                [
+                    ex["order_total"],
+                    ex["item_count"],
+                    ex["hour"],
+                    ex["day_of_week"],
+                    ex["month"],
+                ]
+            ]
+        )
+        pred_encoded = clf.predict(X)[0]
         probabilities = clf.predict_proba(X)[0]
-        pred_label    = le.inverse_transform([pred_encoded])[0]
-        confidence    = probabilities.max()
+        pred_label = le.inverse_transform([pred_encoded])[0]
+        confidence = probabilities.max()
 
         print(
             f"  ${ex['order_total']:>7.2f}"
@@ -315,6 +328,7 @@ def load_and_infer(examples: list[dict]) -> None:
 # PARTE 5 — Llenar la base de datos SQLite (Módulo 8)
 # ---------------------------------------------------------------------------
 
+
 def fill_database(df: pd.DataFrame, max_orders: int = 50) -> None:
     """
     Inserta órdenes del CSV en la base de datos SQLite del Módulo 8,
@@ -328,6 +342,7 @@ def fill_database(df: pd.DataFrame, max_orders: int = 50) -> None:
     Base.metadata.create_all(engine)
 
     from sqlalchemy.orm import sessionmaker
+
     Session = sessionmaker(bind=engine)
 
     # Tomar las primeras max_orders órdenes únicas y válidas
@@ -338,12 +353,12 @@ def fill_database(df: pd.DataFrame, max_orders: int = 50) -> None:
     )
 
     inserted = 0
-    skipped  = 0
+    skipped = 0
 
     status_map = {
-        "pending":   OrderStatus.PENDING,
+        "pending": OrderStatus.PENDING,
         "confirmed": OrderStatus.CONFIRMED,
-        "shipped":   OrderStatus.SHIPPED,
+        "shipped": OrderStatus.SHIPPED,
         "delivered": OrderStatus.DELIVERED,
         "cancelled": OrderStatus.CANCELLED,
     }
@@ -370,12 +385,9 @@ def fill_database(df: pd.DataFrame, max_orders: int = 50) -> None:
             numeric = order_id_str.replace("ORD-", "").lstrip("0") or "0"
             order_num = int(numeric) if numeric.isdigit() else idx + 1000
 
-            builder = (
-                OrderBuilder(order_id=OrderId.generate(order_num))
-                .with_customer(
-                    name=str(row["customer_name"]),
-                    email=str(row["email"]),
-                )
+            builder = OrderBuilder(order_id=OrderId.generate(order_num)).with_customer(
+                name=str(row["customer_name"]),
+                email=str(row["email"]),
             )
 
             for _, item in items_df.iterrows():
@@ -414,7 +426,7 @@ def fill_database(df: pd.DataFrame, max_orders: int = 50) -> None:
 
     # Verificar
     with Session() as session:
-        repo    = OrderRepository(session)
+        repo = OrderRepository(session)
         all_ord = repo.list_all()
         print(f"  Total en DB        : {len(all_ord)} órdenes")
         print("\n  Muestra (primeras 5):")
@@ -425,6 +437,7 @@ def fill_database(df: pd.DataFrame, max_orders: int = 50) -> None:
 # ---------------------------------------------------------------------------
 # MAIN
 # ---------------------------------------------------------------------------
+
 
 def main() -> None:
     print("\n" + "=" * 65)
@@ -446,12 +459,14 @@ def main() -> None:
     print("  " + "-" * 36)
     print(f"  {'Pandas':<10} {len(df_pandas):>14}  {len(df_pandas.columns):>9}")
     print(f"  {'Polars':<10} {len(df_polars):>14}  {len(df_polars.columns):>9}")
-    print("""
+    print(
+        """
   Diferencias clave:
   • Pandas: API mutable, integración con sklearn directa
   • Polars: expresiones lazy, más rápido en datasets grandes
   • Ambos leen el mismo CSV y producen resultados equivalentes
-    """)
+    """
+    )
 
     # 2. Entrenar clasificador
     clf, le, feature_cols = train_classifier(df_pandas)
@@ -462,10 +477,10 @@ def main() -> None:
     # 4. Inferencia con ejemplos nuevos
     examples = [
         {"order_total": 1500.0, "item_count": 2, "hour": 10, "day_of_week": 1, "month": 3},
-        {"order_total":   50.0, "item_count": 1, "hour": 20, "day_of_week": 5, "month": 12},
-        {"order_total":  350.0, "item_count": 3, "hour": 14, "day_of_week": 2, "month": 6},
-        {"order_total": 2500.0, "item_count": 4, "hour":  9, "day_of_week": 0, "month": 1},
-        {"order_total":  100.0, "item_count": 1, "hour": 18, "day_of_week": 4, "month": 11},
+        {"order_total": 50.0, "item_count": 1, "hour": 20, "day_of_week": 5, "month": 12},
+        {"order_total": 350.0, "item_count": 3, "hour": 14, "day_of_week": 2, "month": 6},
+        {"order_total": 2500.0, "item_count": 4, "hour": 9, "day_of_week": 0, "month": 1},
+        {"order_total": 100.0, "item_count": 1, "hour": 18, "day_of_week": 4, "month": 11},
     ]
     load_and_infer(examples)
 
