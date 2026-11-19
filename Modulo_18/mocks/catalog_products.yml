@@ -1,0 +1,609 @@
+- request:
+    method: GET
+    path: /products/AirPods%20Pro
+  response:
+    status: 200
+    headers:
+      Content-Type: application/json
+    body: >
+      {"product_id":"SKU-010","product_name":"AirPods Pro","unit_price":"249.00","currency":"USD","available":true}
+
+- request:
+    method: GET
+    path: /products/Alfombra%20antifatiga
+  response:
+    status: 200
+    headers:
+      Content-Type: application/json
+    body: >
+      {"product_id":"SKU-024","product_name":"Alfombra antifatiga","unit_price":"49.99","currency":"USD","available":true}
+
+- request:
+    method: GET
+    path: /products/Apple%20Pencil
+  response:
+    status: 200
+    headers:
+      Content-Type: application/json
+    body: >
+      {"product_id":"SKU-007b","product_name":"Apple Pencil","unit_price":"129.00","currency":"USD","available":true}
+
+- request:
+    method: GET
+    path: /products/Auriculares%20Sony%20WH-1000XM5
+  response:
+    status: 200
+    headers:
+      Content-Type: application/json
+    body: >
+      {"product_id":"SKU-005b","product_name":"Auriculares Sony WH-1000XM5","unit_price":"349.99","currency":"USD","available":true}
+
+- request:
+    method: GET
+    path: /products/Bater%C3%ADa%20extra%20NP-FZ100
+  response:
+    status: 200
+    headers:
+      Content-Type: application/json
+    body: >
+      {"product_id":"SKU-029c","product_name":"Batería extra NP-FZ100","unit_price":"79.99","currency":"USD","available":true}
+
+- request:
+    method: GET
+    path: /products/Brazo%20articulado%20micr%C3%B3fono
+  response:
+    status: 200
+    headers:
+      Content-Type: application/json
+    body: >
+      {"product_id":"SKU-030b","product_name":"Brazo articulado micrófono","unit_price":"49.99","currency":"USD","available":true}
+
+- request:
+    method: GET
+    path: /products/Cable%20HDMI
+  response:
+    status: 200
+    headers:
+      Content-Type: application/json
+    body: >
+      {"product_id":"SKU-003b","product_name":"Cable HDMI","unit_price":"15.99","currency":"USD","available":true}
+
+- request:
+    method: GET
+    path: /products/Cable%20HDMI%202.1
+  response:
+    status: 200
+    headers:
+      Content-Type: application/json
+    body: >
+      {"product_id":"SKU-020c","product_name":"Cable HDMI 2.1","unit_price":"22.99","currency":"USD","available":true}
+
+- request:
+    method: GET
+    path: /products/Cable%20HDMI%205m
+  response:
+    status: 200
+    headers:
+      Content-Type: application/json
+    body: >
+      {"product_id":"SKU-027c","product_name":"Cable HDMI 5m","unit_price":"29.99","currency":"USD","available":true}
+
+- request:
+    method: GET
+    path: /products/Cable%20USB-C%202m
+  response:
+    status: 200
+    headers:
+      Content-Type: application/json
+    body: >
+      {"product_id":"SKU-018b","product_name":"Cable USB-C 2m","unit_price":"24.99","currency":"USD","available":true}
+
+- request:
+    method: GET
+    path: /products/Cable%20de%20red%20Cat6%2050m
+  response:
+    status: 200
+    headers:
+      Content-Type: application/json
+    body: >
+      {"product_id":"SKU-028b","product_name":"Cable de red Cat6 50m","unit_price":"29.99","currency":"USD","available":true}
+
+- request:
+    method: GET
+    path: /products/Cargador%20inal%C3%A1mbrico
+  response:
+    status: 200
+    headers:
+      Content-Type: application/json
+    body: >
+      {"product_id":"SKU-019b","product_name":"Cargador inalámbrico","unit_price":"39.99","currency":"USD","available":true}
+
+- request:
+    method: GET
+    path: /products/Cargador%20r%C3%A1pido%2065W
+  response:
+    status: 200
+    headers:
+      Content-Type: application/json
+    body: >
+      {"product_id":"SKU-014","product_name":"Cargador rápido 65W","unit_price":"34.99","currency":"USD","available":true}
+
+- request:
+    method: GET
+    path: /products/Consola%20PS5
+  response:
+    status: 200
+    headers:
+      Content-Type: application/json
+    body: >
+      {"product_id":"SKU-022","product_name":"Consola PS5","unit_price":"499.99","currency":"USD","available":true}
+
+- request:
+    method: GET
+    path: /products/Control%20DualSense%20extra
+  response:
+    status: 200
+    headers:
+      Content-Type: application/json
+    body: >
+      {"product_id":"SKU-022b","product_name":"Control DualSense extra","unit_price":"69.99","currency":"USD","available":true}
+
+- request:
+    method: GET
+    path: /products/C%C3%A1mara%20mirrorless%20Sony%20A7IV
+  response:
+    status: 200
+    headers:
+      Content-Type: application/json
+    body: >
+      {"product_id":"SKU-029","product_name":"Cámara mirrorless Sony A7IV","unit_price":"2499.99","currency":"USD","available":true}
+
+- request:
+    method: GET
+    path: /products/Disco%20duro%204TB%20NAS
+  response:
+    status: 200
+    headers:
+      Content-Type: application/json
+    body: >
+      {"product_id":"SKU-025b","product_name":"Disco duro 4TB NAS","unit_price":"119.99","currency":"USD","available":true}
+
+- request:
+    method: GET
+    path: /products/Disco%20duro%20externo%204TB
+  response:
+    status: 200
+    headers:
+      Content-Type: application/json
+    body: >
+      {"product_id":"SKU-008","product_name":"Disco duro externo 4TB","unit_price":"139.99","currency":"USD","available":true}
+
+- request:
+    method: GET
+    path: /products/Dock%20USB-C
+  response:
+    status: 200
+    headers:
+      Content-Type: application/json
+    body: >
+      {"product_id":"SKU-009","product_name":"Dock USB-C","unit_price":"149.99","currency":"USD","available":true}
+
+- request:
+    method: GET
+    path: /products/Escritorio%20de%20pie
+  response:
+    status: 200
+    headers:
+      Content-Type: application/json
+    body: >
+      {"product_id":"SKU-024b","product_name":"Escritorio de pie","unit_price":"599.99","currency":"USD","available":true}
+
+- request:
+    method: GET
+    path: /products/Filtro%20antipop
+  response:
+    status: 200
+    headers:
+      Content-Type: application/json
+    body: >
+      {"product_id":"SKU-030c","product_name":"Filtro antipop","unit_price":"14.99","currency":"USD","available":true}
+
+- request:
+    method: GET
+    path: /products/Fuente%20de%20poder%2027W
+  response:
+    status: 200
+    headers:
+      Content-Type: application/json
+    body: >
+      {"product_id":"SKU-016b","product_name":"Fuente de poder 27W","unit_price":"15.99","currency":"USD","available":true}
+
+- request:
+    method: GET
+    path: /products/Funda%20MagSafe
+  response:
+    status: 200
+    headers:
+      Content-Type: application/json
+    body: >
+      {"product_id":"SKU-017b","product_name":"Funda MagSafe","unit_price":"49.99","currency":"USD","available":true}
+
+- request:
+    method: GET
+    path: /products/Funda%20Smart%20Folio
+  response:
+    status: 200
+    headers:
+      Content-Type: application/json
+    body: >
+      {"product_id":"SKU-007c","product_name":"Funda Smart Folio","unit_price":"79.00","currency":"USD","available":true}
+
+- request:
+    method: GET
+    path: /products/Impresora%20l%C3%A1ser
+  response:
+    status: 200
+    headers:
+      Content-Type: application/json
+    body: >
+      {"product_id":"SKU-011","product_name":"Impresora láser","unit_price":"299.99","currency":"USD","available":true}
+
+- request:
+    method: GET
+    path: /products/Juego%20FIFA%202025
+  response:
+    status: 200
+    headers:
+      Content-Type: application/json
+    body: >
+      {"product_id":"SKU-022c","product_name":"Juego FIFA 2025","unit_price":"59.99","currency":"USD","available":true}
+
+- request:
+    method: GET
+    path: /products/Kindle%20Paperwhite
+  response:
+    status: 200
+    headers:
+      Content-Type: application/json
+    body: >
+      {"product_id":"SKU-021","product_name":"Kindle Paperwhite","unit_price":"139.99","currency":"USD","available":true}
+
+- request:
+    method: GET
+    path: /products/Laptop%20Dell%20XPS%2015
+  response:
+    status: 200
+    headers:
+      Content-Type: application/json
+    body: >
+      {"product_id":"SKU-001","product_name":"Laptop Dell XPS 15","unit_price":"1299.99","currency":"USD","available":true}
+
+- request:
+    method: GET
+    path: /products/Lente%2024-70mm%20f%2F2.8
+  response:
+    status: 200
+    headers:
+      Content-Type: application/json
+    body: >
+      {"product_id":"SKU-029b","product_name":"Lente 24-70mm f/2.8","unit_price":"1299.99","currency":"USD","available":true}
+
+- request:
+    method: GET
+    path: /products/MacBook%20Air%20M3
+  response:
+    status: 200
+    headers:
+      Content-Type: application/json
+    body: >
+      {"product_id":"SKU-018","product_name":"MacBook Air M3","unit_price":"1299.99","currency":"USD","available":true}
+
+- request:
+    method: GET
+    path: /products/Magic%20Keyboard%20iPad
+  response:
+    status: 200
+    headers:
+      Content-Type: application/json
+    body: >
+      {"product_id":"SKU-026b","product_name":"Magic Keyboard iPad","unit_price":"299.99","currency":"USD","available":true}
+
+- request:
+    method: GET
+    path: /products/MicroSD%20128GB
+  response:
+    status: 200
+    headers:
+      Content-Type: application/json
+    body: >
+      {"product_id":"SKU-016c","product_name":"MicroSD 128GB","unit_price":"19.99","currency":"USD","available":true}
+
+- request:
+    method: GET
+    path: /products/Micr%C3%B3fono%20USB%20Blue%20Yeti
+  response:
+    status: 200
+    headers:
+      Content-Type: application/json
+    body: >
+      {"product_id":"SKU-030","product_name":"Micrófono USB Blue Yeti","unit_price":"129.99","currency":"USD","available":true}
+
+- request:
+    method: GET
+    path: /products/Monitor%204K
+  response:
+    status: 200
+    headers:
+      Content-Type: application/json
+    body: >
+      {"product_id":"SKU-003","product_name":"Monitor 4K","unit_price":"599.00","currency":"USD","available":true}
+
+- request:
+    method: GET
+    path: /products/Monitor%20curvo%2027%22
+  response:
+    status: 200
+    headers:
+      Content-Type: application/json
+    body: >
+      {"product_id":"SKU-012","product_name":"Monitor curvo 27\"","unit_price":"329.99","currency":"USD","available":true}
+
+- request:
+    method: GET
+    path: /products/Mouse%20Logitech%20MX%20Master
+  response:
+    status: 200
+    headers:
+      Content-Type: application/json
+    body: >
+      {"product_id":"SKU-001b","product_name":"Mouse Logitech MX Master","unit_price":"99.99","currency":"USD","available":true}
+
+- request:
+    method: GET
+    path: /products/Mouse%20vertical%20ergon%C3%B3mico
+  response:
+    status: 200
+    headers:
+      Content-Type: application/json
+    body: >
+      {"product_id":"SKU-013b","product_name":"Mouse vertical ergonómico","unit_price":"59.99","currency":"USD","available":true}
+
+- request:
+    method: GET
+    path: /products/NAS%20Synology%202%20bah%C3%ADas
+  response:
+    status: 200
+    headers:
+      Content-Type: application/json
+    body: >
+      {"product_id":"SKU-025","product_name":"NAS Synology 2 bahías","unit_price":"299.99","currency":"USD","available":true}
+
+- request:
+    method: GET
+    path: /products/Pantalla%20proyecci%C3%B3n%20100%22
+  response:
+    status: 200
+    headers:
+      Content-Type: application/json
+    body: >
+      {"product_id":"SKU-027b","product_name":"Pantalla proyección 100\"","unit_price":"149.99","currency":"USD","available":true}
+
+- request:
+    method: GET
+    path: /products/Producto%20V
+  response:
+    status: 200
+    headers:
+      Content-Type: application/json
+    body: >
+      {"product_id":"SKU-INV6","product_name":"Producto V","unit_price":"30.00","currency":"USD","available":false}
+
+- request:
+    method: GET
+    path: /products/Producto%20W
+  response:
+    status: 200
+    headers:
+      Content-Type: application/json
+    body: >
+      {"product_id":"SKU-INV5","product_name":"Producto W","unit_price":"10.00","currency":"USD","available":false}
+
+- request:
+    method: GET
+    path: /products/Producto%20X
+  response:
+    status: 200
+    headers:
+      Content-Type: application/json
+    body: >
+      {"product_id":"SKU-INV2","product_name":"Producto X","unit_price":"100.00","currency":"USD","available":false}
+
+- request:
+    method: GET
+    path: /products/Producto%20Y
+  response:
+    status: 200
+    headers:
+      Content-Type: application/json
+    body: >
+      {"product_id":"SKU-INV3","product_name":"Producto Y","unit_price":"50.00","currency":"USD","available":false}
+
+- request:
+    method: GET
+    path: /products/Producto%20Z
+  response:
+    status: 200
+    headers:
+      Content-Type: application/json
+    body: >
+      {"product_id":"SKU-INV4","product_name":"Producto Z","unit_price":"25.00","currency":"USD","available":false}
+
+- request:
+    method: GET
+    path: /products/Proyector%204K
+  response:
+    status: 200
+    headers:
+      Content-Type: application/json
+    body: >
+      {"product_id":"SKU-027","product_name":"Proyector 4K","unit_price":"799.99","currency":"USD","available":true}
+
+- request:
+    method: GET
+    path: /products/Raspberry%20Pi%205
+  response:
+    status: 200
+    headers:
+      Content-Type: application/json
+    body: >
+      {"product_id":"SKU-016","product_name":"Raspberry Pi 5","unit_price":"89.99","currency":"USD","available":true}
+
+- request:
+    method: GET
+    path: /products/Router%20WiFi%206
+  response:
+    status: 200
+    headers:
+      Content-Type: application/json
+    body: >
+      {"product_id":"SKU-006","product_name":"Router WiFi 6","unit_price":"179.99","currency":"USD","available":true}
+
+- request:
+    method: GET
+    path: /products/SSD%201TB
+  response:
+    status: 200
+    headers:
+      Content-Type: application/json
+    body: >
+      {"product_id":"SKU-004","product_name":"SSD 1TB","unit_price":"89.99","currency":"USD","available":true}
+
+- request:
+    method: GET
+    path: /products/Samsung%20Galaxy%20S24
+  response:
+    status: 200
+    headers:
+      Content-Type: application/json
+    body: >
+      {"product_id":"SKU-019","product_name":"Samsung Galaxy S24","unit_price":"999.99","currency":"USD","available":true}
+
+- request:
+    method: GET
+    path: /products/Silla%20ergon%C3%B3mica
+  response:
+    status: 200
+    headers:
+      Content-Type: application/json
+    body: >
+      {"product_id":"SKU-023","product_name":"Silla ergonómica","unit_price":"449.99","currency":"USD","available":true}
+
+- request:
+    method: GET
+    path: /products/Smart%20TV%2055%22%204K
+  response:
+    status: 200
+    headers:
+      Content-Type: application/json
+    body: >
+      {"product_id":"SKU-020","product_name":"Smart TV 55\" 4K","unit_price":"649.99","currency":"USD","available":true}
+
+- request:
+    method: GET
+    path: /products/Soporte%20de%20pared%20TV
+  response:
+    status: 200
+    headers:
+      Content-Type: application/json
+    body: >
+      {"product_id":"SKU-020b","product_name":"Soporte de pared TV","unit_price":"34.99","currency":"USD","available":true}
+
+- request:
+    method: GET
+    path: /products/Switch%208%20puertos
+  response:
+    status: 200
+    headers:
+      Content-Type: application/json
+    body: >
+      {"product_id":"SKU-015","product_name":"Switch 8 puertos","unit_price":"49.99","currency":"USD","available":true}
+
+- request:
+    method: GET
+    path: /products/Switch%20administrable%2024p
+  response:
+    status: 200
+    headers:
+      Content-Type: application/json
+    body: >
+      {"product_id":"SKU-028","product_name":"Switch administrable 24p","unit_price":"349.99","currency":"USD","available":true}
+
+- request:
+    method: GET
+    path: /products/Tablet%20iPad%20Air
+  response:
+    status: 200
+    headers:
+      Content-Type: application/json
+    body: >
+      {"product_id":"SKU-007","product_name":"Tablet iPad Air","unit_price":"649.00","currency":"USD","available":true}
+
+- request:
+    method: GET
+    path: /products/Teclado%20inal%C3%A1mbrico
+  response:
+    status: 200
+    headers:
+      Content-Type: application/json
+    body: >
+      {"product_id":"SKU-013","product_name":"Teclado inalámbrico","unit_price":"79.99","currency":"USD","available":true}
+
+- request:
+    method: GET
+    path: /products/Teclado%20mec%C3%A1nico
+  response:
+    status: 200
+    headers:
+      Content-Type: application/json
+    body: >
+      {"product_id":"SKU-002","product_name":"Teclado mecánico","unit_price":"129.50","currency":"USD","available":true}
+
+- request:
+    method: GET
+    path: /products/T%C3%B3ner%20compatible
+  response:
+    status: 200
+    headers:
+      Content-Type: application/json
+    body: >
+      {"product_id":"SKU-011b","product_name":"Tóner compatible","unit_price":"45.00","currency":"USD","available":true}
+
+- request:
+    method: GET
+    path: /products/Webcam%20Logitech%20C920
+  response:
+    status: 200
+    headers:
+      Content-Type: application/json
+    body: >
+      {"product_id":"SKU-005","product_name":"Webcam Logitech C920","unit_price":"89.99","currency":"USD","available":true}
+
+- request:
+    method: GET
+    path: /products/iPad%20Pro%2012.9%22
+  response:
+    status: 200
+    headers:
+      Content-Type: application/json
+    body: >
+      {"product_id":"SKU-026","product_name":"iPad Pro 12.9\"","unit_price":"1099.99","currency":"USD","available":true}
+
+- request:
+    method: GET
+    path: /products/iPhone%2015%20Pro
+  response:
+    status: 200
+    headers:
+      Content-Type: application/json
+    body: >
+      {"product_id":"SKU-017","product_name":"iPhone 15 Pro","unit_price":"1199.99","currency":"USD","available":true}
