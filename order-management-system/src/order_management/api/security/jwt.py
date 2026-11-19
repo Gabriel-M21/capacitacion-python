@@ -1,17 +1,15 @@
 """
-Utilidades JWT - Módulo 9: APIs web con FastAPI
-Crea y verifica tokens de acceso.
+Utilidades JWT - Módulo 9 / actualizado en Módulo 19
+Lee SECRET_KEY y configuración desde Settings (pydantic-settings)
+en vez de tenerlos hardcodeados.
 """
 
-from datetime import UTC, datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from typing import Any
 
-from jose import JWTError, jwt  # type: ignore[import-untyped]
+from jose import JWTError, jwt
 
-# En producción estas variables vienen de variables de entorno
-SECRET_KEY = "super-secret-key-change-in-production"
-ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 30
+from order_management.config.settings import get_settings
 
 
 def create_access_token(data: dict[str, Any], expires_delta: timedelta | None = None) -> str:
@@ -19,16 +17,20 @@ def create_access_token(data: dict[str, Any], expires_delta: timedelta | None = 
     Crea un JWT firmado con los datos proporcionados.
 
     Args:
-        data: Payload del token (ej. {"sub": "usuario@email.com"})
+        data:          Payload del token (ej. {"sub": "usuario@email.com"})
         expires_delta: Tiempo de expiración personalizado
 
     Returns:
         Token JWT como string
     """
+    settings = get_settings()
     to_encode = data.copy()
-    expire = datetime.now(UTC) + (expires_delta or timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES))
+    expire = datetime.now(timezone.utc) + (
+        expires_delta
+        or timedelta(minutes=settings.access_token_expire_minutes)
+    )
     to_encode["exp"] = expire
-    return jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)  # type: ignore[no-any-return]
+    return jwt.encode(to_encode, settings.secret_key, algorithm=settings.algorithm)
 
 
 def decode_access_token(token: str) -> dict[str, Any]:
@@ -44,7 +46,8 @@ def decode_access_token(token: str) -> dict[str, Any]:
     Raises:
         JWTError: Si el token es inválido o expiró
     """
-    return jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])  # type: ignore[no-any-return]
+    settings = get_settings()
+    return jwt.decode(token, settings.secret_key, algorithms=[settings.algorithm])
 
 
 def verify_token(token: str) -> str | None:

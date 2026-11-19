@@ -1,6 +1,6 @@
 """
-Engine y sesión SQLAlchemy - Módulo 8: Acceso a datos y ORM
-Centraliza la configuración de la conexión a la base de datos.
+Engine y sesión SQLAlchemy - actualizado en Módulo 19
+Lee DATABASE_URL desde Settings en vez de tenerla hardcodeada.
 """
 
 from collections.abc import Generator
@@ -10,28 +10,30 @@ from sqlalchemy import create_engine, event
 from sqlalchemy.engine import Engine
 from sqlalchemy.orm import Session, sessionmaker
 
-# URL por defecto: SQLite local para desarrollo
-# En producción se sobreescribe con una variable de entorno
-DEFAULT_DATABASE_URL = "sqlite:///order_management.db"
+from order_management.config.settings import get_settings
 
 
-def build_engine(database_url: str = DEFAULT_DATABASE_URL, **kwargs: Any) -> Engine:
+def build_engine(database_url: str | None = None, **kwargs: Any) -> Engine:
     """
     Crea y configura el engine de SQLAlchemy.
 
-    Para SQLite activa las foreign keys (desactivadas por defecto).
+    Si no se pasa database_url, la lee desde Settings (variable de entorno
+    DATABASE_URL o el valor por defecto sqlite:///order_management.db).
 
     Args:
-        database_url: URL de conexión (sqlite / postgresql / mssql)
-        **kwargs: Opciones adicionales para create_engine
+        database_url: URL de conexión opcional (sobreescribe Settings)
+        **kwargs:     Opciones adicionales para create_engine
 
     Returns:
         Engine configurado
     """
-    engine = create_engine(database_url, **kwargs)
+    settings = get_settings()
+    url = database_url or settings.database_url
+
+    engine = create_engine(url, echo=settings.db_echo, **kwargs)
 
     # SQLite no activa FK por defecto; lo forzamos en cada conexión
-    if database_url.startswith("sqlite"):
+    if url.startswith("sqlite"):
 
         @event.listens_for(engine, "connect")
         def set_sqlite_pragma(dbapi_conn: Any, _: Any) -> None:
@@ -50,11 +52,6 @@ SessionLocal = sessionmaker(bind=engine, autocommit=False, autoflush=False)
 def get_session() -> Generator[Session, None, None]:
     """
     Generador de sesiones para usar con 'with' o como dependencia en FastAPI.
-
-    Example:
-        with get_session() as session:
-            session.add(model)
-            session.commit()
     """
     session = SessionLocal()
     try:
@@ -71,14 +68,9 @@ def get_in_memory_session() -> Generator[Session, None, None]:
     """
     Sesión con SQLite en memoria para pruebas.
     Crea las tablas automáticamente al iniciarse.
-
-    Example:
-        with get_in_memory_session() as session:
-            # tablas creadas automáticamente
-            session.add(model)
     """
-    from order_management.infrastructure.db import models  # noqa: F401
     from order_management.infrastructure.db.base import Base
+    from order_management.infrastructure.db import models  # noqa: F401
 
     test_engine = build_engine(
         "sqlite:///:memory:",

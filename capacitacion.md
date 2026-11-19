@@ -318,7 +318,7 @@
 
 ---
 
-### Módulo 19. Seguridad y mantenimiento
+### Módulo 19. Seguridad y mantenimiento LISTO
 
 **Contenidos clave:**
 - Gestión de secretos y configuración
