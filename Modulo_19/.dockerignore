@@ -1,0 +1,73 @@
+# =============================================================================
+# .dockerignore - Módulo 17
+# Excluye archivos innecesarios del contexto de build de Docker
+# Reduce el tamaño del contexto y evita copiar secretos o datos locales
+# =============================================================================
+
+# Control de versiones
+.git/
+.gitignore
+
+# Entornos virtuales
+.venv/
+venv/
+env/
+
+# Caché de Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+
+# Distribución y build
+dist/
+build/
+*.egg-info/
+*.egg
+
+# Herramientas de desarrollo (no van en producción)
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+.hypothesis/
+htmlcov/
+.coverage
+coverage.xml
+
+# Tests
+tests/
+
+# Scripts de demo y desarrollo
+scripts/
+
+# Datos y outputs locales
+data/
+*.db
+*.sqlite
+*.sqlite3
+orders_lab.log
+
+# Configuración de IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Archivos del sistema operativo
+.DS_Store
+Thumbs.db
+
+# Mocks de Smocker (solo para desarrollo local)
+mocks/
+
+# Documentación
+docs/
+
+# Archivos de CI locales que no van en la imagen
+.github/
+
+# Variables de entorno con secretos
+.env
+.env.*
+!.env.example
