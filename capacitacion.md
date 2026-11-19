@@ -285,7 +285,7 @@
 
 ---
 
-### Módulo 17. Empaquetado, distribución y CI/CD
+### Módulo 17. Empaquetado, distribución y CI/CD LISTO
 
 **Contenidos clave:**
 - Construcción de ruedas (wheels) y publicación (PyPI/artefactos internos)
@@ -302,7 +302,7 @@
 
 ---
 
-### Módulo 18. CLI y automatización
+### Módulo 18. CLI y automatización LISTO
 
 **Contenidos clave:**
 - argparse, click y Typer
