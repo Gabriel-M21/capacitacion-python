@@ -248,7 +248,7 @@
 
 ---
 
-### Módulo 15. Arquitectura Hexagonal (Puertos y Adaptadores)
+### Módulo 15. Arquitectura Hexagonal (Puertos y Adaptadores) LISTO
 
 **Contenidos clave:**
 - Capas: dominio, aplicación e infraestructura
@@ -268,7 +268,7 @@
 
 ## Nivel Avanzado
 
-### Módulo 16. Arquitectura Limpia
+### Módulo 16. Arquitectura Limpia LISTO
 
 **Contenidos clave:**
 - Entidades, casos de uso, controladores/presenters/gateways
