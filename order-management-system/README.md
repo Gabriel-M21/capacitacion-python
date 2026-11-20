@@ -88,12 +88,12 @@ El proyecto implementa **Arquitectura Hexagonal (Puertos y Adaptadores)** con pr
 │  │  │  OrderCreated · OrderStatusChanged (Eventos)         │  │  │
 │  │  │  OrderRepositoryPort · NotificationPort (Puertos)    │  │  │
 │  │  └──────────────────────────────────────────────────────┘  │  │
-│  │                                                             │  │
-│  │  CreateOrderUseCase · UnitOfWork · EventBus                 │  │
-│  │  Presenters: JSON · CLI · API · Audit                       │  │
-│  │  DTOs: CreateOrderCommand · OrderCreatedResult              │  │
+│  │                                                            │  │
+│  │  CreateOrderUseCase · UnitOfWork · EventBus                │  │
+│  │  Presenters: JSON · CLI · API · Audit                      │  │
+│  │  DTOs: CreateOrderCommand · OrderCreatedResult             │  │
 │  └────────────────────────────────────────────────────────────┘  │
-│                                                                   │
+│                                                                  │
 │  OrderRepository (SQL) · InMemoryOrderRepository                 │
 │  HttpNotificationAdapter · InMemoryNotificationAdapter           │
 │  SqlAlchemyUnitOfWork · InMemoryUnitOfWork                       │
