@@ -59,8 +59,7 @@ class Settings(BaseSettings):
     # ------------------------------------------------------------------
     database_url: str = Field(
         default="sqlite:///order_management.db",
-        description="URL de conexión a la base de datos. "
-        "Ejemplo PostgreSQL: postgresql://user:pass@localhost/dbname",
+        description="URL de conexión a la base de datos SQLite configurada en el proyecto.",
     )
     db_echo: bool = Field(default=False, description="Loguear SQL generado (solo desarrollo)")
 

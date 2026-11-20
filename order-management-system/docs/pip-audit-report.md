@@ -6,10 +6,16 @@
 
 | Métrica | Valor |
 |---|---|
-| Total dependencias auditadas | 104 |
-| Sin vulnerabilidades | 102 |
-| Con vulnerabilidades (sin fix) | 2 |
+| Registros de dependencia en JSON | 106 |
+| Dependencias auditables | 105 |
+| Omitida (paquete local no publicado en PyPI) | 1 |
+| Sin vulnerabilidades | 103 |
+| Paquetes con vulnerabilidades sin fix | 2 |
+| Entradas de hallazgo | 3 (2 IDs únicos; `ecdsa` aparece duplicada) |
 | Fixes disponibles | 0 |
+
+Escaneo local con Poetry ejecutado el 20-11-2026. El paquete del proyecto se
+omitió porque no está publicado en PyPI.
 
 ---
 
@@ -66,7 +72,7 @@
    `python-jose` está sin mantenimiento activo para estas vulnerabilidades.
 
 2. **Largo plazo**: Configurar renovación automática de auditoría en el pipeline
-   CI (ya incluido en `.github/workflows/ci.yml`).
+   CI; actualmente `pip-audit` no forma parte de `.github/workflows/ci.yml`.
 
 ---
 

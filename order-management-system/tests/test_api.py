@@ -7,6 +7,7 @@ from fastapi.testclient import TestClient
 from sqlalchemy.orm import Session
 
 from order_management.api.routers.orders import _sequence
+from order_management.config.settings import get_settings
 
 
 @pytest.fixture(autouse=True)
@@ -91,6 +92,17 @@ def test_health_check(client: TestClient) -> None:
     response = client.get("/health")
     assert response.status_code == 200
     assert response.json()["status"] == "ok"
+
+
+def test_cors_uses_configured_origins(client: TestClient) -> None:
+    origins = get_settings().cors_origins
+    origin = origins[0] if origins else "https://not-allowed.example"
+    response = client.get("/health", headers={"Origin": origin})
+
+    if origins:
+        assert response.headers["access-control-allow-origin"] == origin
+    else:
+        assert "access-control-allow-origin" not in response.headers
 
 
 # ---------------------------------------------------------------------------

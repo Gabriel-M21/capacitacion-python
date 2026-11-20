@@ -59,13 +59,13 @@ jobs:
         run: poetry install --with dev
 
       - name: Ruff — linting
-        run: poetry run ruff check src/ scripts/
+        run: poetry run ruff check src/ scripts/ tests/
 
       - name: Black — formato
-        run: poetry run black --check src/ scripts/
+        run: poetry run black --check src/ scripts/ tests/
 
       - name: isort — orden de imports
-        run: poetry run isort --check-only src/ scripts/
+        run: poetry run isort --check-only src/ scripts/ tests/
 
   # ---------------------------------------------------------------------------
   # JOB 2 — Type checking
@@ -101,7 +101,7 @@ jobs:
         run: poetry install --with dev
 
       - name: mypy — type check
-        run: poetry run mypy src/ scripts/
+        run: poetry run mypy src/ scripts/ tests/
 
   # ---------------------------------------------------------------------------
   # JOB 3 — Tests con cobertura

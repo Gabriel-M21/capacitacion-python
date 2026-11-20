@@ -8,6 +8,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from order_management.api.routers import auth, orders
 from order_management.api.security.users import seed_users
+from order_management.config.settings import get_settings
 from order_management.infrastructure.db import models  # noqa: F401
 from order_management.infrastructure.db.base import Base
 from order_management.infrastructure.db.session import SessionLocal, engine
@@ -49,7 +50,7 @@ app = FastAPI(
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # En producción: lista de dominios permitidos
+    allow_origins=get_settings().cors_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
