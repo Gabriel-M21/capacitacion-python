@@ -2,6 +2,9 @@
 Configuración central de pruebas - fixtures compartidos.
 """
 
+from collections.abc import Generator
+from typing import Any
+
 import pytest
 from fastapi.testclient import TestClient
 from sqlalchemy import create_engine, event
@@ -16,14 +19,14 @@ from order_management.infrastructure.db.base import Base
 
 
 @pytest.fixture(scope="session")
-def test_engine():
+def test_engine() -> Generator[Any, None, None]:
     engine = create_engine(
         "sqlite:///test.db",
         connect_args={"check_same_thread": False},
     )
 
     @event.listens_for(engine, "connect")
-    def set_pragma(dbapi_conn, _):
+    def set_pragma(dbapi_conn: Any, _: Any) -> None:
         dbapi_conn.execute("PRAGMA foreign_keys=ON")
 
     Base.metadata.create_all(engine)
@@ -32,7 +35,7 @@ def test_engine():
 
 
 @pytest.fixture(scope="session")
-def SessionFactory(test_engine) -> sessionmaker:
+def SessionFactory(test_engine: Any) -> sessionmaker:
     return sessionmaker(bind=test_engine, autocommit=False, autoflush=False)
 
 
@@ -46,7 +49,7 @@ def seed(SessionFactory: sessionmaker) -> None:
 
 
 @pytest.fixture
-def db_session(SessionFactory: sessionmaker) -> Session:
+def db_session(SessionFactory: sessionmaker) -> Generator[Session, None, None]:
     db = SessionFactory()
     yield db
     db.rollback()
@@ -54,7 +57,7 @@ def db_session(SessionFactory: sessionmaker) -> Session:
 
 
 @pytest.fixture
-def client(db_session: Session) -> TestClient:
+def client(db_session: Session) -> Generator[TestClient, None, None]:
     """
     TestClient con AMBAS dependencias (get_db y get_current_user)
     apuntando al mismo engine en memoria.
@@ -70,10 +73,10 @@ def client(db_session: Session) -> TestClient:
         role="admin",
     )
 
-    def override_get_db():
+    def override_get_db() -> Generator[Session, None, None]:
         yield db_session
 
-    def override_get_current_user():
+    def override_get_current_user() -> Any:
         return mock_user
 
     app.dependency_overrides[get_db] = override_get_db

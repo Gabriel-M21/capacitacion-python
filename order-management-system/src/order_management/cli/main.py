@@ -16,7 +16,7 @@ app = typer.Typer(
 )
 
 # Registrar sub-aplicaciones
-app.add_typer(auth.app,   name="auth",   help="Autenticación (login/logout/whoami)")
+app.add_typer(auth.app, name="auth", help="Autenticación (login/logout/whoami)")
 app.add_typer(orders.app, name="orders", help="Gestión de órdenes (list/get/create/delete/status)")
 
 
@@ -24,7 +24,7 @@ app.add_typer(orders.app, name="orders", help="Gestión de órdenes (list/get/cr
 def main(
     ctx: typer.Context,
     version: bool = typer.Option(False, "--version", "-v", help="Muestra la versión"),
-    api_url: str  = typer.Option(None,  "--api-url",        help="URL base de la API"),
+    api_url: str = typer.Option(None, "--api-url", help="URL base de la API"),
 ) -> None:
     """
     [bold cyan]orders-cli[/bold cyan] — Gestión de órdenes desde la terminal.
@@ -40,6 +40,7 @@ def main(
 
     if api_url:
         import os
+
         os.environ["ORDERS_API_URL"] = api_url
 
     if ctx.invoked_subcommand is None:

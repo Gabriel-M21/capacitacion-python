@@ -4,10 +4,10 @@ Lee SECRET_KEY y configuración desde Settings (pydantic-settings)
 en vez de tenerlos hardcodeados.
 """
 
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 from typing import Any
 
-from jose import JWTError, jwt
+from jose import JWTError, jwt  # type: ignore[import-untyped]
 
 from order_management.config.settings import get_settings
 
@@ -25,12 +25,11 @@ def create_access_token(data: dict[str, Any], expires_delta: timedelta | None = 
     """
     settings = get_settings()
     to_encode = data.copy()
-    expire = datetime.now(timezone.utc) + (
-        expires_delta
-        or timedelta(minutes=settings.access_token_expire_minutes)
+    expire = datetime.now(UTC) + (
+        expires_delta or timedelta(minutes=settings.access_token_expire_minutes)
     )
     to_encode["exp"] = expire
-    return jwt.encode(to_encode, settings.secret_key, algorithm=settings.algorithm)
+    return jwt.encode(to_encode, settings.secret_key, algorithm=settings.algorithm)  # type: ignore[no-any-return]
 
 
 def decode_access_token(token: str) -> dict[str, Any]:
@@ -47,7 +46,7 @@ def decode_access_token(token: str) -> dict[str, Any]:
         JWTError: Si el token es inválido o expiró
     """
     settings = get_settings()
-    return jwt.decode(token, settings.secret_key, algorithms=[settings.algorithm])
+    return jwt.decode(token, settings.secret_key, algorithms=[settings.algorithm])  # type: ignore[no-any-return]
 
 
 def verify_token(token: str) -> str | None:

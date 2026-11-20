@@ -4,6 +4,7 @@ from collections.abc import Generator
 
 import pytest
 from fastapi.testclient import TestClient
+from sqlalchemy.orm import Session
 
 from order_management.api.routers.orders import _sequence
 
@@ -68,7 +69,7 @@ def test_login_invalid_credentials(client: TestClient) -> None:
     assert response.status_code == 401
 
 
-def test_orders_require_auth(db_session) -> None:
+def test_orders_require_auth(db_session: Session) -> None:
     """Sin override de auth, los endpoints deben devolver 401."""
     from order_management.api.dependencies import get_db
     from order_management.api.main import app

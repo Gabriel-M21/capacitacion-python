@@ -4,7 +4,6 @@ CRUD completo consumiendo la API REST.
 """
 
 import json
-from decimal import Decimal
 from typing import Any
 
 import httpx
@@ -14,7 +13,7 @@ from rich.table import Table
 
 from order_management.cli.config import config
 
-app     = typer.Typer(help="Gestión de órdenes de compra")
+app = typer.Typer(help="Gestión de órdenes de compra")
 console = Console()
 
 
@@ -54,17 +53,18 @@ def _print_order(order: dict[str, Any]) -> None:
     """Imprime una orden con formato Rich."""
     console.rule(f"[bold cyan]{order['order_id']}")
 
-    console.print(f"  [bold]Cliente:[/bold] {order['customer']['name']} "
-                  f"<{order['customer']['email']}>")
+    console.print(
+        f"  [bold]Cliente:[/bold] {order['customer']['name']} " f"<{order['customer']['email']}>"
+    )
     console.print(f"  [bold]Estado:[/bold]  {order['status']}")
     console.print(f"  [bold]Total:[/bold]   ${float(order['total']):.2f}")
     console.print(f"  [bold]Items:[/bold]   {order['item_count']}")
 
     table = Table(show_header=True, header_style="bold magenta", box=None, padding=(0, 2))
-    table.add_column("Producto",   style="cyan",  width=35)
-    table.add_column("Cantidad",   justify="right")
-    table.add_column("Precio",     justify="right")
-    table.add_column("Subtotal",   justify="right")
+    table.add_column("Producto", style="cyan", width=35)
+    table.add_column("Cantidad", justify="right")
+    table.add_column("Precio", justify="right")
+    table.add_column("Subtotal", justify="right")
 
     for item in order.get("items", []):
         table.add_row(
@@ -83,10 +83,11 @@ def _print_order(order: dict[str, Any]) -> None:
 # list
 # ---------------------------------------------------------------------------
 
+
 @app.command(name="list")
 def list_orders(
     status: str = typer.Option(None, "--status", "-s", help="Filtrar por estado"),
-    limit:  int = typer.Option(20,   "--limit",  "-l", help="Máximo de órdenes a mostrar"),
+    limit: int = typer.Option(20, "--limit", "-l", help="Máximo de órdenes a mostrar"),
     json_output: bool = typer.Option(False, "--json", help="Salida en formato JSON"),
 ) -> None:
     """Lista todas las órdenes. Opcionalmente filtra por estado."""
@@ -118,22 +119,22 @@ def list_orders(
             show_header=True,
             header_style="bold blue",
         )
-        table.add_column("ID",        style="cyan",  width=12)
-        table.add_column("Cliente",   width=22)
-        table.add_column("Estado",    width=12)
-        table.add_column("Total",     justify="right", width=10)
-        table.add_column("Items",     justify="right", width=6)
+        table.add_column("ID", style="cyan", width=12)
+        table.add_column("Cliente", width=22)
+        table.add_column("Estado", width=12)
+        table.add_column("Total", justify="right", width=10)
+        table.add_column("Items", justify="right", width=6)
 
         STATUS_COLOR = {
-            "pending":   "yellow",
+            "pending": "yellow",
             "confirmed": "blue",
-            "shipped":   "cyan",
+            "shipped": "cyan",
             "delivered": "green",
             "cancelled": "red",
         }
 
         for order in orders:
-            color  = STATUS_COLOR.get(order["status"], "white")
+            color = STATUS_COLOR.get(order["status"], "white")
             status_text = f"[{color}]{order['status']}[/{color}]"
             table.add_row(
                 order["order_id"],
@@ -152,6 +153,7 @@ def list_orders(
 # ---------------------------------------------------------------------------
 # get
 # ---------------------------------------------------------------------------
+
 
 @app.command()
 def get(
@@ -182,9 +184,10 @@ def get(
 # create
 # ---------------------------------------------------------------------------
 
+
 @app.command()
 def create(
-    customer_name:  str = typer.Option(..., "--name",  "-n", prompt="Nombre del cliente"),
+    customer_name: str = typer.Option(..., "--name", "-n", prompt="Nombre del cliente"),
     customer_email: str = typer.Option(..., "--email", "-e", prompt="Email del cliente"),
     customer_phone: str = typer.Option(None, "--phone", "-p", help="Teléfono (opcional)"),
     notes: str = typer.Option(None, "--notes", help="Notas adicionales"),
@@ -208,19 +211,22 @@ def create(
             break
 
         quantity = typer.prompt("  Cantidad", default=1, type=int)
-        price    = typer.prompt("  Precio unitario", type=float)
+        price = typer.prompt("  Precio unitario", type=float)
 
-        items.append({
-            "product_name": product,
-            "quantity":     quantity,
-            "unit_price":   price,
-        })
-        typer.secho(f"  ✓ Item agregado: {product} x{quantity} @ ${price:.2f}",
-                    fg=typer.colors.GREEN)
+        items.append(
+            {
+                "product_name": product,
+                "quantity": quantity,
+                "unit_price": price,
+            }
+        )
+        typer.secho(
+            f"  ✓ Item agregado: {product} x{quantity} @ ${price:.2f}", fg=typer.colors.GREEN
+        )
 
     payload: dict[str, Any] = {
         "customer": {
-            "name":  customer_name,
+            "name": customer_name,
             "email": customer_email,
         },
         "items": items,
@@ -257,17 +263,19 @@ def create(
 # delete
 # ---------------------------------------------------------------------------
 
+
 @app.command()
 def delete(
-    order_id: str  = typer.Argument(..., help="ID de la orden a eliminar"),
-    force:    bool = typer.Option(False, "--force", "-f", help="No pedir confirmación"),
+    order_id: str = typer.Argument(..., help="ID de la orden a eliminar"),
+    force: bool = typer.Option(False, "--force", "-f", help="No pedir confirmación"),
 ) -> None:
     """Elimina una orden permanentemente."""
     headers = _require_auth()
 
     if not force:
-        typer.secho(f"⚠ Esto eliminará la orden {order_id} permanentemente.",
-                    fg=typer.colors.YELLOW)
+        typer.secho(
+            f"⚠ Esto eliminará la orden {order_id} permanentemente.", fg=typer.colors.YELLOW
+        )
         if not typer.confirm("¿Estás seguro?"):
             typer.secho("Cancelado.", fg=typer.colors.YELLOW)
             raise typer.Exit(0)
@@ -289,16 +297,21 @@ def delete(
 # status
 # ---------------------------------------------------------------------------
 
+
 @app.command()
 def status(
-    order_id:   str = typer.Argument(..., help="ID de la orden"),
-    new_status: str = typer.Argument(..., help="Nuevo estado: confirmed|shipped|delivered|cancelled"),
+    order_id: str = typer.Argument(..., help="ID de la orden"),
+    new_status: str = typer.Argument(
+        ..., help="Nuevo estado: confirmed|shipped|delivered|cancelled"
+    ),
 ) -> None:
     """Cambia el estado de una orden."""
     valid = {"confirmed", "shipped", "delivered", "cancelled", "processing"}
     if new_status not in valid:
-        typer.secho(f"✗ Estado inválido: '{new_status}'. Válidos: {', '.join(sorted(valid))}",
-                    fg=typer.colors.RED)
+        typer.secho(
+            f"✗ Estado inválido: '{new_status}'. Válidos: {', '.join(sorted(valid))}",
+            fg=typer.colors.RED,
+        )
         raise typer.Exit(1)
 
     headers = _require_auth()

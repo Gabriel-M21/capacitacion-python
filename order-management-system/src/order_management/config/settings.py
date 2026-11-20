@@ -36,11 +36,11 @@ class Settings(BaseSettings):
     # ------------------------------------------------------------------
     # API y servidor
     # ------------------------------------------------------------------
-    app_name: str        = Field(default="Order Management API")
-    app_version: str     = Field(default="0.1.0")
-    debug: bool          = Field(default=False)
-    api_host: str        = Field(default="0.0.0.0")
-    api_port: int        = Field(default=8000)
+    app_name: str = Field(default="Order Management API")
+    app_version: str = Field(default="0.1.0")
+    debug: bool = Field(default=False)
+    api_host: str = Field(default="0.0.0.0")
+    api_port: int = Field(default=8000)
 
     # ------------------------------------------------------------------
     # Seguridad — JWT
@@ -48,10 +48,10 @@ class Settings(BaseSettings):
     secret_key: str = Field(
         default="CHANGE-ME-IN-PRODUCTION-USE-32-CHARS-MINIMUM",
         description="Clave secreta para firmar tokens JWT. "
-                    "Mínimo 32 caracteres. "
-                    "Generar con: python -c \"import secrets; print(secrets.token_hex(32))\"",
+        "Mínimo 32 caracteres. "
+        'Generar con: python -c "import secrets; print(secrets.token_hex(32))"',
     )
-    algorithm: str               = Field(default="HS256")
+    algorithm: str = Field(default="HS256")
     access_token_expire_minutes: int = Field(default=30)
 
     # ------------------------------------------------------------------
@@ -60,7 +60,7 @@ class Settings(BaseSettings):
     database_url: str = Field(
         default="sqlite:///order_management.db",
         description="URL de conexión a la base de datos. "
-                    "Ejemplo PostgreSQL: postgresql://user:pass@localhost/dbname",
+        "Ejemplo PostgreSQL: postgresql://user:pass@localhost/dbname",
     )
     db_echo: bool = Field(default=False, description="Loguear SQL generado (solo desarrollo)")
 
@@ -91,6 +91,7 @@ class Settings(BaseSettings):
         """Advierte si el secret_key es el valor por defecto."""
         if v == "CHANGE-ME-IN-PRODUCTION-USE-32-CHARS-MINIMUM":
             import warnings
+
             warnings.warn(
                 "⚠ SECRET_KEY usa el valor por defecto. "
                 "Esto es INSEGURO en producción. "

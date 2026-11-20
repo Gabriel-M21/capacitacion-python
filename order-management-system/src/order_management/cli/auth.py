@@ -14,13 +14,15 @@ app = typer.Typer(help="Autenticación con la API de órdenes")
 def login(
     username: str = typer.Option(
         ...,
-        "--username", "-u",
+        "--username",
+        "-u",
         prompt="Email",
         help="Email del usuario",
     ),
     password: str = typer.Option(
         ...,
-        "--password", "-p",
+        "--password",
+        "-p",
         prompt="Contraseña",
         hide_input=True,
         help="Contraseña del usuario",
@@ -50,10 +52,10 @@ def login(
             typer.secho("✗ Credenciales incorrectas", fg=typer.colors.RED)
         else:
             typer.secho(f"✗ Error HTTP {e.response.status_code}", fg=typer.colors.RED)
-        raise typer.Exit(1)
+        raise typer.Exit(1) from None
     except httpx.RequestError as e:
         typer.secho(f"✗ No se pudo conectar a {config.api_url}: {e}", fg=typer.colors.RED)
-        raise typer.Exit(1)
+        raise typer.Exit(1) from None
 
 
 @app.command()

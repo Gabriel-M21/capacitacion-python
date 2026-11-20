@@ -69,8 +69,8 @@ def get_in_memory_session() -> Generator[Session, None, None]:
     Sesión con SQLite en memoria para pruebas.
     Crea las tablas automáticamente al iniciarse.
     """
-    from order_management.infrastructure.db.base import Base
     from order_management.infrastructure.db import models  # noqa: F401
+    from order_management.infrastructure.db.base import Base
 
     test_engine = build_engine(
         "sqlite:///:memory:",

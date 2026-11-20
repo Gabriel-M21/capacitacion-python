@@ -66,14 +66,14 @@ def order_gold_customer() -> dict[str, Any]:
 # ---------------------------------------------------------------------------
 
 
-def test_strategy_protocol_es_runtime_checkable():
+def test_strategy_protocol_es_runtime_checkable() -> None:
     """PricingStrategy es verificable en runtime con isinstance."""
     assert isinstance(NoDiscountStrategy(), PricingStrategy)
     assert isinstance(VolumeDiscountStrategy(), PricingStrategy)
     assert isinstance(SeasonalDiscountStrategy(), PricingStrategy)
 
 
-def test_no_discount_strategy_devuelve_cero(order_1_item):
+def test_no_discount_strategy_devuelve_cero(order_1_item: dict[str, Any]) -> None:
     strategy = NoDiscountStrategy()
     assert strategy.calculate_discount(order_1_item) == Decimal("0")
 
@@ -89,7 +89,7 @@ def test_no_discount_strategy_devuelve_cero(order_1_item):
         ([1] * 10, Decimal("15")),  # 10 items → 15%
     ],
 )
-def test_volume_discount_strategy_tramos(quantities: list, expected: Decimal):
+def test_volume_discount_strategy_tramos(quantities: list, expected: Decimal) -> None:
     strategy = VolumeDiscountStrategy()
     order = {
         "items": [
@@ -100,17 +100,17 @@ def test_volume_discount_strategy_tramos(quantities: list, expected: Decimal):
     assert strategy.calculate_discount(order) == expected
 
 
-def test_seasonal_discount_strategy_aplica_fijo(order_1_item):
+def test_seasonal_discount_strategy_aplica_fijo(order_1_item: dict[str, Any]) -> None:
     strategy = SeasonalDiscountStrategy(discount_percentage=Decimal("15"))
     assert strategy.calculate_discount(order_1_item) == Decimal("15")
 
 
-def test_seasonal_discount_strategy_invalido():
+def test_seasonal_discount_strategy_invalido() -> None:
     with pytest.raises(ValueError):
         SeasonalDiscountStrategy(discount_percentage=Decimal("150"))
 
 
-def test_vip_discount_strategy_cliente_vip(order_gold_customer):
+def test_vip_discount_strategy_cliente_vip(order_gold_customer: dict[str, Any]) -> None:
     strategy = VIPDiscountStrategy(
         vip_emails={"laura.gomez@example.com"},
         vip_discount=Decimal("20"),
@@ -118,7 +118,7 @@ def test_vip_discount_strategy_cliente_vip(order_gold_customer):
     assert strategy.calculate_discount(order_gold_customer) == Decimal("20")
 
 
-def test_vip_discount_strategy_cliente_no_vip(order_1_item):
+def test_vip_discount_strategy_cliente_no_vip(order_1_item: dict[str, Any]) -> None:
     strategy = VIPDiscountStrategy(
         vip_emails={"otro@example.com"},
         vip_discount=Decimal("20"),
@@ -127,7 +127,7 @@ def test_vip_discount_strategy_cliente_no_vip(order_1_item):
     assert strategy.calculate_discount(order_1_item) == Decimal("0")
 
 
-def test_max_discount_strategy_elige_maximo(order_6_items):
+def test_max_discount_strategy_elige_maximo(order_6_items: dict[str, Any]) -> None:
     strategies: list[PricingStrategy] = [
         NoDiscountStrategy(),  # → 0%
         SeasonalDiscountStrategy(Decimal("8")),  # → 8%
@@ -137,7 +137,7 @@ def test_max_discount_strategy_elige_maximo(order_6_items):
     assert strategy.calculate_discount(order_6_items) == Decimal("10")
 
 
-def test_max_discount_strategy_vacia_lanza_error():
+def test_max_discount_strategy_vacia_lanza_error() -> None:
     with pytest.raises(ValueError):
         MaxDiscountStrategy(strategies=[])
 
@@ -147,7 +147,7 @@ def test_max_discount_strategy_vacia_lanza_error():
 # ---------------------------------------------------------------------------
 
 
-def test_builder_construye_orden_completa():
+def test_builder_construye_orden_completa() -> None:
     order = (
         OrderBuilder(order_id=OrderId.generate(1))
         .with_customer("Juan Pérez", "juan.perez@example.com", "+52 55 1234")
@@ -164,7 +164,7 @@ def test_builder_construye_orden_completa():
     assert order.status == OrderStatus.PENDING
 
 
-def test_builder_sin_cliente_lanza_error():
+def test_builder_sin_cliente_lanza_error() -> None:
     builder = OrderBuilder(order_id=OrderId.generate(1)).add_item(
         "Laptop", quantity=1, unit_price=999.0
     )
@@ -172,13 +172,13 @@ def test_builder_sin_cliente_lanza_error():
         builder.build()
 
 
-def test_builder_sin_items_lanza_error():
+def test_builder_sin_items_lanza_error() -> None:
     builder = OrderBuilder(order_id=OrderId.generate(1)).with_customer("Juan", "juan@example.com")
     with pytest.raises(OrderBuildError, match="item"):
         builder.build()
 
 
-def test_builder_calcula_total_correcto():
+def test_builder_calcula_total_correcto() -> None:
     order = (
         OrderBuilder(order_id=OrderId.generate(1))
         .with_customer("Test", "test@example.com")
@@ -192,7 +192,7 @@ def test_builder_calcula_total_correcto():
     assert order.total == expected
 
 
-def test_builder_express_order_factory_method():
+def test_builder_express_order_factory_method() -> None:
     order = (
         OrderBuilder.express_order(
             order_id=OrderId.generate(99),
@@ -208,7 +208,7 @@ def test_builder_express_order_factory_method():
     assert "express" in order.notes.lower()
 
 
-def test_builder_es_reutilizable():
+def test_builder_es_reutilizable() -> None:
     """El Builder puede construir múltiples órdenes distintas."""
     base = (
         OrderBuilder(order_id=OrderId.generate(1))
@@ -233,24 +233,24 @@ def test_builder_es_reutilizable():
 # ---------------------------------------------------------------------------
 
 
-def test_adapter_cumple_pricing_strategy_protocol():
+def test_adapter_cumple_pricing_strategy_protocol() -> None:
     adapter = ExternalPricingAdapter()
     assert isinstance(adapter, PricingStrategy)
 
 
-def test_adapter_cliente_gold_descuento_20(order_gold_customer):
+def test_adapter_cliente_gold_descuento_20(order_gold_customer: dict[str, Any]) -> None:
     adapter = ExternalPricingAdapter()
     discount = adapter.calculate_discount(order_gold_customer)
     assert discount == Decimal("20")
 
 
-def test_adapter_cliente_silver_con_items(order_6_items):
+def test_adapter_cliente_silver_con_items(order_6_items: dict[str, Any]) -> None:
     adapter = ExternalPricingAdapter()
     discount = adapter.calculate_discount(order_6_items)
     assert discount == Decimal("10")
 
 
-def test_adapter_cliente_sin_tier_sin_descuento(order_1_item):
+def test_adapter_cliente_sin_tier_sin_descuento(order_1_item: dict[str, Any]) -> None:
     """Cliente sin tier y total < 1000 → 0% de descuento."""
     order = {
         "email": "desconocido@noexiste.com",
@@ -260,7 +260,7 @@ def test_adapter_cliente_sin_tier_sin_descuento(order_1_item):
     assert adapter.calculate_discount(order) == Decimal("0")
 
 
-def test_adapter_usa_api_externa_inyectada():
+def test_adapter_usa_api_externa_inyectada() -> None:
     """El Adapter acepta una API inyectada — testeable sin red."""
     mock_api = ExternalPricingAPI()
     adapter = ExternalPricingAdapter(api=mock_api)
@@ -291,20 +291,20 @@ def _make_cached_client() -> tuple[CachedCatalogClient, AsyncMock]:
     return cached, mock_client
 
 
-def test_decorator_primera_llamada_va_al_cliente_real():
+def test_decorator_primera_llamada_va_al_cliente_real() -> None:
     cached, mock_client = _make_cached_client()
 
-    async def run():
+    async def run() -> None:
         await cached.get_product("Laptop Dell XPS 15")
 
     asyncio.run(run())
     mock_client.get_product.assert_called_once_with("Laptop Dell XPS 15")
 
 
-def test_decorator_segunda_llamada_usa_cache():
+def test_decorator_segunda_llamada_usa_cache() -> None:
     cached, mock_client = _make_cached_client()
 
-    async def run():
+    async def run() -> None:
         await cached.get_product("Laptop Dell XPS 15")
         await cached.get_product("Laptop Dell XPS 15")
 
@@ -315,7 +315,7 @@ def test_decorator_segunda_llamada_usa_cache():
     assert cached.stats["misses"] == 1
 
 
-def test_decorator_productos_distintos_consultan_cliente():
+def test_decorator_productos_distintos_consultan_cliente() -> None:
     mock_client = AsyncMock()
 
     async def make_product(name: str) -> CatalogProductOut:
@@ -341,10 +341,10 @@ def test_decorator_productos_distintos_consultan_cliente():
     assert cached.cache_size == 2
 
 
-def test_decorator_hit_rate():
+def test_decorator_hit_rate() -> None:
     cached, _ = _make_cached_client()
 
-    async def run():
+    async def run() -> None:
         for _ in range(3):
             await cached.get_product("Laptop Dell XPS 15")
 
@@ -353,10 +353,10 @@ def test_decorator_hit_rate():
     assert cached.hit_rate == pytest.approx(2 / 3, rel=1e-2)
 
 
-def test_decorator_invalidate_limpia_cache():
+def test_decorator_invalidate_limpia_cache() -> None:
     cached, mock_client = _make_cached_client()
 
-    async def run():
+    async def run() -> None:
         await cached.get_product("Laptop Dell XPS 15")
         cached.invalidate("Laptop Dell XPS 15")
         await cached.get_product("Laptop Dell XPS 15")
@@ -366,10 +366,10 @@ def test_decorator_invalidate_limpia_cache():
     assert mock_client.get_product.call_count == 2
 
 
-def test_decorator_invalidate_all():
+def test_decorator_invalidate_all() -> None:
     cached, mock_client = _make_cached_client()
 
-    async def run():
+    async def run() -> None:
         await cached.get_product("Laptop Dell XPS 15")
         cached.invalidate()  # vacía todo
         assert cached.cache_size == 0
