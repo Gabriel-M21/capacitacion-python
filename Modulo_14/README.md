@@ -1,42 +1,34 @@
-# Order Management System
+# Módulo 14 - Ciencia de datos
 
-Sistema de gestión de pedidos - **Capacitación Python**
+## Objetivo
 
-## Módulos
+Cargar datos de pedidos con Pandas, calcular métricas, entrenar un clasificador y serializarlo para inferencia.
 
-- [x] **Módulo 1**: Entorno y herramientas
-- [x] **Módulo 2**: Fundamentos del lenguaje
+## Qué se realizó
 
-## Instalación
+- Carga y análisis de `data/orders_extended.csv`.
+- Métricas con Pandas.
+- Entrenamiento de modelo con scikit-learn.
+- Exportación e inferencia con `joblib`.
+- Demostración ejecutable en `scripts/demo_module_14.py`.
 
-```bash
-# Instalar dependencias
+## Ejecución
+
+Abre CMD en la raíz del repositorio:
+
+```cmd
+cd /d Modulo_14
 poetry install
-
-# Activar entorno virtual
-poetry shell
-
-# Instalar pre-commit hooks
-pre-commit install
+poetry run python scripts/demo_module_14.py
 ```
 
-## Herramientas
+La demo lee `data/orders_extended.csv`, entrena e infiere localmente, guarda el
+modelo en `data/output/order_classifier.joblib` y llena la base SQLite local
+`order_management.db`. No requiere API web ni Docker. El script crea las tablas
+SQLite; ejecútalo desde `Modulo_14` para que encuentre las rutas de datos.
 
-```bash
-# Formatear
-black src/ tests/
-isort src/ tests/
+Pruebas del código disponible:
 
-# Verificar
-ruff check src/ tests/
-mypy src/
-
-# Tests
-pytest
+```cmd
+poetry run pytest -q
 ```
-
-## 👥 Autor
-
-**Gabriel de Jesús Muñoz Ramírez** - gabriel.munoz@axity.com
-
-Capacitación Python

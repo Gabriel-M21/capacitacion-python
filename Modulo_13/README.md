@@ -1,42 +1,28 @@
-# Order Management System
+# Módulo 13 - Patrones de diseño
 
-Sistema de gestión de pedidos - **Capacitación Python**
+## Objetivo
 
-## Módulos
+Aplicar patrones creacionales, estructurales y de comportamiento a la lógica de pedidos.
 
-- [x] **Módulo 1**: Entorno y herramientas
-- [x] **Módulo 2**: Fundamentos del lenguaje
+## Qué se realizó
 
-## Instalación
+- Strategy para `none`, `volume`, `seasonal`, `vip` y `max`.
+- Builder para construir órdenes normales y exprés.
+- Decorator de caché para el cliente de catálogo.
+- Adapter de infraestructura para estrategias de precio.
+- Demostración en `scripts/demo_module_13.py`.
 
-```bash
-# Instalar dependencias
+## Ejecución
+
+Abre CMD en la raíz del repositorio:
+
+```cmd
+cd /d Modulo_13
 poetry install
-
-# Activar entorno virtual
-poetry shell
-
-# Instalar pre-commit hooks
-pre-commit install
+poetry run python scripts/demo_module_13.py
+poetry run pytest -q tests/test_patterns.py tests/test_pricing.py
 ```
 
-## Herramientas
-
-```bash
-# Formatear
-black src/ tests/
-isort src/ tests/
-
-# Verificar
-ruff check src/ tests/
-mypy src/
-
-# Tests
-pytest
-```
-
-## 👥 Autor
-
-**Gabriel de Jesús Muñoz Ramírez** - gabriel.munoz@axity.com
-
-Capacitación Python
+La demostración es local y no requiere levantar FastAPI, Docker ni Smocker. Los
+patrones Strategy, Builder, Adapter y Decorator se ejecutan directamente desde el
+script; este módulo todavía no publica endpoints HTTP para esos ejemplos.

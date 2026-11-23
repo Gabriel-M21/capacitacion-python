@@ -1,42 +1,33 @@
-# Order Management System
+# Módulo 5 - Tipado estático y calidad
 
-Sistema de gestión de pedidos - **Capacitación Python**
+## Objetivo
 
-## Módulos
+Añadir anotaciones de tipos, configuración de mypy y verificar el estilo con Black, isort y Ruff.
 
-- [x] **Módulo 1**: Entorno y herramientas
-- [x] **Módulo 2**: Fundamentos del lenguaje
+## Qué se realizó
 
-## Instalación
+- Se anotaron las entidades, servicios, utilidades y funciones principales.
+- Se configuraron mypy, Ruff, isort y Black en `pyproject.toml`.
+- Se activaron reglas de calidad mediante pre-commit.
+- Se mantuvieron las demostraciones y modelos de los módulos anteriores.
 
-```bash
-# Instalar dependencias
+## Ejecución
+
+Abre CMD en la raíz del repositorio:
+
+```cmd
+cd /d Modulo_5
 poetry install
-
-# Activar entorno virtual
-poetry shell
-
-# Instalar pre-commit hooks
-pre-commit install
+poetry run mypy src/
+poetry run ruff check src/ scripts/ tests/
+poetry run black --check src/ scripts/ tests/
+poetry run isort --check-only src/ scripts/ tests/
 ```
 
-## Herramientas
+Los comandos pueden combinarse antes de una entrega:
 
-```bash
-# Formatear
-black src/ tests/
-isort src/ tests/
-
-# Verificar
-ruff check src/ tests/
-mypy src/
-
-# Tests
-pytest
+```cmd
+poetry run pre-commit run --all-files
 ```
 
-## 👥 Autor
-
-**Gabriel de Jesús Muñoz Ramírez** - gabriel.munoz@axity.com
-
-Capacitación Python
+Este módulo todavía no contiene archivos de pruebas `test_*.py`.

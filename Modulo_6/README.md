@@ -1,42 +1,31 @@
-# Order Management System
+# Módulo 6 - Librería estándar y entrada/salida
 
-Sistema de gestión de pedidos - **Capacitación Python**
+## Objetivo
 
-## Módulos
+Manipular rutas y archivos, procesar CSV/JSON, manejar fechas y registrar eventos mediante el módulo `logging`.
 
-- [x] **Módulo 1**: Entorno y herramientas
-- [x] **Módulo 2**: Fundamentos del lenguaje
+## Qué se realizó
 
-## Instalación
+- Lectura y escritura de CSV y JSON.
+- Cálculo de métricas sobre pedidos.
+- Uso de `pathlib` para rutas portables.
+- Configuración de logging en niveles y archivo de salida.
+- Demostración en `scripts/demo_module_6.py`.
 
-```bash
-# Instalar dependencias
+## Ejecución
+
+Abre CMD en la raíz del repositorio:
+
+```cmd
+cd /d Modulo_6
 poetry install
-
-# Activar entorno virtual
-poetry shell
-
-# Instalar pre-commit hooks
-pre-commit install
+poetry run python scripts/demo_module_6.py
 ```
 
-## Herramientas
+Revisa `data/` para los archivos de entrada y las exportaciones generadas por el ejemplo.
 
-```bash
-# Formatear
-black src/ tests/
-isort src/ tests/
-
-# Verificar
-ruff check src/ tests/
-mypy src/
-
-# Tests
-pytest
+```cmd
+poetry run ruff check src/ scripts/
 ```
 
-## 👥 Autor
-
-**Gabriel de Jesús Muñoz Ramírez** - gabriel.munoz@axity.com
-
-Capacitación Python
+Este módulo todavía no contiene archivos de pruebas `test_*.py`.

@@ -1,42 +1,31 @@
-# Order Management System
+# Módulo 3 - Funciones y programación Pythonica
 
-Sistema de gestión de pedidos - **Capacitación Python**
+## Objetivo
 
-## Módulos
+Practicar funciones claras, decoradores, generadores, iteradores, comprensiones y context managers aplicados a pedidos.
 
-- [x] **Módulo 1**: Entorno y herramientas
-- [x] **Módulo 2**: Fundamentos del lenguaje
+## Qué se realizó
 
-## Instalación
+- Decorador de reintentos con backoff en `src/order_management/utils/decorators.py`.
+- Generadores para procesar colecciones por lotes.
+- Context managers para recursos y medición de tiempo.
+- Script demostrativo `scripts/demo_module_3.py`.
+- Ejemplo de procesamiento incremental de órdenes.
 
-```bash
-# Instalar dependencias
+## Ejecución
+
+Abre CMD en la raíz del repositorio:
+
+```cmd
+cd /d Modulo_3
 poetry install
-
-# Activar entorno virtual
-poetry shell
-
-# Instalar pre-commit hooks
-pre-commit install
+poetry run python scripts/demo_module_3.py
 ```
 
-## Herramientas
+Comprobación de estilo:
 
-```bash
-# Formatear
-black src/ tests/
-isort src/ tests/
-
-# Verificar
-ruff check src/ tests/
-mypy src/
-
-# Tests
-pytest
+```cmd
+poetry run ruff check src/ scripts/ tests/
 ```
 
-## 👥 Autor
-
-**Gabriel de Jesús Muñoz Ramírez** - gabriel.munoz@axity.com
-
-Capacitación Python
+Este módulo todavía no contiene archivos de pruebas `test_*.py`.

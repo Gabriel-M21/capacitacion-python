@@ -1,42 +1,35 @@
-# Order Management System
+# Módulo 8 - Acceso a datos y ORM
 
-Sistema de gestión de pedidos - **Capacitación Python**
+## Objetivo
 
-## Módulos
+Modelar pedidos, usuarios y partidas con SQLAlchemy, ejecutar operaciones CRUD y administrar migraciones con Alembic.
 
-- [x] **Módulo 1**: Entorno y herramientas
-- [x] **Módulo 2**: Fundamentos del lenguaje
+## Qué se realizó
 
-## Instalación
+- Modelos SQLAlchemy en `src/order_management/infrastructure/db/models.py`.
+- Sesión y configuración de base en `src/order_management/infrastructure/db/session.py`.
+- Repositorio de órdenes.
+- Migraciones Alembic en `alembic/`.
+- Demostración CRUD en `scripts/demo_module_8.py`.
 
-```bash
-# Instalar dependencias
+## Ejecución
+
+Abre CMD en la raíz del repositorio. SQLite es local; no necesitas iniciar un
+contenedor ni un servidor de base de datos.
+
+```cmd
+cd /d Modulo_8
 poetry install
-
-# Activar entorno virtual
-poetry shell
-
-# Instalar pre-commit hooks
-pre-commit install
+poetry run alembic upgrade head
+poetry run python scripts/demo_module_8.py
 ```
 
-## Herramientas
+Operaciones útiles:
 
-```bash
-# Formatear
-black src/ tests/
-isort src/ tests/
-
-# Verificar
-ruff check src/ tests/
-mypy src/
-
-# Tests
-pytest
+```cmd
+poetry run alembic history
+poetry run alembic current
 ```
 
-## 👥 Autor
-
-**Gabriel de Jesús Muñoz Ramírez** - gabriel.munoz@axity.com
-
-Capacitación Python
+La base de datos del laboratorio es SQLite local; no requiere Docker ni un servidor
+de base de datos. Este módulo todavía no contiene archivos de pruebas `test_*.py`.

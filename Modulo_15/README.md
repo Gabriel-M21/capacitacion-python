@@ -1,42 +1,34 @@
-# Order Management System
+# Módulo 15 - Arquitectura Hexagonal
 
-Sistema de gestión de pedidos - **Capacitación Python**
+## Objetivo
 
-## Módulos
+Separar dominio, aplicación e infraestructura mediante puertos y adaptadores.
 
-- [x] **Módulo 1**: Entorno y herramientas
-- [x] **Módulo 2**: Fundamentos del lenguaje
+## Qué se realizó
 
-## Instalación
+- Puerto de repositorio y puerto de notificación.
+- Caso de uso `CreateOrderUseCase`.
+- DTO de creación de órdenes.
+- Adaptadores en memoria, JSON, HTTP y SQLAlchemy.
+- Wiring de infraestructura desde la aplicación.
+- Pruebas hexagonales en `tests/test_hexagonal.py`.
 
-```bash
-# Instalar dependencias
+## Ejecución
+
+Abre CMD en la raíz del repositorio:
+
+```cmd
+cd /d Modulo_15
 poetry install
-
-# Activar entorno virtual
-poetry shell
-
-# Instalar pre-commit hooks
-pre-commit install
+poetry run python scripts/demo_module_15.py
+poetry run pytest -q tests/test_hexagonal.py
 ```
 
-## Herramientas
+Ejecución completa de pruebas:
 
-```bash
-# Formatear
-black src/ tests/
-isort src/ tests/
-
-# Verificar
-ruff check src/ tests/
-mypy src/
-
-# Tests
-pytest
+```cmd
+poetry run pytest -q
 ```
 
-## 👥 Autor
-
-**Gabriel de Jesús Muñoz Ramírez** - gabriel.munoz@axity.com
-
-Capacitación Python
+La demo y las pruebas usan adaptadores locales/en memoria; no hace falta levantar
+FastAPI, Docker ni Smocker.

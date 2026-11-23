@@ -1,42 +1,31 @@
-# Order Management System
+# Módulo 12 - Principios SOLID
 
-Sistema de gestión de pedidos - **Capacitación Python**
+## Objetivo
 
-## Módulos
+Reducir acoplamiento y mejorar la testabilidad aplicando SRP, OCP, LSP, ISP y DIP.
 
-- [x] **Módulo 1**: Entorno y herramientas
-- [x] **Módulo 2**: Fundamentos del lenguaje
+## Qué se realizó
 
-## Instalación
+- Puertos definidos con `Protocol` en `src/order_management/domain/ports.py`.
+- Servicios separados: validación y operación de órdenes.
+- Repositorios alternables en memoria y JSON.
+- Implementaciones reemplazables sin modificar el dominio.
+- Pruebas SOLID en `tests/test_solid.py`.
 
-```bash
-# Instalar dependencias
+## Ejecución
+
+Abre CMD en la raíz del repositorio:
+
+```cmd
+cd /d Modulo_12
 poetry install
-
-# Activar entorno virtual
-poetry shell
-
-# Instalar pre-commit hooks
-pre-commit install
+poetry run python scripts/demo_module_12.py
+poetry run pytest -q tests/test_solid.py
 ```
 
-## Herramientas
+Ejecutar todas las comprobaciones:
 
-```bash
-# Formatear
-black src/ tests/
-isort src/ tests/
-
-# Verificar
-ruff check src/ tests/
-mypy src/
-
-# Tests
-pytest
+```cmd
+poetry run pytest -q
+poetry run mypy src/
 ```
-
-## 👥 Autor
-
-**Gabriel de Jesús Muñoz Ramírez** - gabriel.munoz@axity.com
-
-Capacitación Python

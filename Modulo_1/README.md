@@ -1,41 +1,54 @@
-# Order Management System
+# Módulo 1 - Entorno y herramientas
 
-Sistema de gestión de pedidos - **Capacitación Python**
+## Objetivo
 
-## Módulos
+Preparar el entorno de desarrollo de `order-management-system` con Python, Poetry y VS Code, y configurar las herramientas básicas de calidad utilizadas durante la capacitación.
 
-- [x] **Módulo 1**: Entorno y herramientas
+## Qué se realizó
 
-## Instalación
+- Se creó el proyecto con una estructura compatible con `src/`.
+- Se configuró Poetry mediante `pyproject.toml` y `poetry.lock`.
+- Se dejó disponible el paquete `order_management`.
+- Se añadió una utilidad inicial en `src/order_management/utils.py`.
+- Se configuraron Black, isort, Ruff, mypy y pre-commit.
 
-```bash
-# Instalar dependencias
+## Estructura principal
+
+```text
+Modulo_1/
+├── src/order_management/utils.py
+├── tests/
+├── pyproject.toml
+├── poetry.lock
+├── .pre-commit-config.yaml
+└── README.md
+```
+
+## Ejecución
+
+Abre CMD en la raíz del repositorio. Con Python 3.12 y Poetry instalados:
+
+```cmd
+cd /d Modulo_1
 poetry install
-
-# Activar entorno virtual
-poetry shell
-
-# Instalar pre-commit hooks
-pre-commit install
+poetry run python -c "import order_management.utils as utils; print(utils.__file__)"
 ```
 
-## Herramientas
+Instalar y ejecutar los hooks antes de entregar:
 
-```bash
-# Formatear
-black src/ tests/
-isort src/ tests/
-
-# Verificar
-ruff check src/ tests/
-mypy src/
-
-# Tests
-pytest
+```cmd
+poetry run pre-commit install
+poetry run pre-commit run --all-files
 ```
 
-## 👥 Autor
+Herramientas de calidad:
 
-**Gabriel de Jesús Muñoz Ramírez** - gabriel.munoz@axity.com
+```cmd
+poetry run black --check src/ tests/
+poetry run isort --check-only src/ tests/
+poetry run ruff check src/ tests/
+poetry run mypy src/
+```
 
-Capacitación Python
+Este módulo todavía no contiene archivos de pruebas `test_*.py`; por eso no se
+incluye un comando pytest ejecutable aquí.

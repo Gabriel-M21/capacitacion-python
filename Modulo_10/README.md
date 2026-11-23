@@ -1,42 +1,29 @@
-# Order Management System
+# Módulo 10 - Pruebas y TDD
 
-Sistema de gestión de pedidos - **Capacitación Python**
+## Objetivo
 
-## Módulos
+Diseñar pruebas fiables con pytest, fixtures, parametrización, mocking, Hypothesis y cobertura.
 
-- [x] **Módulo 1**: Entorno y herramientas
-- [x] **Módulo 2**: Fundamentos del lenguaje
+## Qué se realizó
 
-## Instalación
+- Pruebas de API y dominio.
+- Fixtures compartidos en `tests/conftest.py`.
+- Tests parametrizados del descuento por volumen.
+- Tests de propiedades con Hypothesis.
+- Integración de cobertura mediante pytest-cov.
 
-```bash
-# Instalar dependencias
+## Ejecución
+
+Abre CMD en la raíz del repositorio:
+
+```cmd
+cd /d Modulo_10
 poetry install
-
-# Activar entorno virtual
-poetry shell
-
-# Instalar pre-commit hooks
-pre-commit install
+poetry run pytest -v
 ```
 
-## Herramientas
+Ejecutar sólo las pruebas de precios:
 
-```bash
-# Formatear
-black src/ tests/
-isort src/ tests/
-
-# Verificar
-ruff check src/ tests/
-mypy src/
-
-# Tests
-pytest
+```cmd
+poetry run pytest -q tests/test_pricing.py
 ```
-
-## 👥 Autor
-
-**Gabriel de Jesús Muñoz Ramírez** - gabriel.munoz@axity.com
-
-Capacitación Python

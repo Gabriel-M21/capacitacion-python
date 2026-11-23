@@ -1,42 +1,31 @@
-# Order Management System
+# Módulo 4 - Objetos y modelos de datos
 
-Sistema de gestión de pedidos - **Capacitación Python**
+## Objetivo
 
-## Módulos
+Modelar órdenes mediante clases, dataclasses, Pydantic y objetos de valor, incluyendo validación y serialización.
 
-- [x] **Módulo 1**: Entorno y herramientas
-- [x] **Módulo 2**: Fundamentos del lenguaje
+## Qué se realizó
 
-## Instalación
+- Entidades de dominio en `src/order_management/domain/entities.py`.
+- Objetos de valor en `src/order_management/domain/value_objects.py`.
+- Modelos Pydantic de entrada y salida.
+- Conversión entre modelos y entidades mediante mappers.
+- Demostración ejecutable en `scripts/demo_module_4.py`.
 
-```bash
-# Instalar dependencias
+## Ejecución
+
+Abre CMD en la raíz del repositorio:
+
+```cmd
+cd /d Modulo_4
 poetry install
-
-# Activar entorno virtual
-poetry shell
-
-# Instalar pre-commit hooks
-pre-commit install
+poetry run python scripts/demo_module_4.py
 ```
 
-## Herramientas
+Validar tipos:
 
-```bash
-# Formatear
-black src/ tests/
-isort src/ tests/
-
-# Verificar
-ruff check src/ tests/
-mypy src/
-
-# Tests
-pytest
+```cmd
+poetry run mypy src/
 ```
 
-## 👥 Autor
-
-**Gabriel de Jesús Muñoz Ramírez** - gabriel.munoz@axity.com
-
-Capacitación Python
+Este módulo todavía no contiene archivos de pruebas `test_*.py`.

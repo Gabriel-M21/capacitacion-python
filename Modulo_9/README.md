@@ -1,42 +1,49 @@
-# Order Management System
+# Módulo 9 - APIs web con FastAPI
 
-Sistema de gestión de pedidos - **Capacitación Python**
+## Objetivo
 
-## Módulos
+Exponer operaciones CRUD de órdenes mediante FastAPI, JWT, Pydantic, CORS y documentación OpenAPI.
 
-- [x] **Módulo 1**: Entorno y herramientas
-- [x] **Módulo 2**: Fundamentos del lenguaje
+## Qué se realizó
 
-## Instalación
+- Aplicación FastAPI en `src/order_management/api/main.py`.
+- Routers de autenticación y órdenes.
+- Esquemas Pydantic y validación de datos.
+- Login JWT y protección de endpoints.
+- Pruebas de integración con la API.
 
-```bash
-# Instalar dependencias
+## Ejecución
+
+Abre CMD en la raíz del repositorio:
+
+```cmd
+cd /d Modulo_9
 poetry install
-
-# Activar entorno virtual
-poetry shell
-
-# Instalar pre-commit hooks
-pre-commit install
+poetry run alembic upgrade head
+poetry run uvicorn order_management.api.main:app --reload
 ```
 
-## Herramientas
+Documentación disponible al iniciar la API:
 
-```bash
-# Formatear
-black src/ tests/
-isort src/ tests/
+- Swagger UI: `http://localhost:8000/docs`
+- ReDoc: `http://localhost:8000/redoc`
+- Health: `http://localhost:8000/health`
 
-# Verificar
-ruff check src/ tests/
-mypy src/
+Credenciales de prueba configuradas en el proyecto:
 
-# Tests
-pytest
+```text
+admin@example.com / admin123
+user@example.com / user123
 ```
 
-## 👥 Autor
+En Swagger, pulsa **Authorize** e inicia sesión con una de estas cuentas para
+probar las rutas protegidas de `/orders`. También puedes ejecutar `POST
+/auth/login` con el formulario `username`/`password`; devuelve un JWT que debes
+enviar como `Authorization: Bearer <token>`. Si el puerto 8000 está ocupado,
+inicia la API con `--port 8001` y abre `http://localhost:8001/docs`.
 
-**Gabriel de Jesús Muñoz Ramírez** - gabriel.munoz@axity.com
+Ejecutar pruebas:
 
-Capacitación Python
+```cmd
+poetry run pytest -q
+```
